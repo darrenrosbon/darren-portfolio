@@ -192,6 +192,7 @@ h2.heading2 {
 .status.progress { color:#e8caa0; }
 .card .cname { color:#f0f0f0; font-weight:700; font-size:14px; }
 .card .cmeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
+.card-year { position:absolute; right:12px; bottom:10px; color:#5c5c5c; font-size:9px; letter-spacing:0.5px; }
 
 /* Occlude's own wordmark (crescent mark + underlined "occlude.") lifted
    from its live site, so this entry reads as branded rather than the
