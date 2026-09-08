@@ -228,6 +228,10 @@ h2.heading2 {
 .site-mark-inline { display:flex; align-items:center; gap:6px; }
 .site-mark-inline img { flex-shrink:0; display:block; }
 
+.vwd-mark { display:flex; align-items:center; gap:6px; }
+.vwd-icon { flex-shrink:0; display:block; }
+.vwd-word { font-family:'Spectral', serif; font-weight:600; color:#f0ece0; letter-spacing:-0.01em; }
+
 /* ---------- Mobile: the desktop layout is a tight single-screen
    composition (heading, work grid and face all sharing one viewport by
    pixel-precise positioning) — that doesn't survive a narrow screen, so
@@ -354,10 +358,11 @@ h2.heading2 {
      2x2 grid reads left-to-right, top-to-bottom in that order) — mobile
      wants occlude, Chroma.GG, saas-dashboard, portfolio_v2 instead. */
   .card:nth-child(1) { order: 1; } /* occlude */
-  .card:nth-child(2) { order: 3; } /* saas-dashboard */
+  .card:nth-child(2) { order: 3; } /* Pulse */
   .card:nth-child(3) { order: 2; } /* Chroma.GG */
   .card:nth-child(4) { order: 4; } /* Rooted & Co. */
-  .card:nth-child(5) { order: 5; } /* portfolio (self-reference, always last) */
+  .card:nth-child(5) { order: 5; } /* Van Wyk Dlamini */
+  .card:nth-child(6) { order: 6; } /* portfolio (self-reference, always last) */
   .card {
     position:relative;
     /* justify-content:flex-start (not the base rule's space-between) —
