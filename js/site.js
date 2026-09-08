@@ -208,21 +208,26 @@ function sizeSocialIcons() {
 
 // Positions #about relative to the face's actual bottom edge, computed —
 // not a fixed CSS pixel value tuned against one test environment, which
-// kept being wrong on real devices (different font rendering/wrapping
-// shifts where #work actually ends). Desktop positions #about with plain
-// absolute coordinates in CSS and doesn't need this.
+// kept being wrong whenever the content above it changed (different font
+// rendering/wrapping, or — the bug this caught — the work grid gaining a
+// 5th card and wrapping to a 3rd row, which pushed #work's real bottom
+// edge below the desktop rule's fixed top:500px and caused an overlap).
 function positionAboutSection() {
   const about = document.getElementById('about');
   const work = document.getElementById('work');
+  const heroTop = hero.getBoundingClientRect().top;
+  const gap = 24;
   if (W >= MOBILE_BREAKPOINT) {
     about.style.marginTop = '';
+    about.style.top = '0px'; // reset before measuring so the old value can't skew the new one
+    const workBottom = work.getBoundingClientRect().bottom - heroTop;
+    about.style.top = (workBottom + gap) + 'px';
     return;
   }
+  about.style.top = '';
   about.style.marginTop = '0px'; // reset before measuring so the old value can't skew the new one
-  const heroTop = hero.getBoundingClientRect().top;
   const workBottom = work.getBoundingClientRect().bottom - heroTop;
   const faceBottom = FACE_TOP_PADDING + faceRows * FACE_CELL_H;
-  const gap = 24;
   const marginTop = Math.max(gap, (faceBottom + gap) - workBottom);
   about.style.marginTop = marginTop + 'px';
 }
