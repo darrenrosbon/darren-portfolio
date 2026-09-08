@@ -1,0 +1,400 @@
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:#0a0a0a; font-family:'JetBrains Mono', monospace; }
+
+/* The `hidden` attribute doesn't reliably get its expected display:none
+   default on SVG elements in every engine — confirmed here: an SVG with
+   `hidden` present computed to display:block anyway. Force it explicitly
+   rather than relying on the UA stylesheet. Affects the copy-button icon
+   swap (mobile + desktop). */
+svg[hidden] { display:none; }
+
+/* ---------- Hero ---------- */
+#hero { position:relative; height:100vh; overflow:hidden; }
+.site-mark { position:absolute; top:20px; left:20px; z-index:6; display:block; line-height:0; transition:opacity 0.15s ease; }
+.site-mark img { display:block; }
+.site-mark:hover { opacity:0.8; }
+#hero canvas { display:block; position:absolute; top:0; left:0; }
+
+.heading-wrap {
+  position:absolute; left:60px; top:48px; z-index:5;
+  display:flex; align-items:baseline; gap:14px;
+}
+h1.heading {
+  margin:0; color:#f0f0f0; font-weight:800;
+  font-size: clamp(32px, 5.5vw, 72px);
+  line-height:1.05; letter-spacing:-1px;
+}
+.and-stuff {
+  color:#969696; font-weight:500;
+  font-size:11px; letter-spacing:0.5px; opacity:0.6;
+}
+.byline {
+  position:absolute; top:48px; right:32px; z-index:5;
+  color:#e8caa0; font-weight:500;
+  font-size: clamp(13px, 1.3vw, 18px);
+  letter-spacing:0.5px; text-align:right;
+}
+
+/* Desktop: about-me section, sitting directly under the work section (same
+   left column, not anchored to the face). */
+#about {
+  position:absolute; left:60px; top:500px; z-index:5;
+  width: min(56%, 640px);
+}
+h2.guy-heading {
+  margin:0 0 14px 0; color:#f0f0f0; font-weight:800; text-align:center;
+  font-size: clamp(18px, 2.2vw, 28px);
+  letter-spacing:-1px;
+}
+.about-text {
+  margin:0 auto; color:#c9c9c9; font-size:14px; line-height:1.6; max-width:46ch;
+  text-align:center;
+}
+.about-text .location { color:#e8caa0; font-weight:700; }
+
+/* Social icons — mobile-only for now, hidden entirely on desktop. */
+.social-icon { display:none; }
+
+/* Desktop's contact block (email + social icons), sitting in the empty
+   space below #about. Part of the same centered column as the heading/
+   work/about (JS sets left + width to match — see positionMainBody in
+   site.js), with its own narrower content centered within that column via
+   align-items:center. No transform:translateX(-50%) here — that "center
+   via left:50%+translate" trick doesn't compose with JS explicitly setting
+   both left AND width to match the column, so it's been removed in favor
+   of the explicit values. Hidden on mobile in its own media query below —
+   mobile has its own separate .contact-bar and heading-row icons instead. */
+.desktop-contact {
+  position:absolute; left:60px; top:670px;
+  z-index:5; display:flex; flex-direction:column; align-items:center;
+}
+.contact-bar-desktop {
+  display:flex; align-items:center;
+  border:1px solid rgba(232,202,160,0.4);
+  background:rgba(232,202,160,0.06);
+}
+.contact-email-desktop {
+  padding:14px 20px;
+  color:#e8caa0; font-weight:700; font-size:15px;
+  text-decoration:none;
+}
+.contact-email-desktop:hover { background:rgba(232,202,160,0.12); }
+.desktop-contact .copy-btn {
+  display:flex; align-items:center; justify-content:center;
+  width:44px; align-self:stretch;
+  border:none; border-left:1px solid rgba(232,202,160,0.4);
+  background:transparent; color:#e8caa0;
+  padding:0; cursor:pointer;
+}
+.desktop-contact .copy-btn:hover { background:rgba(232,202,160,0.12); }
+.desktop-contact .copy-btn svg { width:18px; height:18px; }
+.desktop-contact .copy-btn.copied { color:#7ec98f; }
+
+.social-row-desktop { display:flex; gap:16px; margin-top:18px; justify-content:center; }
+.social-icon-desktop { display:inline-flex; color:#e8caa0; width:40px; height:40px; }
+.social-icon-desktop svg { width:100%; height:100%; }
+.social-icon-desktop:hover { color:#fff; }
+
+/* .info-btn is an <a href="#" role="button"> (JS opens the modal, no real
+   navigation) — deliberately an anchor rather than a <button>, since a
+   <button> with aspect-ratio inside this stretched flex row hit form
+   controls' special intrinsic-sizing rules and rendered enormous instead
+   of matching its sibling icons. Anchors don't have that problem. */
+.info-btn { text-decoration:none; }
+
+/* ---------- Contact modal — a small "Contact me" dialog the [i] icon
+   opens, listing every channel in one place (plain-text email included)
+   for visitors the mailto/copy-button pair doesn't work for. ---------- */
+.contact-modal-overlay {
+  position:fixed; inset:0; z-index:50;
+  background:rgba(0,0,0,0.6);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+}
+.contact-modal-overlay[hidden] { display:none; }
+.contact-modal {
+  width:min(360px, 100%);
+  background:#0e0e0e;
+  border:1px solid rgba(232,202,160,0.4);
+  padding:20px;
+}
+.contact-modal-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:14px; margin-bottom:14px;
+  border-bottom:1px solid rgba(232,202,160,0.25);
+  font-weight:700; font-size:15px; color:#f0f0f0; letter-spacing:-0.2px;
+}
+.contact-modal-close {
+  background:none; border:none; padding:4px; margin:-4px; color:#8f8f8f; cursor:pointer;
+  display:inline-flex;
+}
+.contact-modal-close svg { width:16px; height:16px; }
+.contact-modal-close:hover { color:#f0f0f0; }
+.contact-modal-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+.contact-modal-list li { display:flex; align-items:center; gap:12px; }
+.contact-modal-list svg { width:18px; height:18px; color:#e8caa0; flex-shrink:0; }
+.contact-modal-list a {
+  color:#c9c9c9; text-decoration:none; font-size:13px; word-break:break-all;
+}
+.contact-modal-list a:hover { color:#e8caa0; }
+
+/* Contact bar — mobile-only for now, hidden entirely on desktop. */
+.contact-bar { display:none; }
+
+/* The heading's forced "The guy / behind the work" break is mobile-only —
+   suppress it on desktop so the heading reads as one flowing line there,
+   same as before. */
+@media (min-width: 701px) {
+  br.force-break { display:none; }
+}
+.about-text span#age { color:#e8caa0; font-weight:700; }
+
+/* ---------- Work — inline in the hero, next to the face ---------- */
+#work {
+  position:absolute; left:60px; top:160px; z-index:5;
+  width: min(56%, 640px);
+}
+h2.heading2 {
+  color:#f0f0f0; font-weight:800; font-size: clamp(20px, 2.6vw, 32px);
+  letter-spacing:-1px; margin:0 0 20px 0; text-align:center;
+}
+.cards {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top:1px solid rgba(232,202,160,0.25);
+  border-left:1px solid rgba(232,202,160,0.25);
+}
+.card {
+  background:rgba(10,10,10,0.55); padding:16px 16px; min-height:108px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  position:relative;
+  border-right:1px solid rgba(232,202,160,0.25);
+  border-bottom:1px solid rgba(232,202,160,0.25);
+  transition: background 0.15s ease;
+  text-decoration:none;
+}
+.card:hover { background:rgba(20,20,20,0.7); }
+.card .status {
+  align-self:flex-start;
+  font-size:9px; letter-spacing:1px; text-transform:uppercase;
+  padding:2px 6px; border:1px solid currentColor;
+  margin-top:10px;
+}
+.status.live { color:#7ec98f; }
+.status.progress { color:#e8caa0; }
+.card .cname { color:#f0f0f0; font-weight:700; font-size:14px; }
+.card .cmeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
+
+/* Occlude's own wordmark (crescent mark + underlined "occlude.") lifted
+   from its live site, so this entry reads as branded rather than the
+   plain-text title every other card uses. */
+.occlude-mark { display:flex; align-items:center; gap:6px; font-weight:500; }
+.occlude-icon { flex-shrink:0; }
+.occlude-word {
+  font-family:'Space Grotesk', sans-serif; font-weight:500;
+  color:#EDE9E1; letter-spacing:-0.01em;
+  text-decoration:underline; text-decoration-color:#E8894A; text-underline-offset:3px;
+}
+
+/* Pulse (saas-dashboard) wordmark: heartbeat-line mark + bold Outfit
+   text, lifted from its live nav. Ink color swapped from the site's
+   near-black (tuned for a light background) to a light tint so it stays
+   legible on this dark card. */
+.pulse-mark { display:flex; align-items:center; gap:6px; }
+.pulse-icon { flex-shrink:0; }
+.pulse-word { font-family:'Outfit', sans-serif; font-weight:700; color:#EDEDFB; letter-spacing:-0.01em; }
+
+/* Chroma.GG wordmark: its own eye icon asset + "Chroma" in Space Grotesk
+   bold, ".GG" in italic pink — lifted from its hero title styling. */
+.chroma-mark { display:flex; align-items:center; gap:6px; }
+.chroma-icon { flex-shrink:0; display:block; }
+.chroma-word { font-family:'Space Grotesk', sans-serif; font-weight:700; color:#f4f1fa; letter-spacing:-0.01em; }
+.chroma-word em { font-weight:500; font-style:italic; color:#ec4899; }
+
+/* This site's own card, using the same D_ mark shown in the corner. */
+.site-mark-inline { display:flex; align-items:center; gap:6px; }
+.site-mark-inline img { flex-shrink:0; display:block; }
+
+/* ---------- Mobile: the desktop layout is a tight single-screen
+   composition (heading, work grid and face all sharing one viewport by
+   pixel-precise positioning) — that doesn't survive a narrow screen, so
+   below 700px it unwinds into a simpler stacked flow instead. ---------- */
+@media (max-width: 700px) {
+  /* Hero keeps a fixed 100vh band (so the canvas sizing math stays
+     simple), but overflow becomes visible so #work can flow below it
+     instead of being clipped — back to the simpler stacked layout. */
+  /* height:auto + min-height (not a fixed height:100vh) — with overflow:
+     visible, content already spills past a fixed height, and trailing
+     margin/padding on a box whose content overflows its own bounds simply
+     isn't reserved as visible space afterward (confirmed: neither the
+     contact bar's own margin-bottom nor padding-bottom on #hero showed up
+     in the page's actual scrollable height). auto lets #hero's box
+     genuinely contain all of its content, including trailing spacing. */
+  #hero { height:auto; min-height:100vh; overflow:visible; padding-bottom:40px; }
+
+  /* position:relative (not static) — z-index has no effect on statically
+     positioned elements, and without it the absolutely-positioned canvas
+     paints ABOVE this content regardless of DOM order, per CSS stacking
+     rules. relative keeps normal in-flow layout while letting z-index:5
+     (set in the base rule) put this content above the canvas. */
+  /* flex-direction stays row here (not column) — "and stuff" is taken out
+     of flow entirely below, so heading-wrap no longer needs to stack it
+     under the heading. */
+  .heading-wrap { position:relative; left:0; top:0; padding:56px 24px 0; }
+  /* Pinned to the heading's own bottom-right corner instead of stacked
+     below it — heading-wrap's rendered height shrinks to just the h1 now,
+     which pulls everything after it (face, work, about) up into the
+     freed space automatically via normal document flow. */
+  /* Negative bottom pushes it below the heading text without affecting
+     heading-wrap's own box height — it's position:absolute, so it doesn't
+     affect layout of anything after it either way. */
+  .and-stuff {
+    position:absolute; right:4px; bottom:-14px; margin:0;
+  }
+
+  /* Pinned corner, out of the document flow — same spot as desktop, just
+     retuned for a small screen. */
+  .byline { position:absolute; top:16px; right:16px; left:auto; text-align:right; font-size:11px; padding:0; z-index:5; }
+  /* Unlike desktop, mobile keeps this under the face rather than under the
+     work list — position:relative (in-flow), not absolute, so there's
+     actual room below it for that section's content instead of being
+     pinned to the edge of a fixed-height box.
+     margin-top is NOT set here — a fixed px guess kept being wrong on real
+     devices (font rendering/wrapping shifts where #work actually ends, so
+     a value tuned in one test environment doesn't hold elsewhere). site.js
+     computes and sets it at runtime from the actual measured position of
+     #work plus the face's known height. Horizontal margins are safe as a
+     static value since they don't depend on content height. */
+  /* width was leaking in from the desktop rule (min(56%,640px)) this whole
+     time, uncorrected here — almost certainly what made the earlier
+     float/fit-content attempts behave so inconsistently. Reset it
+     explicitly, then margin-left:auto can reliably push a capped-width
+     column to the right edge. */
+  #about {
+    position:relative; left:0; top:0;
+    width:auto; max-width:230px; margin:0 24px 0 auto;
+    text-align:right;
+  }
+  /* text-align:right explicitly — the desktop rule sets text-align:left,
+     which was leaking through uncorrected here (same class of bug as the
+     width and top leaks above), overriding the text-align:right inherited
+     from #about. */
+  /* white-space:nowrap — without it, the icon (sized from the heading's
+     own height via aspect-ratio+stretch below) claims width in the same
+     row, which can squeeze the heading into wrapping onto a 3rd/4th line,
+     which grows the row taller, which grows the icon wider, squeezing it
+     further — a runaway loop. nowrap keeps each of the two <br>-separated
+     segments on exactly one line each, so the heading's height is stable
+     regardless of how much width the icon ends up taking. */
+  h2.guy-heading { margin:0; font-size:16px; text-align:right; white-space:nowrap; }
+  /* text-align:right + margin reset — the desktop rule now sets
+     text-align:center and margin:0 auto (for its own centering), which
+     would otherwise leak through uncorrected here. */
+  .about-text { font-size:12px; max-width:none; text-align:right; margin:0; }
+  /* Desktop's icon row + centered email block — mobile already has its
+     own icons next to the heading and its own contact bar, so these
+     would be duplicates. */
+  .social-row-desktop { display:none; }
+  .desktop-contact { display:none; }
+
+  /* Row of icon + heading, right-aligned as a group — icons sit to the
+     left of the heading text, matching reading order. align-items:stretch
+     (not center) so the icons take on the row's full cross-axis size —
+     since the heading is now two lines, that's the height of both lines
+     combined, not a single line. */
+  .guy-heading-row {
+    display:flex; align-items:stretch; justify-content:flex-end; gap:12px;
+    margin-bottom:10px;
+  }
+  /* No fixed width/height — aspect-ratio:1 lets the stretched height
+     (from align-items:stretch above) determine the width too, so the icon
+     is exactly as tall as the two-line heading and stays square.
+     flex-shrink:0 — without it, adding the 4th ([i]) icon pushed the
+     row's natural width past its container and flexbox quietly squashed
+     every icon to fit (they stopped being square, just got narrower),
+     instead of the row being allowed to size to its actual content. */
+  .social-icon {
+    display:inline-flex; color:#e8caa0;
+    aspect-ratio:1/1; width:auto; height:auto; flex-shrink:0;
+  }
+  .social-icon svg { width:100%; height:100%; }
+  .social-icon:hover { color:#fff; }
+
+  /* Kept narrow enough to stay clear of the face, which sits in the same
+     right-hand region on mobile as it does on desktop. */
+  #work { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
+  /* text-align:left explicitly — the desktop rule now sets text-align:
+     center, which would otherwise leak through uncorrected here (same
+     class of bug hit repeatedly in this file). */
+  h2.heading2 { font-size:20px; text-align:left; }
+  /* flex column (not block/grid) so `order` below can reorder the cards for
+     mobile without touching the HTML/desktop order. gap replaces the
+     desktop grid's shared borders now that each card is its own box. */
+  /* align-items:flex-start (not the default stretch) — stretch was
+     forcing every card to the full width of #work regardless of how
+     little its own content needed, leaving dead space on the right that
+     just covered more of the face than necessary. flex-start lets each
+     card shrink to its own content; equalizeCardSizes() (site.js) then
+     matches every card to the widest one actually needs. */
+  .cards { display:flex; flex-direction:column; align-items:flex-start; gap:8px; border:none; }
+  /* DOM order is occlude, saas-dashboard, Chroma.GG, portfolio_v2 (desktop's
+     2x2 grid reads left-to-right, top-to-bottom in that order) — mobile
+     wants occlude, Chroma.GG, saas-dashboard, portfolio_v2 instead. */
+  .card:nth-child(1) { order: 1; } /* occlude */
+  .card:nth-child(2) { order: 3; } /* saas-dashboard */
+  .card:nth-child(3) { order: 2; } /* Chroma.GG */
+  .card:nth-child(4) { order: 4; } /* portfolio_v2 */
+  .card {
+    position:relative;
+    /* justify-content:flex-start (not the base rule's space-between) —
+       space-between stretches its children apart to fill whatever height
+       equalizeCardHeights() (site.js) applies, turning a tight card into
+       one with a big gap before the badge. flex-start plus a fixed gap
+       keeps every card's internal rhythm identical regardless of which
+       card set the shared max height. */
+    flex:none; display:flex; flex-direction:column; justify-content:flex-start; gap:6px;
+    width:auto; min-width:0; min-height:0;
+    padding:7px 9px;
+    border:1px solid rgba(232,202,160,0.25);
+    background:rgba(10,10,10,0.55);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card .cname { font-size:13px; }
+  .card .cmeta { font-size:10px; margin-top:0; }
+  .card .status { margin-top:0; }
+
+  /* Contact bar — full-width button-style bar at the very bottom of the
+     page: tapping the email opens the mail client, the separate copy
+     button copies the address without leaving the page. */
+  /* position:relative + z-index — without a position, the canvas (which is
+     positioned) paints ABOVE this in-flow content regardless of DOM order,
+     same stacking-order issue hit earlier with #work/#about/.byline. */
+  .contact-bar {
+    position:relative; z-index:5;
+    display:flex; align-items:center;
+    margin:36px 24px 0;
+    border:1px solid rgba(232,202,160,0.4);
+    background:rgba(232,202,160,0.06);
+  }
+  .contact-email {
+    flex:1; min-width:0;
+    padding:16px 14px;
+    color:#e8caa0; font-weight:700; font-size:13px;
+    text-decoration:none;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .contact-email:active { background:rgba(232,202,160,0.12); }
+  .copy-btn {
+    flex:none;
+    display:flex; align-items:center; justify-content:center;
+    width:52px; align-self:stretch;
+    border:none; border-left:1px solid rgba(232,202,160,0.4);
+    background:transparent; color:#e8caa0;
+    padding:0; cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .copy-btn:active { background:rgba(232,202,160,0.12); }
+  .copy-btn svg { width:18px; height:18px; }
+  .copy-btn.copied { color:#7ec98f; }
+}
