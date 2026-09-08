@@ -117,6 +117,10 @@ h2.guy-heading {
   background:#0e0e0e;
   border:1px solid rgba(232,202,160,0.4);
   padding:20px;
+  /* Explicit rather than assumed — every channel here is meant to be
+     selectable by hand (drag to select, then copy), same reasoning as the
+     plain-text email fallback the modal already exists for. */
+  user-select:text; -webkit-user-select:text;
 }
 .contact-modal-head {
   display:flex; align-items:center; justify-content:space-between;
@@ -137,6 +141,10 @@ h2.guy-heading {
   color:#c9c9c9; text-decoration:none; font-size:13px; word-break:break-all;
 }
 .contact-modal-list a:hover { color:#e8caa0; }
+/* The Discord row's plain-text username after the link — not a link
+   itself, just there so a visitor can select/search it by hand. */
+.contact-modal-list li > span { font-size:13px; }
+.contact-modal-hint { color:#8f8f8f; }
 
 /* Contact bar — mobile-only for now, hidden entirely on desktop. */
 .contact-bar { display:none; }
