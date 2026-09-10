@@ -1,6 +1,12 @@
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 const hero = document.getElementById('hero');
+
+document.querySelector('.site-mark').addEventListener('click', (e) => {
+  e.preventDefault();
+  hero.scrollIntoView({ behavior: 'smooth' });
+  history.replaceState(null, '', location.pathname + location.search);
+});
 const BG_FONT_SIZE = 13, CELL = 13;
 const BG_COLOR = [150, 150, 150];
 const FACE_COLOR = [232, 202, 160];
