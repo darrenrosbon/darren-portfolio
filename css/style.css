@@ -217,8 +217,12 @@ h2.heading2 {
    bold, ".GG" in italic pink — lifted from its hero title styling. */
 .chroma-mark { display:flex; align-items:center; gap:6px; }
 .chroma-icon { flex-shrink:0; display:block; }
-.chroma-word { font-family:'Space Grotesk', sans-serif; font-weight:700; color:#f4f1fa; letter-spacing:-0.01em; }
-.chroma-word em { font-weight:500; font-style:italic; color:#ec4899; }
+.chroma-word { font-family:'Space Grotesk', sans-serif; font-weight:700; color:#f6f3fb; letter-spacing:-0.01em; }
+.chroma-word em {
+  font-weight:700; font-style:normal;
+  background:linear-gradient(100deg, #a855f7, #ec4899);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
 
 .rooted-mark { display:flex; align-items:center; gap:6px; }
 .rooted-icon { flex-shrink:0; display:block; }
@@ -231,6 +235,14 @@ h2.heading2 {
 .vwd-mark { display:flex; align-items:center; gap:6px; }
 .vwd-icon { flex-shrink:0; display:block; }
 .vwd-word { font-family:'Spectral', serif; font-weight:600; color:#f0ece0; letter-spacing:-0.01em; }
+
+.talos-mark { display:flex; align-items:center; gap:6px; }
+.talos-icon { flex-shrink:0; display:block; }
+.talos-word { font-family:'Big Shoulders Display', sans-serif; font-weight:900; color:#f9f7f5; letter-spacing:-0.02em; }
+
+.kruger-mark { display:flex; align-items:center; gap:6px; }
+.kruger-icon { flex-shrink:0; display:block; }
+.kruger-word { font-family:'Archivo', sans-serif; font-weight:700; color:#e9eaea; text-transform:uppercase; letter-spacing:0.01em; }
 
 /* ---------- Mobile: the desktop layout is a tight single-screen
    composition (heading, work grid and face all sharing one viewport by
@@ -362,7 +374,9 @@ h2.heading2 {
   .card:nth-child(3) { order: 2; } /* Chroma.GG */
   .card:nth-child(4) { order: 4; } /* Rooted & Co. */
   .card:nth-child(5) { order: 5; } /* Van Wyk Dlamini */
-  .card:nth-child(6) { order: 6; } /* portfolio (self-reference, always last) */
+  .card:nth-child(6) { order: 6; } /* Talos */
+  .card:nth-child(7) { order: 7; } /* Kruger Body & Paint */
+  .card:nth-child(8) { order: 8; } /* portfolio (self-reference, always last) */
   .card {
     position:relative;
     /* justify-content:flex-start (not the base rule's space-between) —
