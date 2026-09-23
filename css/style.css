@@ -244,6 +244,10 @@ h2.heading2 {
 .kruger-icon { flex-shrink:0; display:block; }
 .kruger-word { font-family:'Archivo', sans-serif; font-weight:700; color:#e9eaea; text-transform:uppercase; letter-spacing:0.01em; }
 
+.sable-mark { display:flex; align-items:center; gap:6px; }
+.sable-icon { flex-shrink:0; display:block; }
+.sable-word { font-family:'Sora', sans-serif; font-weight:700; color:#eef1ea; letter-spacing:-0.01em; }
+
 /* ---------- Mobile: the desktop layout is a tight single-screen
    composition (heading, work grid and face all sharing one viewport by
    pixel-precise positioning) — that doesn't survive a narrow screen, so
