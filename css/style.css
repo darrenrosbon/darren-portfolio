@@ -228,10 +228,6 @@ h2.heading2 {
 .rooted-icon { flex-shrink:0; display:block; }
 .rooted-word { font-family:'Sora', sans-serif; font-weight:700; color:#f2f0ea; letter-spacing:-0.01em; }
 
-/* This site's own card, using the same D_ mark shown in the corner. */
-.site-mark-inline { display:flex; align-items:center; gap:6px; }
-.site-mark-inline img { flex-shrink:0; display:block; }
-
 .vwd-mark { display:flex; align-items:center; gap:6px; }
 .vwd-icon { flex-shrink:0; display:block; }
 .vwd-word { font-family:'Spectral', serif; font-weight:600; color:#f0ece0; letter-spacing:-0.01em; }
