@@ -224,10 +224,6 @@ h2.heading2 {
   -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
 }
 
-.rooted-mark { display:flex; align-items:center; gap:6px; }
-.rooted-icon { flex-shrink:0; display:block; }
-.rooted-word { font-family:'Sora', sans-serif; font-weight:700; color:#f2f0ea; letter-spacing:-0.01em; }
-
 .vwd-mark { display:flex; align-items:center; gap:6px; }
 .vwd-icon { flex-shrink:0; display:block; }
 .vwd-word { font-family:'Spectral', serif; font-weight:600; color:#f0ece0; letter-spacing:-0.01em; }
@@ -240,9 +236,9 @@ h2.heading2 {
 .kruger-icon { flex-shrink:0; display:block; }
 .kruger-word { font-family:'Archivo', sans-serif; font-weight:700; color:#e9eaea; text-transform:uppercase; letter-spacing:0.01em; }
 
-.sable-mark { display:flex; align-items:center; gap:6px; }
-.sable-icon { flex-shrink:0; display:block; }
-.sable-word { font-family:'Sora', sans-serif; font-weight:700; color:#eef1ea; letter-spacing:-0.01em; }
+.stonegate-mark { display:flex; align-items:center; gap:6px; }
+.stonegate-icon { flex-shrink:0; display:block; }
+.stonegate-word { font-family:'Barlow Condensed', sans-serif; font-weight:700; color:#f2efe8; letter-spacing:0.01em; }
 
 /* ---------- Mobile: the desktop layout is a tight single-screen
    composition (heading, work grid and face all sharing one viewport by
@@ -372,11 +368,10 @@ h2.heading2 {
   .card:nth-child(1) { order: 1; } /* occlude */
   .card:nth-child(2) { order: 3; } /* Pulse */
   .card:nth-child(3) { order: 2; } /* Chroma.GG */
-  .card:nth-child(4) { order: 4; } /* Rooted & Co. */
+  .card:nth-child(4) { order: 4; } /* Stonegate Paving */
   .card:nth-child(5) { order: 5; } /* Van Wyk Dlamini */
   .card:nth-child(6) { order: 6; } /* Talos */
   .card:nth-child(7) { order: 7; } /* Kruger Body & Paint */
-  .card:nth-child(8) { order: 8; } /* portfolio (self-reference, always last) */
   .card {
     position:relative;
     /* justify-content:flex-start (not the base rule's space-between) —
