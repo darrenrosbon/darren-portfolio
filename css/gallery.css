@@ -47,12 +47,6 @@ html, body { margin:0; padding:0; background:#0a0a0a; color:#f0f0f0; font-family
 .g-piece img:hover { border-color:rgba(232,202,160,0.6); }
 .g-piece figcaption { margin-top:8px; color:#969696; font-size:11px; }
 
-.g-empty {
-  aspect-ratio:var(--ratio); display:flex; align-items:center; justify-content:center;
-  color:#5c5c5c; font-size:11px; letter-spacing:1px; text-transform:uppercase;
-  border:1px dashed rgba(232,202,160,0.25);
-}
-
 .g-lightbox {
   position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
   padding:24px; background:rgba(0,0,0,0.85); cursor:zoom-out;

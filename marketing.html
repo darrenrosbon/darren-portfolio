@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css?v=4">
+<link rel="stylesheet" href="css/gallery.css?v=5">
 </head>
 <body>
 
@@ -35,7 +35,6 @@
     <div class="g-grid g-flyers">
       <figure class="g-piece"><img src="img/marketing/flyer-stonegate-paving-built-to-last.webp" alt="Stonegate Paving flyer: Paving built to last, Wierda Park, Centurion" loading="lazy"><figcaption>Stonegate Paving — Paving built to last</figcaption></figure>
       <figure class="g-piece"><img src="img/marketing/flyer-kruger-lifetime-refinish-warranty.webp" alt="Kruger Body and Paint flyer: Lifetime refinish warranty, est. 1984, Johannesburg" loading="lazy"><figcaption>Kruger Body &amp; Paint — Lifetime refinish warranty</figcaption></figure>
-      <div class="g-empty">Coming soon</div>
     </div>
   </section>
 
@@ -74,7 +73,7 @@
       });
     });
 
-    // To add a piece: replace a .g-empty tile with
+    // To add a piece: add one inside the matching .g-grid:
     // <figure class="g-piece"><img src="img/marketing/NAME.jpg" alt="..."><figcaption>Title</figcaption></figure>
     const box = document.getElementById('lightbox');
     const boxImg = document.getElementById('lightboxImg');
