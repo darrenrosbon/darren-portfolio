@@ -89,14 +89,19 @@ function buildOccupancyMask() {
   }
 }
 
-function resize() {
+function resize() { layout(false); }
+
+// keepHeight is true only on the second pass after growing the hero to fit
+// the desktop column; every other call starts from the CSS height.
+function layout(keepHeight) {
+  if (!keepHeight) hero.style.height = '';
   W = hero.clientWidth;
   H = hero.clientHeight;
   if (W === 0 || H === 0) {
     // The hero can briefly report zero size during initial layout in some
     // embedding contexts; bail out and retry next frame rather than crash
     // getImageData with a zero-size read.
-    requestAnimationFrame(resize);
+    requestAnimationFrame(() => layout(keepHeight));
     return;
   }
   // Backing store sized for the device's actual pixel density, not just
@@ -123,7 +128,7 @@ function resize() {
   // having ~1.5x more rows/cols of detail.
   if (W < MOBILE_BREAKPOINT) {
     FACE_FONT = 2.45; FACE_CELL_W = 1.4; FACE_CELL_H = 2.45;
-    FACE_TOP_PADDING = 90; // clears the heading (now single-line, "and stuff" moved out of flow) + byline above it
+    FACE_TOP_PADDING = 130; // clears the two-line heading + byline above it
   } else {
     FACE_FONT = 3.5; FACE_CELL_W = 2; FACE_CELL_H = 3.5;
     FACE_TOP_PADDING = 28; // leaves room below the face for "the guy behind the work"
@@ -134,9 +139,21 @@ function resize() {
   buildNodes();
   equalizeCardSizes();
   sizeSocialIcons();
+  positionServices();
   positionAboutSection();
   positionMainBody();
   positionDesktopContact();
+
+  if (!keepHeight && W >= MOBILE_BREAKPOINT) {
+    const heroTop = hero.getBoundingClientRect().top;
+    const contactBottom = document.querySelector('.desktop-contact').getBoundingClientRect().bottom - heroTop;
+    const needed = Math.ceil(contactBottom + 40);
+    if (needed > hero.clientHeight) {
+      hero.style.height = needed + 'px';
+      layout(true);
+      return;
+    }
+  }
 
   // The draw loop must not start until the first successful resize has
   // populated rows/occupied/etc. — starting it unconditionally at load
@@ -218,9 +235,20 @@ function sizeSocialIcons() {
 // rendering/wrapping, or — the bug this caught — the work grid gaining a
 // 5th card and wrapping to a 3rd row, which pushed #work's real bottom
 // edge below the desktop rule's fixed top:500px and caused an overlap).
+function positionServices() {
+  const services = document.getElementById('services');
+  const work = document.getElementById('work');
+  if (W < MOBILE_BREAKPOINT) {
+    services.style.top = '';
+    return;
+  }
+  const heroTop = hero.getBoundingClientRect().top;
+  services.style.top = (work.getBoundingClientRect().bottom - heroTop + 24) + 'px';
+}
+
 function positionAboutSection() {
   const about = document.getElementById('about');
-  const work = document.getElementById('work');
+  const work = document.getElementById('services');
   const heroTop = hero.getBoundingClientRect().top;
   const gap = 24;
   if (W >= MOBILE_BREAKPOINT) {
@@ -248,9 +276,10 @@ function positionMainBody() {
   const headingWrap = document.querySelector('.heading-wrap');
   const work = document.getElementById('work');
   const about = document.getElementById('about');
+  const services = document.getElementById('services');
   const contact = document.querySelector('.desktop-contact');
   if (W < MOBILE_BREAKPOINT) {
-    [headingWrap, work, about, contact].forEach((el) => { if (el) el.style.left = ''; });
+    [headingWrap, work, services, about, contact].forEach((el) => { if (el) el.style.left = ''; });
     if (contact) contact.style.width = '';
     return;
   }
@@ -262,6 +291,7 @@ function positionMainBody() {
 
   headingWrap.style.left = columnLeft + 'px';
   work.style.left = columnLeft + 'px';
+  services.style.left = columnLeft + 'px';
   about.style.left = columnLeft + 'px';
   if (contact) {
     contact.style.left = columnLeft + 'px';
@@ -298,7 +328,7 @@ resize();
 // vertical centering depends on #about's rendered bottom, both of which
 // can shift once the real font swaps in.
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(() => { equalizeCardSizes(); sizeSocialIcons(); positionAboutSection(); positionMainBody(); positionDesktopContact(); });
+  document.fonts.ready.then(resize);
 }
 
 // Occasional blink, cartoon-wink style: eye closes and holds for a beat,

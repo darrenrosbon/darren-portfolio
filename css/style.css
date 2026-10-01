@@ -21,12 +21,8 @@ svg[hidden] { display:none; }
 }
 h1.heading {
   margin:0; color:#f0f0f0; font-weight:800;
-  font-size: clamp(32px, 5.5vw, 72px);
+  font-size: clamp(26px, 3vw, 48px);
   line-height:1.05; letter-spacing:-1px;
-}
-.and-stuff {
-  color:#969696; font-weight:500;
-  font-size:11px; letter-spacing:0.5px; opacity:0.6;
 }
 .byline {
   position:absolute; top:48px; right:32px; z-index:5;
@@ -194,6 +190,31 @@ h2.heading2 {
 .card .cmeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
 .card-year { position:absolute; right:12px; bottom:10px; color:#5c5c5c; font-size:9px; letter-spacing:0.5px; }
 
+/* ---------- Services — sits under the work grid; top is set by
+   positionServices() in site.js on desktop, flows in-document on mobile. ---------- */
+#services {
+  position:absolute; left:60px; top:620px; z-index:5;
+  width: min(56%, 640px);
+}
+.service-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr);
+  border-top:1px solid rgba(232,202,160,0.25);
+  border-left:1px solid rgba(232,202,160,0.25);
+}
+.service {
+  position:relative; background:rgba(10,10,10,0.55); padding:14px 16px 16px;
+  border-right:1px solid rgba(232,202,160,0.25);
+  border-bottom:1px solid rgba(232,202,160,0.25);
+}
+.service-icon { width:18px; height:18px; color:#e8caa0; display:block; }
+.service .sname { color:#f0f0f0; font-weight:700; font-size:14px; margin-top:10px; }
+.service .smeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
+.tag-new {
+  position:absolute; top:14px; right:12px;
+  font-size:9px; letter-spacing:1px; text-transform:uppercase;
+  padding:2px 6px; border:1px solid #e8caa0; color:#e8caa0;
+}
+
 /* Occlude's own wordmark (crescent mark + underlined "occlude.") lifted
    from its live site, so this entry reads as branded rather than the
    plain-text title every other card uses. */
@@ -265,20 +286,8 @@ h2.heading2 {
      paints ABOVE this content regardless of DOM order, per CSS stacking
      rules. relative keeps normal in-flow layout while letting z-index:5
      (set in the base rule) put this content above the canvas. */
-  /* flex-direction stays row here (not column) — "and stuff" is taken out
-     of flow entirely below, so heading-wrap no longer needs to stack it
-     under the heading. */
   .heading-wrap { position:relative; left:0; top:0; padding:56px 24px 0; }
-  /* Pinned to the heading's own bottom-right corner instead of stacked
-     below it — heading-wrap's rendered height shrinks to just the h1 now,
-     which pulls everything after it (face, work, about) up into the
-     freed space automatically via normal document flow. */
-  /* Negative bottom pushes it below the heading text without affecting
-     heading-wrap's own box height — it's position:absolute, so it doesn't
-     affect layout of anything after it either way. */
-  .and-stuff {
-    position:absolute; right:4px; bottom:-14px; margin:0;
-  }
+  .heading-wrap h1.heading { max-width:20ch; }
 
   /* Pinned corner, out of the document flow — same spot as desktop, just
      retuned for a small screen. */
@@ -351,6 +360,13 @@ h2.heading2 {
   /* Kept narrow enough to stay clear of the face, which sits in the same
      right-hand region on mobile as it does on desktop. */
   #work { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
+  #services { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
+  .service-grid { display:flex; flex-direction:column; gap:8px; border:none; }
+  .service { padding:7px 9px; border:1px solid rgba(232,202,160,0.25); }
+  .service-icon { display:none; }
+  .service .sname { font-size:13px; margin-top:0; }
+  .service .smeta { font-size:10px; margin-top:4px; }
+  .tag-new { top:7px; right:9px; }
   /* text-align:left explicitly — the desktop rule now sets text-align:
      center, which would otherwise leak through uncorrected here (same
      class of bug hit repeatedly in this file). */
