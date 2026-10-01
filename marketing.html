@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing work — Darren Robson</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/gallery.css?v=2">
+</head>
+<body>
+
+<header class="g-head">
+  <a class="g-back" href="index.html">&larr; Back</a>
+  <a class="g-mark" href="index.html" aria-label="Darren Robson — home">
+    <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+  </a>
+</header>
+
+<main class="g-main">
+  <h1 class="g-title">Marketing work</h1>
+  <p class="g-sub">Flyers, social posts and brand materials.</p>
+
+  <nav class="g-filters" aria-label="Filter by type">
+    <button type="button" class="g-chip active" data-filter="all">All</button>
+    <button type="button" class="g-chip" data-filter="flyers">Flyers</button>
+    <button type="button" class="g-chip" data-filter="social">Social</button>
+    <button type="button" class="g-chip" data-filter="brand">Brand</button>
+  </nav>
+
+  <section class="g-group" data-group="flyers">
+    <h2 class="g-group-title">Flyers</h2>
+    <div class="g-grid g-flyers">
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+    </div>
+  </section>
+
+  <section class="g-group" data-group="social">
+    <h2 class="g-group-title">Social</h2>
+    <div class="g-grid g-social">
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+    </div>
+  </section>
+
+  <section class="g-group" data-group="brand">
+    <h2 class="g-group-title">Brand</h2>
+    <div class="g-grid g-brand">
+      <div class="g-empty">Coming soon</div>
+      <div class="g-empty">Coming soon</div>
+    </div>
+  </section>
+</main>
+
+<div class="g-lightbox" id="lightbox" hidden>
+  <button type="button" class="g-lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightboxImg" alt="">
+</div>
+
+<script>
+  (function () {
+    const chips = document.querySelectorAll('.g-chip');
+    const groups = document.querySelectorAll('.g-group');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter;
+        chips.forEach((c) => c.classList.toggle('active', c === chip));
+        groups.forEach((g) => { g.hidden = f !== 'all' && g.dataset.group !== f; });
+      });
+    });
+
+    // To add a piece: replace a .g-empty tile with
+    // <figure class="g-piece"><img src="img/marketing/NAME.jpg" alt="..."><figcaption>Title</figcaption></figure>
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightboxImg');
+    function closeBox() { box.hidden = true; boxImg.removeAttribute('src'); }
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest('.g-piece img');
+      if (img) {
+        boxImg.src = img.src;
+        boxImg.alt = img.alt;
+        box.hidden = false;
+      } else if (!box.hidden && e.target !== boxImg) {
+        closeBox();
+      }
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
+  })();
+</script>
+</body>
+</html>
