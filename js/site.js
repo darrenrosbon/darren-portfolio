@@ -95,8 +95,12 @@ function resize() { layout(false); }
 // the desktop column; every other call starts from the CSS height.
 function layout(keepHeight) {
   if (!keepHeight) hero.style.height = '';
+  // Canvas is position:fixed, so it covers the viewport, not the (taller,
+  // scrolling) hero. Mobile uses the larger of innerHeight/screen.height so
+  // the strip revealed when the URL bar collapses is still painted.
   W = hero.clientWidth;
-  H = hero.clientHeight;
+  H = window.innerHeight;
+  if (W < MOBILE_BREAKPOINT) H = Math.max(H, window.screen.height || 0);
   if (W === 0 || H === 0) {
     // The hero can briefly report zero size during initial layout in some
     // embedding contexts; bail out and retry next frame rather than crash
@@ -164,7 +168,12 @@ function layout(keepHeight) {
     requestAnimationFrame(draw);
   }
 }
-window.addEventListener('resize', resize);
+// Mobile URL-bar show/hide fires height-only resizes on every scroll; a full
+// relayout each time would thrash, so only react when the width changes.
+window.addEventListener('resize', () => {
+  if (W < MOBILE_BREAKPOINT && hero.clientWidth === W) return;
+  resize();
+});
 let started = false;
 
 const GRID_SPACING = 6;
@@ -259,11 +268,7 @@ function positionAboutSection() {
     return;
   }
   about.style.top = '';
-  about.style.marginTop = '0px'; // reset before measuring so the old value can't skew the new one
-  const workBottom = work.getBoundingClientRect().bottom - heroTop;
-  const faceBottom = FACE_TOP_PADDING + faceRows * FACE_CELL_H;
-  const marginTop = Math.max(gap, (faceBottom + gap) - workBottom);
-  about.style.marginTop = marginTop + 'px';
+  about.style.marginTop = gap + 'px'; // face is fixed behind the content now, nothing to clear
 }
 
 // Desktop: the WHOLE left column (heading, work, about, contact) centered
@@ -483,6 +488,8 @@ function drawFace() {
   ctx.textBaseline = 'top';
   ctx.fillStyle = `rgb(${FACE_COLOR[0]}, ${FACE_COLOR[1]}, ${FACE_COLOR[2]})`;
   const lines = isWinking ? winkPatchLines : faceLines;
+  // Mobile content scrolls over the fixed face; dim it so text stays legible.
+  ctx.globalAlpha = W < MOBILE_BREAKPOINT ? 0.5 : 1;
   for (let row = 0; row < faceRows; row++) {
     const line = lines[row];
     for (let c = 0; c < line.length; c++) {
@@ -491,6 +498,7 @@ function drawFace() {
       ctx.fillText(ch, faceOriginX + c * FACE_CELL_W, faceOriginY + row * FACE_CELL_H);
     }
   }
+  ctx.globalAlpha = 1;
 }
 
 function draw(tMs) {

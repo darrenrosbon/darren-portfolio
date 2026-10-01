@@ -13,7 +13,7 @@ svg[hidden] { display:none; }
 .site-mark { position:absolute; top:20px; left:20px; z-index:6; display:block; line-height:0; transition:opacity 0.15s ease; }
 .site-mark img { display:block; }
 .site-mark:hover { opacity:0.8; }
-#hero canvas { display:block; position:absolute; top:0; left:0; }
+#hero canvas { display:block; position:fixed; top:0; left:0; z-index:0; pointer-events:none; }
 
 .heading-wrap {
   position:absolute; left:60px; top:48px; z-index:5;
