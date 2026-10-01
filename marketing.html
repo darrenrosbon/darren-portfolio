@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css?v=3">
+<link rel="stylesheet" href="css/gallery.css?v=4">
 </head>
 <body>
 
@@ -51,7 +51,7 @@
   <section class="g-group" data-group="brand">
     <h2 class="g-group-title">Brand</h2>
     <div class="g-grid g-brand">
-      <div class="g-empty">Coming soon</div>
+      <figure class="g-piece"><img src="img/marketing/brand-chroma-gg-sheet.webp" alt="Chroma.GG brand identity sheet: logo, colour palette, typography, imagery, mood and voice" loading="lazy"><figcaption>Chroma.GG — Brand identity sheet</figcaption></figure>
       <div class="g-empty">Coming soon</div>
     </div>
   </section>
@@ -84,6 +84,8 @@
       if (img) {
         boxImg.src = img.src;
         boxImg.alt = img.alt;
+        box.classList.toggle('tall', img.naturalHeight / img.naturalWidth > 1.45);
+        box.scrollTop = 0;
         box.hidden = false;
       } else if (!box.hidden && e.target !== boxImg) {
         closeBox();
