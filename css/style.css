@@ -399,6 +399,7 @@ h2.heading2 {
   .card:nth-child(6) { order: 6; } /* Talos */
   .card:nth-child(7) { order: 7; } /* Kruger Body & Paint */
   .card:nth-child(8) { order: 8; } /* Sable Tree Felling */
+  .card:nth-child(9) { order: 9; } /* Dog walking app */
   .card {
     position:relative;
     /* justify-content:flex-start (not the base rule's space-between) —
