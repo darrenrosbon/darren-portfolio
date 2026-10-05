@@ -47,9 +47,12 @@ html, body { margin:0; padding:0; background:#0a0a0a; color:#f0f0f0; font-family
 .g-piece img:hover { border-color:rgba(232,202,160,0.6); }
 .g-piece figcaption { margin-top:8px; color:#969696; font-size:11px; }
 
-.g-frame { margin-top:28px; border:1px solid rgba(232,202,160,0.25); background:rgba(10,10,10,0.55); }
-.g-frame iframe { display:block; width:100%; height:min(78vh, 760px); border:0; }
-.g-actions { margin:16px 0 0; }
+.g-screens { margin-top:28px; grid-template-columns:repeat(3, 1fr); gap:20px; align-items:start; }
+.g-screens .g-piece img { aspect-ratio:auto; height:auto; object-fit:contain; }
+@media (max-width: 700px) {
+  .g-screens { grid-template-columns:repeat(2, 1fr); gap:12px; }
+}
+.g-actions { margin:28px 0 0; }
 .g-btn {
   display:inline-block; padding:7px 12px; color:#e8caa0; font-size:12px; font-weight:700; text-decoration:none;
   border:1px solid rgba(232,202,160,0.4); background:rgba(232,202,160,0.06);

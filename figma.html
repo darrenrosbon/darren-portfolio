@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css?v=6">
+<link rel="stylesheet" href="css/gallery.css?v=8">
 </head>
 <body>
 
@@ -21,19 +21,45 @@
 
 <main class="g-main">
   <h1 class="g-title">Dog walking app</h1>
-  <p class="g-sub">Mobile app design, made in Figma.</p>
+  <p class="g-sub">Mobile app design, made in Figma. Tap a screen to enlarge.</p>
 
-  <div class="g-frame">
-    <iframe
-      title="Dog walking app, Figma design file"
-      src="https://embed.figma.com/design/LqJj9WiqS7xjTNnFT09oZE/Dog-walking-app?embed-host=share"
-      allowfullscreen loading="lazy"></iframe>
+  <div class="g-grid g-screens">
+    <figure class="g-piece"><img src="img/dog-walking-app/1-home.webp" width="804" height="1748" alt="Home screen: Milo's day, walk goal, weekly adventure" loading="lazy"><figcaption>Home</figcaption></figure>
+    <figure class="g-piece"><img src="img/dog-walking-app/2-active-walk.webp" width="804" height="1822" alt="Active walk screen: route map and live timer at Willow Park" loading="lazy"><figcaption>Active walk</figcaption></figure>
+    <figure class="g-piece"><img src="img/dog-walking-app/3-completed-walk.webp" width="804" height="1892" alt="Completed walk screen: happy paws summary" loading="lazy"><figcaption>Completed walk</figcaption></figure>
+    <figure class="g-piece"><img src="img/dog-walking-app/4-goals.webp" width="804" height="1944" alt="Goals screen: daily and weekly targets" loading="lazy"><figcaption>Goals</figcaption></figure>
+    <figure class="g-piece"><img src="img/dog-walking-app/5-accomplishments.webp" width="804" height="1880" alt="Accomplishments screen: streak and badge shelf" loading="lazy"><figcaption>Accomplishments</figcaption></figure>
+    <figure class="g-piece"><img src="img/dog-walking-app/6-rewards.webp" width="804" height="1816" alt="Rewards screen: paw points and treats to spend them on" loading="lazy"><figcaption>Rewards</figcaption></figure>
   </div>
 
   <p class="g-actions">
     <a class="g-btn" href="https://www.figma.com/design/LqJj9WiqS7xjTNnFT09oZE/Dog-walking-app" target="_blank" rel="noopener noreferrer">Open in Figma &rarr;</a>
   </p>
 </main>
+
+<div class="g-lightbox" id="lightbox" hidden>
+  <button type="button" class="g-lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightboxImg" alt="">
+</div>
+
+<script>
+  (function () {
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightboxImg');
+    function closeBox() { box.hidden = true; boxImg.removeAttribute('src'); }
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest('.g-piece img');
+      if (img) {
+        boxImg.src = img.src;
+        boxImg.alt = img.alt;
+        box.hidden = false;
+      } else if (!box.hidden && e.target !== boxImg) {
+        closeBox();
+      }
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
+  })();
+</script>
 
 </body>
 </html>
