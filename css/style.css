@@ -264,6 +264,8 @@ h2.heading2 {
 .kruger-icon { flex-shrink:0; display:block; }
 .kruger-word { font-family:'Archivo', sans-serif; font-weight:700; color:#e9eaea; text-transform:uppercase; letter-spacing:0.01em; }
 
+.walkies-mark, .tally-mark { display:flex; align-items:center; gap:6px; }
+.walkies-icon, .tally-icon { flex-shrink:0; display:block; }
 .stonegate-mark { display:flex; align-items:center; gap:6px; }
 .stonegate-icon { flex-shrink:0; display:block; }
 .sable-mark { display:flex; align-items:center; gap:6px; }
