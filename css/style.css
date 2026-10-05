@@ -211,6 +211,31 @@ h2.heading2 {
   text-decoration:none;
 }
 .card:hover { background:rgba(20,20,20,0.7); }
+
+/* Hover: two gold corner brackets draw in diagonally, a faint tint fills the
+   card, and an arrow slides into the top-right corner. Only where a real
+   hover exists, so a tap on a phone doesn't leave a card stuck highlighted. */
+.card::before, .card::after {
+  content:""; position:absolute; width:0; height:0; border:0 solid #e8caa0; pointer-events:none;
+  transition:width .28s cubic-bezier(.2,.8,.2,1), height .28s cubic-bezier(.2,.8,.2,1);
+}
+.card::before { top:6px; left:6px; border-top-width:1px; border-left-width:1px; }
+.card::after { bottom:6px; right:6px; border-bottom-width:1px; border-right-width:1px; }
+.card-arrow {
+  position:absolute; top:10px; right:12px; color:#e8caa0; font-size:13px; line-height:1;
+  opacity:0; transform:translate(-6px, 6px); pointer-events:none;
+  transition:opacity .25s ease, transform .3s cubic-bezier(.2,.8,.2,1);
+}
+@media (hover:hover) {
+  .card:hover { background:rgba(232,202,160,0.05); }
+  .card:hover::before, .card:hover::after { width:14px; height:14px; }
+  .card:hover .card-arrow { opacity:1; transform:translate(0, 0); }
+  .card:hover .card-year { color:#e8caa0; }
+}
+.card:active { background:rgba(232,202,160,0.09); }
+@media (prefers-reduced-motion:reduce) {
+  .card::before, .card::after, .card-arrow { transition:none; }
+}
 .card .status {
   align-self:flex-start;
   font-size:9px; letter-spacing:1px; text-transform:uppercase;
