@@ -106,6 +106,24 @@ h2.guy-heading {
 .social-icon-desktop svg { width:100%; height:100%; }
 .social-icon-desktop:hover { color:#fff; }
 
+/* Hover: icons hop and tip, alternating left and right, with a springy
+   settle. Hover rules only run where a real hover exists, so a tap on a phone
+   doesn't leave an icon stuck tilted; :active gives the press feedback there. */
+.social-icon, .social-icon-desktop {
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), color .2s ease;
+}
+@media (hover:hover) {
+  .social-icon:hover, .social-icon-desktop:hover { transform:translateY(-6px) rotate(-8deg) scale(1.12); }
+  .social-icon:nth-child(even):hover, .social-icon-desktop:nth-child(even):hover { transform:translateY(-6px) rotate(8deg) scale(1.12); }
+}
+.social-icon:active, .social-icon-desktop:active { transform:translateY(0) scale(.94); transition-duration:.1s; }
+@media (prefers-reduced-motion:reduce) {
+  .social-icon, .social-icon-desktop { transition:color .2s ease; }
+  .social-icon:hover, .social-icon-desktop:hover,
+  .social-icon:nth-child(even):hover, .social-icon-desktop:nth-child(even):hover,
+  .social-icon:active, .social-icon-desktop:active { transform:none; }
+}
+
 /* .info-btn is an <a href="#" role="button"> (JS opens the modal, no real
    navigation) — deliberately an anchor rather than a <button>, since a
    <button> with aspect-ratio inside this stretched flex row hit form
