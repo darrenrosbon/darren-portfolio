@@ -359,9 +359,11 @@ h2.heading2 {
   .about-text, .about-body .about-text { font-size:12px; max-width:none; text-align:right; margin:0; flex:none; }
   .about-body { display:block; }
   .sa-map {
-    display:block; margin:16px 0 0 auto; font-size:5.8px; width:max-content;
-    color:#8c8c8c; background:rgba(10,10,10,0.78); padding:6px;
+    display:block; margin:16px 0 0 calc(278px - 100vw); font-size:5.8px; width:max-content;
+    color:#a8a8a8;
+    text-shadow:0 0 2px #0a0a0a, 0 0 3px #0a0a0a, 0 0 5px #0a0a0a;
   }
+  .sa-m { text-shadow:0 0 2px #0a0a0a, 0 0 4px #0a0a0a; }
   /* Desktop's icon row + centered email block — mobile already has its
      own icons next to the heading and its own contact bar, so these
      would be duplicates. */
