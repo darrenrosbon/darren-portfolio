@@ -49,8 +49,9 @@ html, body { margin:0; padding:0; background:#0a0a0a; color:#f0f0f0; font-family
 
 .g-screens { margin-top:28px; grid-template-columns:repeat(3, 1fr); gap:20px; align-items:start; }
 .g-screens .g-piece img { aspect-ratio:auto; height:auto; object-fit:contain; border:0; background:none; }
+.g-screens-4 { grid-template-columns:repeat(4, 1fr); gap:16px; }
 @media (max-width: 700px) {
-  .g-screens { grid-template-columns:repeat(2, 1fr); gap:12px; }
+  .g-screens, .g-screens-4 { grid-template-columns:repeat(2, 1fr); gap:12px; }
 }
 .g-actions { margin:28px 0 0; }
 .g-btn {

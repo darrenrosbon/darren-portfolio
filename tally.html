@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tally — Darren Robson</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/gallery.css?v=10">
+</head>
+<body>
+
+<header class="g-head">
+  <a class="g-back" href="index.html">&larr; Back</a>
+  <a class="g-mark" href="index.html" aria-label="Darren Robson — home">
+    <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+  </a>
+</header>
+
+<main class="g-main">
+  <h1 class="g-title">Tally</h1>
+  <p class="g-sub">Budgeting app design, made in Figma. Tap a screen to enlarge.</p>
+
+  <div class="g-grid g-screens g-screens-4">
+    <figure class="g-piece"><img src="img/tally/1-overview.webp?v=1" width="804" height="1748" alt="Overview screen: left to spend, income, expenses and recent activity" loading="lazy"><figcaption>Overview</figcaption></figure>
+    <figure class="g-piece"><img src="img/tally/2-budgets.webp?v=1" width="804" height="1748" alt="Budgets screen: monthly budget and category progress bars" loading="lazy"><figcaption>Budgets</figcaption></figure>
+    <figure class="g-piece"><img src="img/tally/3-activity.webp?v=1" width="804" height="1748" alt="Activity screen: searchable transactions grouped by day" loading="lazy"><figcaption>Activity</figcaption></figure>
+    <figure class="g-piece"><img src="img/tally/4-add-expense.webp?v=1" width="804" height="1748" alt="Add expense screen: amount, category, merchant and receipt" loading="lazy"><figcaption>Add expense</figcaption></figure>
+  </div>
+</main>
+
+<div class="g-lightbox" id="lightbox" hidden>
+  <button type="button" class="g-lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightboxImg" alt="">
+</div>
+
+<script>
+  (function () {
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightboxImg');
+    function closeBox() { box.hidden = true; boxImg.removeAttribute('src'); }
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest('.g-piece img');
+      if (img) {
+        boxImg.src = img.src;
+        boxImg.alt = img.alt;
+        box.hidden = false;
+      } else if (!box.hidden && e.target !== boxImg) {
+        closeBox();
+      }
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
+  })();
+</script>
+
+</body>
+</html>
