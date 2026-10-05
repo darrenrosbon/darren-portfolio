@@ -48,6 +48,26 @@ h2.guy-heading {
 }
 .about-text .location { color:#e8caa0; font-weight:700; }
 
+/* Map sits beside the text on desktop; stacks below it on mobile and on
+   narrow desktop windows where the column is too tight for both. */
+.about-body { display:flex; align-items:center; justify-content:center; gap:22px; }
+.about-body .about-text { margin:0; flex:1 1 0; min-width:0; max-width:34ch; text-align:left; }
+.sa-map {
+  margin:0; flex:none;
+  font-family:'JetBrains Mono', monospace; font-size:7px; line-height:1;
+  color:#7a7a7a; white-space:pre; user-select:none; -webkit-user-select:none;
+}
+.sa-m { color:#e8caa0; font-weight:700; }
+.sa-d {
+  display:inline-block; transform:scale(1.9);
+  background:#f1d3a0; color:#0a0a0a; font-weight:800;
+  box-shadow:0 0 6px 2px rgba(241,211,160,0.7);
+}
+@media (min-width: 701px) and (max-width: 900px) {
+  .about-body { flex-direction:column; gap:16px; }
+  .about-body .about-text { max-width:46ch; text-align:center; }
+}
+
 /* Social icons — mobile-only for now, hidden entirely on desktop. */
 .social-icon { display:none; }
 
@@ -336,7 +356,12 @@ h2.heading2 {
   /* text-align:right + margin reset — the desktop rule now sets
      text-align:center and margin:0 auto (for its own centering), which
      would otherwise leak through uncorrected here. */
-  .about-text { font-size:12px; max-width:none; text-align:right; margin:0; }
+  .about-text, .about-body .about-text { font-size:12px; max-width:none; text-align:right; margin:0; flex:none; }
+  .about-body { display:block; }
+  .sa-map {
+    display:block; margin:16px 0 0 auto; font-size:5.8px; width:max-content;
+    color:#8c8c8c; background:rgba(10,10,10,0.78); padding:6px;
+  }
   /* Desktop's icon row + centered email block — mobile already has its
      own icons next to the heading and its own contact bar, so these
      would be duplicates. */
