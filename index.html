@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&family=Outfit:wght@700&family=Barlow+Condensed:wght@700&family=Sora:wght@700&family=Spectral:wght@600&family=Big+Shoulders+Display:wght@900&family=Archivo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=91">
+<link rel="stylesheet" href="css/style.css?v=94">
 </head>
 <body>
 
@@ -208,38 +208,7 @@
         I'm as comfortable in Figma as I am in code, and I give form and
         function the same care.
       </p>
-      <pre class="sa-map" role="img" aria-label="Map of South Africa with Johannesburg marked"><span aria-hidden="true">                                               #%%#
-                                           #%%%%%%%%%%#
-                                          #%%%%%++%%%%%#
-                                        #%%%%++++++++%%#
-                                       #%%%+++:::::++%%%#
-                                     #%%%%+++::::::+++%%#
-                                    #%%%+++::::::::+++%%#
-              #%#                  #%%%+++::::.::::+++%%%#
-              #%%%%%%%%%#         #%%%++:::::.::::++%%%%%#
-              #%%%%%%%                   :   ::::++%%%# ##
-              #%%+++++   <span class="sa-m">JOHANNESBURG</span>      <span class="sa-d">@</span>  ::+++%%#    #
-              #%%+++::                   :   :::+++%%#    ##
-              #%%+++::::::::::::::::::::::::::::+++%%#   #%%#
-              #%%+++::::::::::::::::::::+++++++::++%%%%%%%%#
-              #%%+++:::..........:::::++++%%%++++++++%%%%%#
-              #%%+++:::.........::::++++%%%%%%%%+++++++%%%#
- ##    #%%%%%%%%%++::::........::::+++%%%%# #%%%%%++++%%%#
-  #%%%%%%%%%%%%+++::::........::::++%%%%#      #%%%+%%%%#
-   #%%%%+++++++++::::.........:::+++%%#         #%%%%%#
-    #%%+++::::::::::..........::::++%%%#       #%%%%%#
-    #%%+++:::::::..............::::++%%%#    #%%%%%%#
-    #%%%++::::..................::::++%%%%%%%%%%%%#
-     #%%+++:::...................::::+++%%%%%%%%%#
-     #%%%++::::...................::::++++++%%%#
-      #%%+++:::................:::::::++++%%%%#
-      #%%%++:::::::::::::::::::::::+++++%%%%#
-       #%%+++::::::::::::::::::++++++%%%%%%#
-       #%%+++:::+++++++++++++++++%%%%%%%#
-       #%%%+++++++%%%%%%%%%%%%%%%%%%%#
-        #%%%%%%%%%%%%%%%%%%%%%%%%#
-         #%%%%%%%%#
-             #</span></pre>
+      <canvas id="saMap" class="sa-map" width="372" height="320" role="img" aria-label="Map of South Africa with Johannesburg marked"></canvas>
     </div>
   </div>
 
@@ -323,8 +292,9 @@
   </div>
 </section>
 
-<script src="js/face-art.js?v=91"></script>
-<script src="js/site.js?v=91"></script>
+<script src="js/face-art.js?v=94"></script>
+<script src="js/site.js?v=94"></script>
+<script src="js/sa-map.js?v=94"></script>
 <script>
   // Computed on load, not hardcoded, so it stays correct without upkeep.
   (function () {
