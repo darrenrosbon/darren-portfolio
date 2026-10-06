@@ -11,6 +11,8 @@ const BG_FONT_SIZE = 13, CELL = 13;
 const BG_COLOR = [150, 150, 150];
 const FACE_COLOR = [232, 202, 160];
 const MOBILE_BREAKPOINT = 700;
+// Visitors who ask for less motion get the still grid and face: no pulses, no wink.
+const REDUCED_MOTION = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 // Face sizing/position scales down and drops lower on narrow screens so it
 // doesn't collide with the heading text, which is much wider relative to
@@ -476,8 +478,6 @@ function buildCaches() {
 }
 
 const smooth = (t) => t * t * (3 - 2 * t);
-// Visitors who ask for less motion get the still grid and face: no pulses, no wink.
-const REDUCED_MOTION = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 function drawPulses(tMs) {
   if (REDUCED_MOTION) return;
