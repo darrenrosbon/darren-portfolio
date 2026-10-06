@@ -21,12 +21,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&family=Outfit:wght@700&family=Barlow+Condensed:wght@700&family=Sora:wght@700&family=Spectral:wght@600&family=Big+Shoulders+Display:wght@900&family=Archivo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=107">
+<link rel="stylesheet" href="css/style.css?v=109">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <section id="hero">
   <canvas id="c"></canvas>
+  <header>
   <a class="site-mark" href="#hero" aria-label="Darren Robson — back to top">
     <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
   </a>
@@ -34,7 +36,9 @@
     <h1 class="heading">I build websites, bots and brands</h1>
   </div>
   <div class="byline">— Darren Robson</div>
+  </header>
 
+  <main id="main" tabindex="-1">
   <div id="work">
     <div class="cards">
       <div class="grid-head"><h2 class="heading2">My recent work</h2><span class="grid-meta">Projects</span></div>
@@ -259,6 +263,9 @@
     </div>
   </div>
 
+  </main>
+
+  <footer>
   <!-- Desktop only: centered in the empty space below the about section.
        Mobile has its own separate contact bar + icon row (in the
        heading row), hidden/shown per breakpoint in CSS. -->
@@ -309,6 +316,8 @@
     </button>
   </div>
 
+  </footer>
+
   <div class="contact-modal-overlay" id="contactModalOverlay" hidden>
     <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
       <div class="contact-modal-head">
@@ -339,9 +348,9 @@
   </div>
 </section>
 
-<script src="js/face-art.js?v=107"></script>
-<script src="js/site.js?v=107"></script>
-<script src="js/sa-map.js?v=107"></script>
+<script src="js/face-art.js?v=109"></script>
+<script src="js/site.js?v=109"></script>
+<script src="js/sa-map.js?v=109"></script>
 <script>
   // Computed on load, not hardcoded, so it stays correct without upkeep.
   (function () {

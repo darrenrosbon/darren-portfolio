@@ -336,6 +336,7 @@ const STAR_IN = 150, STAR_HOLD = 450, STAR_OUT = 200;
 const STAR_TOTAL = STAR_IN + STAR_HOLD + STAR_OUT;
 
 function scheduleNextBlink() {
+  if (REDUCED_MOTION) return;
   const delay = 4000 + Math.random() * 5000;
   setTimeout(() => {
     isWinking = true;
@@ -471,8 +472,11 @@ function buildCaches() {
 }
 
 const smooth = (t) => t * t * (3 - 2 * t);
+// Visitors who ask for less motion get the still grid and face: no pulses, no wink.
+const REDUCED_MOTION = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 function drawPulses(tMs) {
+  if (REDUCED_MOTION) return;
   if (tMs >= nextSpawn && nodes.length) {
     const n = nodes[Math.floor(Math.random() * nodes.length)];
     pulses.push({ col: n.col, row: n.row, start: tMs });

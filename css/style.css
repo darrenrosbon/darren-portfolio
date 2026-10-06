@@ -8,6 +8,19 @@ html, body { margin:0; padding:0; background:#0a0a0a; font-family:'JetBrains Mon
    swap (mobile + desktop). */
 svg[hidden] { display:none; }
 
+/* Keyboard focus: the browser default is faint on this dark page. */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
+  outline:2px solid #e8caa0; outline-offset:3px;
+}
+.skip-link {
+  position:absolute; left:12px; top:-60px; z-index:100;
+  padding:10px 14px; background:#0a0a0a; color:#e8caa0; font-weight:700; font-size:13px;
+  text-decoration:none; border:1px solid #e8caa0;
+  transition:top .15s ease;
+}
+.skip-link:focus { top:12px; }
+main:focus { outline:none; }
+
 /* ---------- Hero ---------- */
 #hero { position:relative; height:100vh; overflow:hidden; }
 .site-mark { position:absolute; top:20px; left:20px; z-index:6; display:block; line-height:0; transition:opacity 0.15s ease; }
@@ -257,7 +270,7 @@ h2.heading2 {
 .status.progress { color:#e8caa0; }
 .card .cname { color:#f0f0f0; font-weight:700; font-size:14px; }
 .card .cmeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
-.card-year { position:absolute; right:12px; bottom:10px; color:#5c5c5c; font-size:9px; letter-spacing:0.5px; }
+.card-year { position:absolute; right:12px; bottom:10px; color:#8a8a8a; font-size:9px; letter-spacing:0.5px; }
 
 /* ---------- Services — sits under the work grid; top is set by
    positionServices() in site.js on desktop, flows in-document on mobile. ---------- */

@@ -2,6 +2,11 @@
 html, body { margin:0; padding:0; background:#0a0a0a; color:#f0f0f0; font-family:'JetBrains Mono', monospace; }
 [hidden] { display:none !important; }
 
+a:focus-visible, button:focus-visible {
+  outline:2px solid #e8caa0; outline-offset:3px;
+}
+.g-piece img:focus-visible { outline:2px solid #e8caa0; outline-offset:3px; }
+
 .g-head {
   display:flex; align-items:center; justify-content:space-between;
   padding:20px 24px;
