@@ -398,7 +398,10 @@ function drawWinkStar(tMs) {
 }
 
 let lastSpawn = 0;
-const PULSE_LIFE = 1400;
+// Slower than the original 1400ms life / 220ms spawn; both doubled so the pulse
+// density is unchanged and only the motion calms down.
+const PULSE_LIFE = 2800;
+const PULSE_SPAWN_EVERY = 440;
 
 function drawBackground(tMs) {
   ctx.font = `${BG_FONT_SIZE}px 'Courier New', monospace`;
@@ -418,7 +421,7 @@ function drawBackground(tMs) {
     }
   }
 
-  if (tMs - lastSpawn > 220 && nodes.length) {
+  if (tMs - lastSpawn > PULSE_SPAWN_EVERY && nodes.length) {
     const spawnCount = 3 + Math.floor(Math.random() * 3);
     for (let i = 0; i < spawnCount; i++) {
       const n = nodes[Math.floor(Math.random() * nodes.length)];
