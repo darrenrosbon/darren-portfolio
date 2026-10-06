@@ -17,7 +17,9 @@ const MOBILE_BREAKPOINT = 700;
 // the viewport once font-size clamps to its minimum.
 let FACE_FONT, FACE_CELL_W, FACE_CELL_H, FACE_TOP_PADDING;
 
-let W, H, cols, rows;
+let W, H, cols, rows, DPR = 1;
+// Offscreen copies of the static grid and the face; built in buildCaches().
+let bgCache = null, faceOpenCache = null, faceWinkCache = null;
 let faceLines, winkPatchLines, faceCols, faceRows, faceOriginX, faceOriginY;
 let occupied;
 
@@ -117,6 +119,7 @@ function layout(keepHeight) {
   // every fillText/drawImage call below keeps using plain CSS-pixel
   // coordinates (W, H, FACE_CELL_*, CELL) and the transform does the rest.
   const dpr = window.devicePixelRatio || 1;
+  DPR = dpr;
   canvas.width = W * dpr;
   canvas.height = H * dpr;
   canvas.style.width = W + 'px';
@@ -141,6 +144,7 @@ function layout(keepHeight) {
   buildFace();
   buildOccupancyMask();
   buildNodes();
+  buildCaches();
   sizeSocialIcons();
   positionServices();
   positionAboutSection();
@@ -397,18 +401,46 @@ function drawWinkStar(tMs) {
   drawSparkle(cx, cy, starSize * t, rotation, t);
 }
 
-let lastSpawn = 0;
-// Slower than the original 1400ms life / 220ms spawn; both doubled so the pulse
-// density is unchanged and only the motion calms down.
+let nextSpawn = 0;
+// Each pulse lives 2.8s; one starts roughly every 110ms, so about 25 are alive at
+// once. A steady trickle replaces the old bursts, which read as a rhythmic flicker.
 const PULSE_LIFE = 2800;
-const PULSE_SPAWN_EVERY = 440;
+const PULSE_ARM_CELLS = 5;
 
-function drawBackground(tMs) {
-  ctx.font = `${BG_FONT_SIZE}px 'Courier New', monospace`;
-  ctx.textBaseline = 'top';
+// The grid and the face never change between frames, so they are rendered once
+// into offscreen images and only blitted each frame. Redrawing thousands of
+// characters per frame was what made the animation stutter.
 
+function makeLayer(w, h) {
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w * DPR));
+  c.height = Math.max(1, Math.round(h * DPR));
+  const cx = c.getContext('2d');
+  cx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  cx.textBaseline = 'top';
+  return c;
+}
+
+function paintFace(layer, lines) {
+  const cx = layer.getContext('2d');
+  cx.font = `${FACE_FONT}px 'Courier New', monospace`;
+  cx.fillStyle = `rgb(${FACE_COLOR[0]}, ${FACE_COLOR[1]}, ${FACE_COLOR[2]})`;
+  for (let row = 0; row < faceRows; row++) {
+    const line = lines[row];
+    for (let c = 0; c < line.length; c++) {
+      const ch = line[c];
+      if (ch === ' ') continue;
+      cx.fillText(ch, c * FACE_CELL_W, row * FACE_CELL_H);
+    }
+  }
+}
+
+function buildCaches() {
+  bgCache = makeLayer(W, H);
+  const bx = bgCache.getContext('2d');
+  bx.font = `${BG_FONT_SIZE}px 'Courier New', monospace`;
   for (let row = 0; row < rows; row++) {
-    if (!occupied[row]) continue; // defensive: guards a mid-resize inconsistency, see resize()
+    if (!occupied[row]) continue;
     const onH = row % GRID_SPACING === 0;
     for (let col = 0; col < cols; col++) {
       if (occupied[row][col]) continue;
@@ -416,79 +448,86 @@ function drawBackground(tMs) {
       if (!onH && !onV) continue;
       let ch = onH ? '-' : '|';
       if (onH && onV) ch = '+';
-      ctx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, ${onH && onV ? 0.14 : 0.07})`;
-      ctx.fillText(ch, col * CELL, row * CELL);
+      bx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, ${onH && onV ? 0.14 : 0.07})`;
+      bx.fillText(ch, col * CELL, row * CELL);
     }
   }
-
-  if (tMs - lastSpawn > PULSE_SPAWN_EVERY && nodes.length) {
-    const spawnCount = 3 + Math.floor(Math.random() * 3);
-    for (let i = 0; i < spawnCount; i++) {
-      const n = nodes[Math.floor(Math.random() * nodes.length)];
-      pulses.push({ col: n.col, row: n.row, start: tMs });
-    }
-    lastSpawn = tMs;
-  }
-  pulses = pulses.filter(p => tMs - p.start < PULSE_LIFE);
-
-  for (const p of pulses) {
-    if (!occupied[p.row]) continue;
-    const age = (tMs - p.start) / PULSE_LIFE;
-    const coreAlpha = Math.max(0, 1 - age * 2.2);
-    if (coreAlpha > 0 && !occupied[p.row][p.col]) {
-      ctx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, ${coreAlpha.toFixed(3)})`;
-      ctx.fillText('#', p.col * CELL, p.row * CELL);
-    }
-    const armLen = Math.floor(age * 5);
-    const armAlpha = (1 - age) * 0.5;
-    if (armAlpha > 0.02) {
-      for (let i = 1; i <= armLen; i++) {
-        const dirs = [[i, 0], [-i, 0], [0, i], [0, -i]];
-        for (const [dc, dr] of dirs) {
-          const cc = p.col + dc, rr = p.row + dr;
-          if (rr < 0 || rr >= rows || cc < 0 || cc >= cols) continue;
-          if (!occupied[rr] || occupied[rr][cc]) continue;
-          ctx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, ${armAlpha.toFixed(3)})`;
-          ctx.fillText(dc !== 0 ? '-' : '|', cc * CELL, rr * CELL);
-        }
-      }
-    }
-  }
-
-  ctx.font = `10px 'Courier New', monospace`;
+  bx.font = `10px 'Courier New', monospace`;
+  bx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, 0.22)`;
   for (let row = GRID_SPACING; row < rows; row += GRID_SPACING * 3) {
     if (!occupied[row]) continue;
     for (let col = GRID_SPACING; col < cols; col += GRID_SPACING * 4) {
       if (occupied[row][col]) continue;
       const tag = `${String(col * 4).padStart(3, '0')}.${String(row * 4).padStart(3, '0')}`;
-      ctx.fillStyle = `rgba(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]}, 0.22)`;
-      ctx.fillText(tag, col * CELL + 4, row * CELL - 12);
+      bx.fillText(tag, col * CELL + 4, row * CELL - 12);
     }
   }
+
+  const fw = faceCols * FACE_CELL_W + 4, fh = faceRows * FACE_CELL_H + 4;
+  faceOpenCache = makeLayer(fw, fh);
+  faceWinkCache = makeLayer(fw, fh);
+  paintFace(faceOpenCache, faceLines);
+  paintFace(faceWinkCache, winkPatchLines);
+}
+
+const smooth = (t) => t * t * (3 - 2 * t);
+
+function drawPulses(tMs) {
+  if (tMs >= nextSpawn && nodes.length) {
+    const n = nodes[Math.floor(Math.random() * nodes.length)];
+    pulses.push({ col: n.col, row: n.row, start: tMs });
+    nextSpawn = tMs + 70 + Math.random() * 80;
+  }
+  pulses = pulses.filter(p => tMs - p.start < PULSE_LIFE);
+
+  ctx.font = `${BG_FONT_SIZE}px 'Courier New', monospace`;
+  ctx.textBaseline = 'top';
+  ctx.fillStyle = `rgb(${BG_COLOR[0]}, ${BG_COLOR[1]}, ${BG_COLOR[2]})`;
+
+  for (const p of pulses) {
+    if (!occupied[p.row]) continue;
+    const age = (tMs - p.start) / PULSE_LIFE;
+    const life = Math.pow(1 - age, 1.6);
+    const fadeIn = smooth(Math.min(1, age / 0.14));
+
+    const coreAlpha = fadeIn * life;
+    if (coreAlpha > 0.01 && !occupied[p.row][p.col]) {
+      ctx.globalAlpha = coreAlpha;
+      ctx.fillText('#', p.col * CELL, p.row * CELL);
+    }
+
+    const front = age * PULSE_ARM_CELLS;
+    const reach = Math.min(PULSE_ARM_CELLS, Math.ceil(front));
+    for (let i = 1; i <= reach; i++) {
+      const grow = smooth(Math.min(1, front - (i - 1)));
+      const a = grow * life * 0.5 * (1 - (i - 1) * 0.12);
+      if (a < 0.01) continue;
+      ctx.globalAlpha = a;
+      const dirs = [[i, 0], [-i, 0], [0, i], [0, -i]];
+      for (const [dc, dr] of dirs) {
+        const cc = p.col + dc, rr = p.row + dr;
+        if (rr < 0 || rr >= rows || cc < 0 || cc >= cols) continue;
+        if (!occupied[rr] || occupied[rr][cc]) continue;
+        ctx.fillText(dc !== 0 ? '-' : '|', cc * CELL, rr * CELL);
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
 }
 
 function drawFace() {
-  ctx.font = `${FACE_FONT}px 'Courier New', monospace`;
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = `rgb(${FACE_COLOR[0]}, ${FACE_COLOR[1]}, ${FACE_COLOR[2]})`;
-  const lines = isWinking ? winkPatchLines : faceLines;
+  const layer = isWinking ? faceWinkCache : faceOpenCache;
   // Mobile content scrolls over the fixed face; dim it so text stays legible.
   ctx.globalAlpha = W < MOBILE_BREAKPOINT ? 0.5 : 1;
-  for (let row = 0; row < faceRows; row++) {
-    const line = lines[row];
-    for (let c = 0; c < line.length; c++) {
-      const ch = line[c];
-      if (ch === ' ') continue;
-      ctx.fillText(ch, faceOriginX + c * FACE_CELL_W, faceOriginY + row * FACE_CELL_H);
-    }
-  }
+  ctx.drawImage(layer, faceOriginX, faceOriginY, layer.width / DPR, layer.height / DPR);
   ctx.globalAlpha = 1;
 }
 
 function draw(tMs) {
   ctx.fillStyle = '#0a0a0a';
   ctx.fillRect(0, 0, W, H);
-  drawBackground(tMs);
+  ctx.drawImage(bgCache, 0, 0, W, H);
+  drawPulses(tMs);
   updateBlink(tMs);
   drawFace();
   drawWinkStar(tMs);
