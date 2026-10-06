@@ -201,6 +201,17 @@ h2.heading2 {
   border-top:1px solid rgba(232,202,160,0.25);
   border-left:1px solid rgba(232,202,160,0.25);
 }
+/* Section heading as the first row of its grid, sharing the grid's borders. */
+.grid-head {
+  grid-column:1 / -1;
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  padding:12px 14px;
+  background:rgba(232,202,160,0.05);
+  border-right:1px solid rgba(232,202,160,0.25);
+  border-bottom:1px solid rgba(232,202,160,0.25);
+}
+.grid-head h2.heading2 { margin:0; text-align:left; font-size:16px; line-height:1.2; }
+.grid-meta { color:#e8caa0; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; }
 .card {
   background:rgba(10,10,10,0.55); padding:16px 16px; min-height:108px;
   display:flex; flex-direction:column; justify-content:space-between;
@@ -474,6 +485,9 @@ h2.heading2 {
      center, which would otherwise leak through uncorrected here (same
      class of bug hit repeatedly in this file). */
   h2.heading2 { font-size:20px; text-align:left; }
+  .grid-head { display:block; padding:0; background:none; border:0; margin-bottom:12px; }
+  .grid-head h2.heading2 { font-size:20px; }
+  .grid-meta { display:none; }
   /* flex column (not block/grid) so `order` below can reorder the cards for
      mobile without touching the HTML/desktop order. gap replaces the
      desktop grid's shared borders now that each card is its own box. */
@@ -487,16 +501,16 @@ h2.heading2 {
   /* DOM order is occlude, saas-dashboard, Chroma.GG, portfolio_v2 (desktop's
      2x2 grid reads left-to-right, top-to-bottom in that order) — mobile
      wants occlude, Chroma.GG, saas-dashboard, portfolio_v2 instead. */
-  .card:nth-child(1) { order: 1; } /* occlude */
-  .card:nth-child(2) { order: 3; } /* Pulse */
-  .card:nth-child(3) { order: 2; } /* Chroma.GG */
-  .card:nth-child(4) { order: 4; } /* Stonegate Paving */
-  .card:nth-child(5) { order: 5; } /* Van Wyk Dlamini */
-  .card:nth-child(6) { order: 6; } /* Talos */
-  .card:nth-child(7) { order: 7; } /* Kruger Body & Paint */
-  .card:nth-child(8) { order: 8; } /* Sable Tree Felling */
-  .card:nth-child(9) { order: 9; } /* Walkies */
-  .card:nth-child(10) { order: 10; } /* Tally */
+  .card:nth-of-type(1) { order: 1; } /* occlude */
+  .card:nth-of-type(2) { order: 3; } /* Pulse */
+  .card:nth-of-type(3) { order: 2; } /* Chroma.GG */
+  .card:nth-of-type(4) { order: 4; } /* Stonegate Paving */
+  .card:nth-of-type(5) { order: 5; } /* Van Wyk Dlamini */
+  .card:nth-of-type(6) { order: 6; } /* Talos */
+  .card:nth-of-type(7) { order: 7; } /* Kruger Body & Paint */
+  .card:nth-of-type(8) { order: 8; } /* Sable Tree Felling */
+  .card:nth-of-type(9) { order: 9; } /* Walkies */
+  .card:nth-of-type(10) { order: 10; } /* Tally */
   .card {
     position:relative;
     /* justify-content:flex-start (not the base rule's space-between) —
