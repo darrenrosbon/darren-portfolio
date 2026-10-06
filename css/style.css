@@ -469,25 +469,32 @@ h2.heading2 {
      right-hand region on mobile as it does on desktop. */
   #work { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
   #services { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
-  .service-grid { display:flex; flex-direction:column; gap:8px; border:none; }
-  .service { padding:7px 9px; border:1px solid rgba(232,202,160,0.25); }
+  /* One bordered box per section, rows split by hairlines, like the desktop
+     grid folded into a column. */
+  .cards, .service-grid, .stack-grid {
+    display:flex; flex-direction:column; align-items:stretch; gap:0;
+    border:1px solid rgba(232,202,160,0.25); background:rgba(10,10,10,0.55);
+  }
+  .service, .stack-cell {
+    padding:10px 11px 12px; background:none;
+    border:0; border-bottom:1px solid rgba(232,202,160,0.25);
+  }
+  .service:last-child, .stack-cell:last-child { border-bottom:0; }
   .service-icon { display:none; }
   #stack { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
-  .stack-grid { display:flex; flex-direction:column; gap:8px; border:none; }
-  .stack-cell { padding:8px 9px 10px; border:1px solid rgba(232,202,160,0.25); }
   .stack-title { font-size:12.5px; }
   .stack-sub { font-size:10px; margin-bottom:8px; }
   .chip { font-size:10.5px; padding:3px 7px; }
   .service .sname { font-size:13px; margin-top:0; }
   .service .smeta { font-size:10px; margin-top:4px; }
-  .tag-new { top:7px; right:9px; }
+  .tag-new { top:10px; right:11px; }
   /* text-align:left explicitly — the desktop rule now sets text-align:
      center, which would otherwise leak through uncorrected here (same
      class of bug hit repeatedly in this file). */
   h2.heading2 { font-size:20px; text-align:left; }
-  .grid-head { display:block; padding:0; background:none; border:0; margin-bottom:12px; }
-  .grid-head h2.heading2 { font-size:20px; }
-  .grid-meta { display:none; }
+  .grid-head { gap:10px; padding:10px 11px; }
+  .grid-head h2.heading2 { font-size:15px; }
+  .grid-meta { font-size:10px; }
   /* flex column (not block/grid) so `order` below can reorder the cards for
      mobile without touching the HTML/desktop order. gap replaces the
      desktop grid's shared borders now that each card is its own box. */
@@ -497,7 +504,6 @@ h2.heading2 {
      just covered more of the face than necessary. flex-start lets each
      card shrink to its own content; equalizeCardSizes() (site.js) then
      matches every card to the widest one actually needs. */
-  .cards { display:flex; flex-direction:column; align-items:flex-start; gap:8px; border:none; }
   /* DOM order is occlude, saas-dashboard, Chroma.GG, portfolio_v2 (desktop's
      2x2 grid reads left-to-right, top-to-bottom in that order) — mobile
      wants occlude, Chroma.GG, saas-dashboard, portfolio_v2 instead. */
@@ -521,11 +527,12 @@ h2.heading2 {
        card set the shared max height. */
     flex:none; display:flex; flex-direction:column; justify-content:flex-start; gap:6px;
     width:auto; min-width:0; min-height:0;
-    padding:7px 9px;
-    border:1px solid rgba(232,202,160,0.25);
-    background:rgba(10,10,10,0.55);
+    padding:10px 11px 12px;
+    border:0; border-bottom:1px solid rgba(232,202,160,0.25);
+    background:none;
     -webkit-tap-highlight-color: transparent;
   }
+  .card:last-child { border-bottom:0; }
   .card .cname { font-size:13px; }
   .card .cmeta { font-size:10px; margin-top:0; }
   .card .status { margin-top:0; }

@@ -141,7 +141,6 @@ function layout(keepHeight) {
   buildFace();
   buildOccupancyMask();
   buildNodes();
-  equalizeCardSizes();
   sizeSocialIcons();
   positionServices();
   positionAboutSection();
@@ -186,30 +185,6 @@ function buildNodes() {
       if (!occupied[row] || !occupied[row][col]) nodes.push({ col, row });
     }
   }
-}
-
-// Mobile's project cards are separate boxes stacked in one column, so
-// unlike the desktop grid (equal-size cells for free) each one naturally
-// sizes to its own content — and with align-items:flex-start (CSS) that
-// means each card is only as wide as its own longest line, not stretched
-// to fill #work regardless of need. Measure every card's true natural
-// width and height, then match every card to the largest of each —
-// smallest shared size that still fits the biggest card, not a guessed
-// fixed box and not dead space stretched out to cover the face behind it.
-// Desktop's grid cells already share a row/column via CSS, so this is a
-// no-op there.
-function equalizeCardSizes() {
-  const cards = document.querySelectorAll('.card');
-  if (!cards.length) return;
-  cards.forEach((c) => { c.style.width = ''; c.style.height = ''; }); // reset before measuring
-  if (W >= MOBILE_BREAKPOINT) return;
-  let maxW = 0, maxH = 0;
-  cards.forEach((c) => {
-    const r = c.getBoundingClientRect();
-    maxW = Math.max(maxW, r.width);
-    maxH = Math.max(maxH, r.height);
-  });
-  cards.forEach((c) => { c.style.width = maxW + 'px'; c.style.height = maxH + 'px'; });
 }
 
 // Mobile's icon row stretches to the two-line heading's height via CSS
