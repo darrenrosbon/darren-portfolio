@@ -310,12 +310,6 @@ h2.heading2 {
   transition:background 0.15s ease;
 }
 .service-link:hover { background:rgba(232,202,160,0.15); }
-.tag-new {
-  position:absolute; top:14px; right:12px;
-  font-size:9px; letter-spacing:1px; text-transform:uppercase;
-  padding:2px 6px; border:1px solid #e8caa0; color:#e8caa0;
-}
-
 /* Occlude's own wordmark (crescent mark + underlined "occlude.") lifted
    from its live site, so this entry reads as branded rather than the
    plain-text title every other card uses. */
@@ -480,14 +474,19 @@ h2.heading2 {
     border:0; border-bottom:1px solid rgba(232,202,160,0.25);
   }
   .service:last-child, .stack-cell:last-child { border-bottom:0; }
-  .service-icon { display:none; }
+  /* Icon sits to the left of the title, like the tools boxes; the description
+     and link line up under the title. */
+  .service { display:grid; grid-template-columns:16px 1fr; column-gap:8px; align-items:start; }
+  .service-icon { grid-column:1; grid-row:1; width:16px; height:16px; margin-top:0; }
+  .service .sname { grid-column:2; grid-row:1; line-height:16px; }
+  .service .smeta { grid-column:2; }
+  .service .service-link { grid-column:2; justify-self:start; }
   #stack { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
   .stack-title { font-size:12.5px; }
   .stack-sub { font-size:10px; margin-bottom:8px; }
   .chip { font-size:10.5px; padding:3px 7px; }
   .service .sname { font-size:13px; margin-top:0; }
   .service .smeta { font-size:10px; margin-top:4px; }
-  .tag-new { top:10px; right:11px; }
   /* text-align:left explicitly — the desktop rule now sets text-align:
      center, which would otherwise leak through uncorrected here (same
      class of bug hit repeatedly in this file). */
