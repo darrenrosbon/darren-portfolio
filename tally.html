@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css?v=11">
+<link rel="stylesheet" href="css/gallery.css?v=12">
 </head>
 <body>
 
@@ -49,24 +49,7 @@
   <img id="lightboxImg" alt="">
 </div>
 
-<script>
-  (function () {
-    const box = document.getElementById('lightbox');
-    const boxImg = document.getElementById('lightboxImg');
-    function closeBox() { box.hidden = true; boxImg.removeAttribute('src'); }
-    document.addEventListener('click', (e) => {
-      const img = e.target.closest('.g-piece img');
-      if (img) {
-        boxImg.src = img.src;
-        boxImg.alt = img.alt;
-        box.hidden = false;
-      } else if (!box.hidden && e.target !== boxImg) {
-        closeBox();
-      }
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
-  })();
-</script>
+<script src="js/lightbox.js?v=1"></script>
 
 </body>
 </html>

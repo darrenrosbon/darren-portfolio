@@ -138,7 +138,7 @@ function layout(keepHeight) {
     FACE_TOP_PADDING = 130; // clears the two-line heading + byline above it
   } else {
     FACE_FONT = 3.5; FACE_CELL_W = 2; FACE_CELL_H = 3.5;
-    FACE_TOP_PADDING = 28; // leaves room below the face for "the guy behind the work"
+    FACE_TOP_PADDING = 28;
   }
 
   buildFace();
@@ -210,7 +210,11 @@ function sizeSocialIcons() {
   if (W >= MOBILE_BREAKPOINT) return;
   const heading = document.querySelector('.guy-heading');
   if (!heading) return;
-  const size = (heading.getBoundingClientRect().height * SOCIAL_ICON_SCALE) + 'px';
+  // Cap the size so icons, gaps and heading fit between the page margins; on very
+  // narrow screens the row used to push the first icon off the left edge.
+  const gap = 12, sideMargin = 24;
+  const fit = (W - sideMargin * 2 - heading.getBoundingClientRect().width - icons.length * gap) / icons.length;
+  const size = Math.max(16, Math.min(heading.getBoundingClientRect().height * SOCIAL_ICON_SCALE, fit)) + 'px';
   // align-self:center — an explicit height opts the item out of the row's
   // align-items:stretch, so without this it'd anchor to the top instead
   // of sitting centered against the two-line heading.

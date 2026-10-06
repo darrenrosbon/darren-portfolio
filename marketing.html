@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css?v=11">
+<link rel="stylesheet" href="css/gallery.css?v=12">
 </head>
 <body>
 
@@ -69,7 +69,7 @@
   </section>
 </main>
 
-<div class="g-lightbox" id="lightbox" hidden>
+<div class="g-lightbox" id="lightbox" data-scroll-tall hidden>
   <button type="button" class="g-lightbox-close" aria-label="Close">&times;</button>
   <img id="lightboxImg" alt="">
 </div>
@@ -87,24 +87,9 @@
     });
 
     // To add a piece: add one inside the matching .g-grid:
-    // <figure class="g-piece"><img src="img/marketing/NAME.jpg" alt="..."><figcaption>Title</figcaption></figure>
-    const box = document.getElementById('lightbox');
-    const boxImg = document.getElementById('lightboxImg');
-    function closeBox() { box.hidden = true; boxImg.removeAttribute('src'); }
-    document.addEventListener('click', (e) => {
-      const img = e.target.closest('.g-piece img');
-      if (img) {
-        boxImg.src = img.src;
-        boxImg.alt = img.alt;
-        box.classList.toggle('tall', img.naturalHeight / img.naturalWidth > 1.45);
-        box.scrollTop = 0;
-        box.hidden = false;
-      } else if (!box.hidden && e.target !== boxImg) {
-        closeBox();
-      }
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) closeBox(); });
+    // <figure class="g-piece"><img src="img/marketing/NAME.webp" alt="..."><figcaption>Title</figcaption></figure>
   })();
 </script>
+<script src="js/lightbox.js?v=1"></script>
 </body>
 </html>
