@@ -264,6 +264,28 @@ h2.heading2 {
   border-right:1px solid rgba(232,202,160,0.25);
   border-bottom:1px solid rgba(232,202,160,0.25);
 }
+/* Tools — sits under the services grid; top is set by positionServices() in
+   site.js on desktop, flows in-document on mobile. */
+#stack {
+  position:absolute; left:60px; top:900px; z-index:5;
+  width: min(56%, 640px);
+}
+.stack-grid {
+  display:grid; grid-template-columns:repeat(2, 1fr);
+  border-top:1px solid rgba(232,202,160,0.25);
+  border-left:1px solid rgba(232,202,160,0.25);
+}
+.stack-cell {
+  background:rgba(10,10,10,0.55); padding:12px 12px 14px;
+  border-right:1px solid rgba(232,202,160,0.25);
+  border-bottom:1px solid rgba(232,202,160,0.25);
+}
+.stack-label { color:#969696; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; margin:0 0 8px; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.chip {
+  display:inline-block; font-size:11px; line-height:1.2; padding:4px 8px;
+  color:#e8caa0; border:1px solid rgba(232,202,160,0.3); background:rgba(232,202,160,0.05);
+}
 .service-icon { width:18px; height:18px; color:#e8caa0; display:block; }
 .service .sname { color:#f0f0f0; font-weight:700; font-size:14px; margin-top:10px; }
 .service .smeta { color:#969696; font-size:10.5px; margin-top:8px; line-height:1.45; }
@@ -436,6 +458,11 @@ h2.heading2 {
   .service-grid { display:flex; flex-direction:column; gap:8px; border:none; }
   .service { padding:7px 9px; border:1px solid rgba(232,202,160,0.25); }
   .service-icon { display:none; }
+  #stack { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
+  .stack-grid { display:flex; flex-direction:column; gap:8px; border:none; }
+  .stack-cell { padding:8px 9px 10px; border:1px solid rgba(232,202,160,0.25); }
+  .stack-label { font-size:10px; margin-bottom:6px; }
+  .chip { font-size:10.5px; padding:3px 7px; }
   .service .sname { font-size:13px; margin-top:0; }
   .service .smeta { font-size:10px; margin-top:4px; }
   .tag-new { top:7px; right:9px; }

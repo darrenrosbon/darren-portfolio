@@ -246,18 +246,21 @@ function sizeSocialIcons() {
 // edge below the desktop rule's fixed top:500px and caused an overlap).
 function positionServices() {
   const services = document.getElementById('services');
+  const stack = document.getElementById('stack');
   const work = document.getElementById('work');
   if (W < MOBILE_BREAKPOINT) {
     services.style.top = '';
+    stack.style.top = '';
     return;
   }
   const heroTop = hero.getBoundingClientRect().top;
   services.style.top = (work.getBoundingClientRect().bottom - heroTop + 24) + 'px';
+  stack.style.top = (services.getBoundingClientRect().bottom - heroTop + 24) + 'px';
 }
 
 function positionAboutSection() {
   const about = document.getElementById('about');
-  const work = document.getElementById('services');
+  const work = document.getElementById('stack');
   const heroTop = hero.getBoundingClientRect().top;
   const gap = 24;
   if (W >= MOBILE_BREAKPOINT) {
@@ -282,9 +285,10 @@ function positionMainBody() {
   const work = document.getElementById('work');
   const about = document.getElementById('about');
   const services = document.getElementById('services');
+  const stack = document.getElementById('stack');
   const contact = document.querySelector('.desktop-contact');
   if (W < MOBILE_BREAKPOINT) {
-    [headingWrap, work, services, about, contact].forEach((el) => { if (el) el.style.left = ''; });
+    [headingWrap, work, services, stack, about, contact].forEach((el) => { if (el) el.style.left = ''; });
     if (contact) contact.style.width = '';
     return;
   }
@@ -297,6 +301,7 @@ function positionMainBody() {
   headingWrap.style.left = columnLeft + 'px';
   work.style.left = columnLeft + 'px';
   services.style.left = columnLeft + 'px';
+  stack.style.left = columnLeft + 'px';
   about.style.left = columnLeft + 'px';
   if (contact) {
     contact.style.left = columnLeft + 'px';
