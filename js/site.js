@@ -46,8 +46,23 @@ function buildFace() {
   const closedLines = ASCII_ART_WINK.replace(/\r/g, '').split('\n');
   faceCols = Math.max(...faceLines.map(l => l.length));
   faceRows = faceLines.length;
+  if (W < MOBILE_BREAKPOINT) {
+    faceOriginY = FACE_TOP_PADDING; // fixed offset that clears the heading
+  } else {
+    // Desktop: the fixed CTA card owns the bottom-right corner, so the face
+    // must end above it. Shrink to fit if the viewport is too short, then
+    // center in the viewport, shifting up if that would reach the card.
+    const card = document.querySelector('.cta-card');
+    const cardBlock = card && getComputedStyle(card).display !== 'none'
+      ? card.offsetHeight + parseFloat(getComputedStyle(card).bottom) + 16 // card height + its bottom offset + gap
+      : 0;
+    const limit = H - cardBlock;
+    const scale = Math.max(0.55, Math.min(1, (limit - FACE_TOP_PADDING) / (faceRows * FACE_CELL_H)));
+    FACE_FONT *= scale; FACE_CELL_W *= scale; FACE_CELL_H *= scale;
+    const fh = faceRows * FACE_CELL_H;
+    faceOriginY = Math.max(FACE_TOP_PADDING, Math.min((H - fh) / 2, limit - fh));
+  }
   faceOriginX = W - faceCols * FACE_CELL_W;
-  faceOriginY = FACE_TOP_PADDING;
 
   winkPatchLines = faceLines.map((line, row) => {
     if (row < WINK_ROW_START || row > WINK_ROW_END) return line;
@@ -229,6 +244,9 @@ function sizeSocialIcons() {
 // rendering/wrapping, or — the bug this caught — the work grid gaining a
 // 5th card and wrapping to a 3rd row, which pushed #work's real bottom
 // edge below the desktop rule's fixed top:500px and caused an overlap).
+// Vertical space between the Projects / Services / Tools blocks (desktop).
+const BLOCK_GAP = 48;
+
 function positionServices() {
   const services = document.getElementById('services');
   const stack = document.getElementById('stack');
@@ -239,15 +257,19 @@ function positionServices() {
     return;
   }
   const heroTop = hero.getBoundingClientRect().top;
-  services.style.top = (work.getBoundingClientRect().bottom - heroTop + 24) + 'px';
-  stack.style.top = (services.getBoundingClientRect().bottom - heroTop + 24) + 'px';
+  // The headline is taller than the old single line, so #work starts below it
+  // instead of at a fixed offset.
+  const headingWrap = document.querySelector('.heading-wrap');
+  work.style.top = (headingWrap.getBoundingClientRect().bottom - heroTop + 32) + 'px';
+  services.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  stack.style.top = (services.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
 }
 
 function positionAboutSection() {
   const about = document.getElementById('about');
   const work = document.getElementById('stack');
   const heroTop = hero.getBoundingClientRect().top;
-  const gap = 24;
+  const gap = BLOCK_GAP;
   if (W >= MOBILE_BREAKPOINT) {
     about.style.marginTop = '';
     about.style.top = '0px'; // reset before measuring so the old value can't skew the new one

@@ -30,12 +30,14 @@ main:focus { outline:none; }
 
 .heading-wrap {
   position:absolute; left:60px; top:48px; z-index:5;
-  display:flex; align-items:baseline; gap:14px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:0;
 }
+.hero-eyebrow { color:#e8caa0; font-size:12px; letter-spacing:2px; font-weight:500; margin-bottom:12px; }
+.heading-accent { color:#e8caa0; }
 h1.heading {
   margin:0; color:#f0f0f0; font-weight:800;
-  font-size: clamp(26px, 3vw, 48px);
-  line-height:1.05; letter-spacing:-1px;
+  font-size: clamp(26px, 3.9vw, 60px);
+  line-height:1.02; letter-spacing:-1px;
 }
 .byline {
   position:absolute; top:48px; right:32px; z-index:5;
@@ -583,4 +585,75 @@ h2.heading2 {
   .copy-btn:active { background:rgba(232,202,160,0.12); }
   .copy-btn svg { width:18px; height:18px; }
   .copy-btn.copied { color:#7ec98f; }
+}
+
+/* ---------- Hero CTA card (desktop only; mobile has its own contact bar) ---------- */
+.cta-card { display:none; }
+@media (min-width: 701px) {
+  .cta-card {
+    display:block; position:fixed; right:32px; bottom:32px; z-index:6; width:360px;
+    background:#0a0a0a; border:1px solid #e8caa0; padding:20px;
+  }
+  .cta-eyebrow { color:#e8caa0; font-size:12px; letter-spacing:1px; margin-bottom:8px; }
+  .cta-title { color:#f0f0f0; font-weight:800; font-size:20px; letter-spacing:-1px; line-height:1.15; margin-bottom:16px; }
+  .cta-actions { display:flex; gap:10px; flex-wrap:wrap; }
+  .cta-btn {
+    font:600 13px 'JetBrains Mono', monospace; padding:10px 16px; cursor:pointer;
+    border:1px solid #e8caa0; text-decoration:none; transition:background .2s ease, color .2s ease;
+  }
+  .cta-btn-primary { background:#e8caa0; color:#0a0a0a; }
+  .cta-btn-ghost { background:transparent; color:#e8caa0; }
+  .cta-btn-primary:hover { background:#f2dcb9; }
+  .cta-btn-ghost:hover { background:rgba(232,202,160,0.12); }
+}
+@media (min-width: 701px) and (max-width: 1180px) {
+  .cta-card { width:320px; right:24px; bottom:24px; }
+}
+
+/* Mobile: the CTA becomes a slim bar pinned to the bottom (thumb zone). */
+@media (max-width: 700px) {
+  .cta-card {
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:rgba(10,10,10,0.96); border-top:1px solid rgba(232,202,160,0.4);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+  .cta-copy { min-width:0; }
+  .cta-eyebrow { color:#e8caa0; font-size:11px; letter-spacing:1px; margin-bottom:3px; }
+  .cta-title { color:#f0f0f0; font-weight:800; font-size:14px; letter-spacing:-0.5px; line-height:1.2; }
+  .cta-title br { display:none; }
+  .cta-actions { flex:none; }
+  .cta-btn-ghost { display:none; } /* mobile already has the contact bar + [i] modal */
+  .cta-btn-primary {
+    font:600 14px 'JetBrains Mono', monospace; padding:11px 16px; white-space:nowrap;
+    background:#e8caa0; color:#0a0a0a; border:1px solid #e8caa0; text-decoration:none;
+  }
+  /* keep the last content clear of the bar */
+  body { padding-bottom:72px; }
+}
+
+/* About: text + actions on the left, map on the right (wide desktop only).
+   Narrower widths keep their existing layouts and hide the extras. */
+.about-eyebrow { display:none; }
+@media (min-width: 961px) {
+  #about {
+    display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:24px; align-items:center;
+  }
+  .about-body { display:contents; }
+  .about-eyebrow { display:block; grid-column:1; grid-row:1; color:#e8caa0; font-size:11px; letter-spacing:1px; margin-bottom:8px; }
+  .guy-heading-row { grid-column:1; grid-row:2; }
+  h2.guy-heading { text-align:left; margin:0 0 12px 0; }
+  .about-body .about-text { grid-column:1; grid-row:3; text-align:left; max-width:36ch; margin:0; }
+  .sa-map { grid-column:2; grid-row:1 / 4; }
+}
+
+/* ---------- Section blocks: stronger headers + cream top rule ---------- */
+.cards, .service-grid, .stack-grid {
+  border-top:2px solid #e8caa0;
+  background:rgba(10,10,10,0.7);
+}
+.grid-head { background:rgba(232,202,160,0.08); }
+@media (min-width: 701px) {
+  .grid-head { padding:16px 16px; }
+  .grid-head h2.heading2 { font-size:21px; }
 }
