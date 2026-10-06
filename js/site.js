@@ -305,12 +305,6 @@ function positionDesktopContact() {
 }
 
 
-// Header-row counts ("10 projects") come from the page, so adding a card, service
-// or tool never leaves a stale number behind.
-document.querySelectorAll('.grid-meta[data-count]').forEach((el) => {
-  const n = document.querySelectorAll(el.dataset.count).length;
-  el.textContent = n + ' ' + el.dataset.label + (n === 1 ? '' : 's');
-});
 resize();
 
 // Fonts loading after initial layout can reflow #work's text (different
