@@ -38,7 +38,8 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { overflow-y: scroll; scrollbar-color: #4a4237 #0a0a0a; }
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; width: 0; height: 0; }
 body {
   margin: 0;
   background: var(--bg);
@@ -696,5 +697,6 @@ document.getElementById('copy').addEventListener('click', function () {
 </script>
 <script src="js/face-art.js?v=113"></script>
 <script src="js/site.js?v=138"></script>
+<script src="js/scrollbar.js?v=1"></script>
 </body>
 </html>
