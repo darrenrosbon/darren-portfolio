@@ -321,9 +321,18 @@ function positionMainBody() {
   // Column width matches the existing CSS formula for the blocks (min(56%, 640px)),
   // read live rather than duplicating the constant.
   // Pages with no stacked blocks (About) use the whole open space beside the face.
-  const columnWidth = blocks.length ? blocks[0].getBoundingClientRect().width
-    : Math.max(320, Math.min(faceOriginX - 96, 900));
-  if (!blocks.length && about) about.style.width = columnWidth + 'px';
+  let columnWidth;
+  if (blocks.length) {
+    columnWidth = blocks[0].getBoundingClientRect().width;
+  } else if (about) {
+    // Size the column to the content itself, capped to the space beside the face,
+    // so the group sits centered with even spacing instead of stretching to the edges.
+    about.style.width = 'max-content';
+    columnWidth = Math.max(320, Math.min(about.getBoundingClientRect().width, faceOriginX - 96));
+    about.style.width = columnWidth + 'px';
+  } else {
+    columnWidth = Math.min(W * 0.56, 640);
+  }
   const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
   column.forEach((el) => { el.style.left = columnLeft + 'px'; });
   if (contact) contact.style.width = columnWidth + 'px';
