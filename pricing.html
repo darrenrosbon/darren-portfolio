@@ -224,8 +224,9 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .q-link { font: inherit; font-size: 13px; color: var(--gold); background: none; border: 0; padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
 .q-link:hover { color: #f2dcb9; }
 .q-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 600px) { .qactions { column-gap: 6px; } .qactions .q-or, .qactions .q-link { font-size: clamp(10px, 2.9vw, 11.5px); white-space: nowrap; } }
 .qactions .btn[disabled] { opacity: .6; cursor: wait; }
-@media (max-width: 600px) { .q-dot { display: none; } .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
+@media (max-width: 600px) { .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
 
 /* CTA */
 .cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 22px; }
