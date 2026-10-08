@@ -727,6 +727,7 @@ h2.heading2 {
   #about { max-width:none; margin:0 24px; text-align:left; }
   .guy-heading { text-align:left; }
   .about-text, .about-body .about-text { text-align:left; }
-  .guy-heading-row { justify-content:flex-start; }
+  .guy-heading-row { justify-content:space-between; }
+  .guy-heading-row .guy-heading { order:-1; }
   .sa-map { margin:18px 0 0; width:min(293px, calc(100vw - 48px)); }
 }
