@@ -744,3 +744,20 @@ h2.heading2 {
   #hero[data-page="about"] { padding-bottom:72px; }
   body:has(#hero[data-page="about"]) { padding-bottom:0; }
 }
+
+/* Home hero: direct link to the quote form */
+.hero-quote-link { display:inline-flex; align-items:center; min-height:44px; margin-top:6px; color:#e8caa0; font-size:13px; font-weight:600;
+  text-decoration:underline; text-underline-offset:5px; }
+.hero-quote-link:hover { color:#f2dcb9; }
+
+/* Phones: 44px minimum tap targets */
+@media (max-width: 700px) {
+  .offer-add { min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
+  .offer-link { min-height:44px; display:flex; align-items:center; justify-content:center; }
+  .cta-btn { min-height:44px; text-align:center; }
+  .cta-btn-primary { display:inline-block; }
+  .nav-toggle { width:44px; height:44px; }
+  .service-link { min-height:44px; display:inline-flex; align-items:center; }
+  .copy-btn { min-height:44px; }
+  .contact-modal-close { min-width:44px; min-height:44px; }
+}

@@ -11,10 +11,12 @@
 <meta property="og:title" content="Pricing — Robson Web Studio">
 <meta property="og:description" content="Website packages from R1,250 for South African businesses. Split payments, free copywriting and 30 days of free support.">
 <meta property="og:url" content="https://robsonwebstudio.com/pricing.html">
-<meta property="og:image" content="https://robsonwebstudio.com/img/og.png">
+<meta property="og:image" content="https://robsonwebstudio.com/img/og-studio.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robson Web Studio: Proper websites, priced for SA business">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://robsonwebstudio.com/img/og-studio.png">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -262,8 +264,22 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   th, td { padding: 10px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* Phones: 16px inputs (stops iOS zooming the page on focus) and 44px tap targets */
+@media (max-width: 700px) {
+  .field input, .field select, .field textarea { font-size: 16px; }
+  .field input:not([type=checkbox]), .field select { min-height: 48px; }
+  .dd-btn { font-size: 16px; min-height: 48px; }
+  .dd-opt { padding-block: 13px; font-size: 14px; }
+  .stepper button { width: 44px; height: 44px; }
+  .add-quote { min-height: 44px; }
+  .q-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .acc-btn { min-height: 56px; }
+  .btn { min-height: 44px; }
+  .support a { display: inline-block; padding: 13px 0; }
+}
+
 </style>
-<script src="js/nav.js?v=7"></script>
+<script src="js/nav.js?v=9"></script>
 </head>
 <body>
 <canvas id="c"></canvas>
@@ -361,10 +377,10 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     <form class="qform" id="quoteForm" novalidate>
       <p class="note">Tell me about your business and I'll come back with a package or a custom price. Name and phone are required.</p>
       <div class="qgrid">
-        <div class="field"><label for="qName">Your name</label><input id="qName" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="qPhone">Phone or WhatsApp</label><input id="qPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="082 123 4567" required></div>
-        <div class="field"><label for="qBiz">Business name</label><input id="qBiz" name="business" type="text" autocomplete="organization"></div>
-        <div class="field"><label for="qEmail">Email (optional)</label><input id="qEmail" name="email" type="email" autocomplete="email"></div>
+        <div class="field"><label for="qName">Your name</label><input id="qName" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required></div>
+        <div class="field"><label for="qPhone">Phone or WhatsApp</label><input id="qPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="082 123 4567" required></div>
+        <div class="field"><label for="qBiz">Business name</label><input id="qBiz" name="business" type="text" autocomplete="organization" autocapitalize="words" enterkeyhint="next"></div>
+        <div class="field"><label for="qEmail">Email (optional)</label><input id="qEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next"></div>
         <div class="field wide"><label for="qPkg">Package you're interested in</label>
           <select id="qPkg" name="package">
             <option value="Not sure yet">Not sure yet</option>
@@ -387,7 +403,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           </div>
 
         </fieldset>
-        <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4"></textarea></div>
+        <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4" autocapitalize="sentences"></textarea></div>
       </div>
       <div class="qtotal" id="qTotal" aria-live="polite">
         <div class="qt-row"><span>Package</span><strong id="qtPkg">Not chosen</strong></div>
@@ -686,8 +702,8 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   });
 })();
 </script>
-<script src="js/face-art.js?v=113"></script>
-<script src="js/site.js?v=140"></script>
-<script src="js/scrollbar.js?v=2"></script>
+<script defer src="js/face-art.js?v=113"></script>
+<script defer src="js/site.js?v=140"></script>
+<script defer src="js/scrollbar.js?v=2"></script>
 </body>
 </html>

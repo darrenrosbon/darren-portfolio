@@ -11,14 +11,14 @@
       .m-bar { display:flex; align-items:center; justify-content:center; position:fixed; top:0; left:0; right:0; height:56px; z-index:10;
         background:rgba(10,10,10,0.96); border-bottom:1px solid rgba(232,202,160,0.18); }
       .m-bar-title { color:#e8caa0; font-weight:500; font-size:12px; letter-spacing:2px; white-space:nowrap; }
-      .site-mark { position:fixed; top:28px; transform:translateY(-50%); z-index:12; }
+      .site-mark { position:fixed; top:28px; left:12px; padding:8px; transform:translateY(-50%); z-index:12; }
       .hero-eyebrow, p.eyebrow { display:none; }
       .heading-wrap { padding-top:84px; }
       .wrap { padding-block-start:84px; }
 
       .nav-toggle {
         display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
-        position:fixed; top:8px; right:12px; width:40px; height:40px; padding:0; z-index:90;
+        position:fixed; top:6px; right:10px; width:44px; height:44px; padding:0; z-index:90;
         background:transparent; border:0; color:#e8caa0; cursor:pointer;
       }
       .nav-toggle:focus-visible { outline:2px solid #e8caa0; outline-offset:3px; }
