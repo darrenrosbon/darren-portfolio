@@ -761,3 +761,7 @@ h2.heading2 {
   .copy-btn { min-height:44px; }
   .contact-modal-close { min-width:44px; min-height:44px; }
 }
+
+/* Work page: gold button under the projects, leading to pricing and the quote form */
+.work-cta { margin:0; order:99; }
+@media (max-width: 700px) { .work-cta { margin:0; } }
