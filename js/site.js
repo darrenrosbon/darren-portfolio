@@ -263,14 +263,14 @@ function positionServices() {
   // instead of at a fixed offset.
   const headingWrap = document.querySelector('.heading-wrap');
   packages.style.top = (headingWrap.getBoundingClientRect().bottom - heroTop + 32) + 'px';
-  work.style.top = (packages.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  services.style.top = (packages.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  work.style.top = (services.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
   process.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
-  services.style.top = (process.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
 }
 
 function positionAboutSection() {
   const about = document.getElementById('about');
-  const work = document.getElementById('services');
+  const work = document.getElementById('process');
   const heroTop = hero.getBoundingClientRect().top;
   const gap = BLOCK_GAP;
   if (W >= MOBILE_BREAKPOINT) {
