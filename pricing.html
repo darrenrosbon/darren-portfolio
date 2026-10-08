@@ -624,6 +624,21 @@ document.getElementById('copy').addEventListener('click', function () {
     });
   });
   syncAddBtns();
+
+  // Arriving from a home page "Add to quote" link: pricing.html?add=<package>#quote
+  (function () {
+    var want = new URLSearchParams(location.search).get('add');
+    if (!want) return;
+    var sel = document.getElementById('qPkg');
+    var ok = Array.prototype.some.call(sel.options, function (o) { return o.value === want; });
+    if (ok) {
+      sel.value = want;
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      var go = function () { document.getElementById('quote').scrollIntoView({ block: 'start' }); };
+      go(); window.addEventListener('load', go);
+    }
+    history.replaceState(null, '', location.pathname + location.hash);
+  })();
   form.querySelectorAll('.qty-row').forEach(function (row) {
     var out = row.querySelector('output'), dec = row.querySelector('.dec'), inc = row.querySelector('.inc');
     function set(n) {

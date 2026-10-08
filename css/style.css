@@ -714,3 +714,9 @@ h2.heading2 {
   .hero-sub { font-size:13px; max-width:32ch; margin-top:10px; }
 }
 @media (max-width: 700px) { .hero-eyebrow { margin-bottom:28px; } }
+
+/* "Add to quote" on the home page package cells: opens the quote form on the pricing page with that package chosen */
+.offer-add { margin-top:10px; padding:7px 10px; border:1px solid #e8caa0; color:#e8caa0; text-align:center; text-decoration:none;
+  font:600 11.5px 'JetBrains Mono', monospace; transition:background .2s ease, color .2s ease; }
+.offer-add:hover { background:#e8caa0; color:#0a0a0a; }
+.offer-cell .offer-for { flex:1; }
