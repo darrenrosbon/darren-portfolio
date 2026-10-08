@@ -334,8 +334,13 @@ function positionMainBody() {
   } else {
     columnWidth = Math.min(W * 0.56, 640);
   }
-  const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
+  // The headline/eyebrow share one left edge on every page (the pricing page's own
+  // content edge); pages with stacked blocks line them up under it, About centers its
+  // wider content in the space beside the face.
+  const pageLeft = Math.max(24, (W - 1120) / 2 + 24);
+  const columnLeft = blocks.length ? pageLeft : Math.max(24, (faceOriginX - columnWidth) / 2);
   column.forEach((el) => { el.style.left = columnLeft + 'px'; });
+  headingWrap.style.left = pageLeft + 'px';
   if (contact) contact.style.width = columnWidth + 'px';
 }
 

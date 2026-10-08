@@ -38,6 +38,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+html { scrollbar-gutter: stable; }
 body {
   margin: 0;
   background: var(--bg);
@@ -46,7 +47,7 @@ body {
   font-size: 14px;
   line-height: 1.6;
 }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 96px 72px; display: grid; gap: 28px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 24px; padding-block: 48px 72px; display: grid; gap: 28px; }
 a { color: var(--gold); }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
@@ -242,7 +243,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   .pkg:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
 @media (max-width: 600px) {
-  .wrap { padding-inline: 16px; padding-block: 72px 56px; }
+  .wrap { padding-inline: 24px; padding-block: 56px 56px; }
   .grid, .duo { grid-template-columns: 1fr; }
   .pkg { border-right: 0; border-bottom: 1px solid var(--line); }
   .pkg:last-child { border-bottom: 0; }
@@ -692,6 +693,6 @@ document.getElementById('copy').addEventListener('click', function () {
 })();
 </script>
 <script src="js/face-art.js?v=113"></script>
-<script src="js/site.js?v=135"></script>
+<script src="js/site.js?v=136"></script>
 </body>
 </html>

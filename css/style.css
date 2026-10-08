@@ -1,5 +1,7 @@
 * { box-sizing: border-box; }
 html, body { margin:0; padding:0; background:#0a0a0a; font-family:'JetBrains Mono', monospace; }
+/* Same layout width whether or not a page scrolls, so the shared eyebrow/headline edge never shifts between pages. */
+html { scrollbar-gutter:stable; }
 
 /* The `hidden` attribute doesn't reliably get its expected display:none
    default on SVG elements in every engine — confirmed here: an SVG with
