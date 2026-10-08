@@ -676,7 +676,6 @@ h2.heading2 {
 .offer-block { grid-template-columns:repeat(2, 1fr); }
 .offer-cell { padding:16px; border-right:1px solid rgba(232,202,160,0.25); border-bottom:1px solid rgba(232,202,160,0.25); background:rgba(10,10,10,0.55); min-width:0; display:flex; flex-direction:column; gap:6px; }
 .offer-wide { grid-column:1 / -1; }
-.offer-featured { box-shadow:inset 0 0 0 1px #e8caa0; background:rgba(27,24,19,0.8); }
 .offer-name { color:#f0f0f0; font-weight:700; font-size:14px; }
 .offer-price { color:#e8caa0; font-weight:800; font-size:24px; line-height:1.1; }
 .offer-for { color:#969696; font-size:11.5px; line-height:1.45; }
@@ -689,7 +688,6 @@ h2.heading2 {
   .offer-block { grid-template-columns:none; }
   .offer-cell, .offer-link { padding:10px 11px 12px; border:0; border-bottom:1px solid rgba(232,202,160,0.25); background:none; }
   .offer-cell:last-child, .offer-link:last-child { border-bottom:0; }
-  .offer-featured { box-shadow:none; background:rgba(232,202,160,0.08); }
   .offer-price { font-size:20px; }
   .top-nav { gap:4px 12px; }
 }

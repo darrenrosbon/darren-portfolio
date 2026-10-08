@@ -91,7 +91,6 @@ canvas#c { display: block; position: fixed; top: 0; left: 0; z-index: 0; pointer
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .pkg { padding: 20px 18px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; position: relative; }
 .pkg:last-child { border-right: 0; }
-.pkg.featured { background: rgba(27, 24, 19, .8); box-shadow: inset 0 0 0 1px var(--gold); }
 .pkg-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 24px; }
 .pkg h3 { margin: 0; font-size: 15px; font-weight: 700; }
 .badge { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--green); color: var(--green); white-space: nowrap; }
@@ -307,7 +306,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         <button class="btn ghost add-quote" type="button" data-pkg="Starter (R1,950)" aria-pressed="false">Add to quote</button>
       </article>
 
-      <article class="pkg featured">
+      <article class="pkg">
         <div class="pkg-top"><h3>Business</h3><span class="badge gold">Most popular</span></div>
         <div class="price">R3,950</div>
         <p class="for">For paving, panel beaters, salons and established trades.</p>
