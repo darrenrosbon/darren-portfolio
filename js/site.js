@@ -1,11 +1,11 @@
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 // Inner pages (pricing) have no hero or home layout: same background, no column positioning.
-const IS_HOME = !!document.getElementById('work');
+const IS_HOME = !!document.querySelector('.heading-wrap');
 const hero = document.getElementById('hero') || document.documentElement;
 
 const siteMark = document.querySelector('.site-mark');
-if (IS_HOME && siteMark) {
+if (IS_HOME && siteMark && siteMark.getAttribute('href') === '#hero') {
   siteMark.addEventListener('click', (e) => {
     e.preventDefault();
     hero.scrollIntoView({ behavior: 'smooth' });
@@ -175,9 +175,10 @@ function layout(keepHeight) {
     positionDesktopContact();
   }
 
-  if (IS_HOME && !keepHeight && W >= MOBILE_BREAKPOINT) {
+  const desktopContact = document.querySelector('.desktop-contact');
+  if (IS_HOME && desktopContact && !keepHeight && W >= MOBILE_BREAKPOINT) {
     const heroTop = hero.getBoundingClientRect().top;
-    const contactBottom = document.querySelector('.desktop-contact').getBoundingClientRect().bottom - heroTop;
+    const contactBottom = desktopContact.getBoundingClientRect().bottom - heroTop;
     const needed = Math.ceil(contactBottom + 40);
     if (needed > hero.clientHeight) {
       hero.style.height = needed + 'px';
@@ -254,30 +255,34 @@ function sizeSocialIcons() {
 // Vertical space between the Projects / Services / Tools blocks (desktop).
 const BLOCK_GAP = 48;
 
+function stackedBlocks() {
+  return ['packages', 'services', 'work', 'process']
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
+}
+
 function positionServices() {
-  const services = document.getElementById('services');
-  const work = document.getElementById('work');
-  const packages = document.getElementById('packages');
-  const process = document.getElementById('process');
+  const blocks = stackedBlocks();
   if (W < MOBILE_BREAKPOINT) {
-    packages.style.top = '';
-    process.style.top = '';
-    services.style.top = '';
+    blocks.forEach((b) => { b.style.top = ''; });
     return;
   }
   const heroTop = hero.getBoundingClientRect().top;
-  // The headline is taller than the old single line, so #work starts below it
-  // instead of at a fixed offset.
+  // The headline is taller than the old single line, so the first block starts
+  // below it instead of at a fixed offset; each later block follows the last.
   const headingWrap = document.querySelector('.heading-wrap');
-  packages.style.top = (headingWrap.getBoundingClientRect().bottom - heroTop + 32) + 'px';
-  services.style.top = (packages.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
-  work.style.top = (services.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
-  process.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  let y = headingWrap.getBoundingClientRect().bottom - heroTop + 32;
+  blocks.forEach((b) => {
+    b.style.top = y + 'px';
+    y = b.getBoundingClientRect().bottom - heroTop + BLOCK_GAP;
+  });
 }
 
 function positionAboutSection() {
   const about = document.getElementById('about');
-  const work = document.getElementById('process');
+  const blocks = stackedBlocks();
+  if (!about || !blocks.length) return;
+  const work = blocks[blocks.length - 1];
   const heroTop = hero.getBoundingClientRect().top;
   const gap = BLOCK_GAP;
   if (W >= MOBILE_BREAKPOINT) {
@@ -299,33 +304,21 @@ function positionAboutSection() {
 // left:60px, just recentered.
 function positionMainBody() {
   const headingWrap = document.querySelector('.heading-wrap');
-  const work = document.getElementById('work');
+  const blocks = stackedBlocks();
   const about = document.getElementById('about');
-  const services = document.getElementById('services');
-  const packages = document.getElementById('packages');
-  const process = document.getElementById('process');
   const contact = document.querySelector('.desktop-contact');
+  const column = [headingWrap, ...blocks, about, contact].filter(Boolean);
   if (W < MOBILE_BREAKPOINT) {
-    [headingWrap, packages, process, work, services, about, contact].forEach((el) => { if (el) el.style.left = ''; });
+    column.forEach((el) => { el.style.left = ''; });
     if (contact) contact.style.width = '';
     return;
   }
-  // Column width matches the existing CSS formula for #work/#about
-  // (min(56%, 640px)) — read live rather than duplicating the constant,
-  // so this stays correct if that CSS value ever changes.
-  const columnWidth = work.getBoundingClientRect().width;
+  // Column width matches the existing CSS formula for the blocks (min(56%, 640px)),
+  // read live rather than duplicating the constant.
+  const columnWidth = blocks.length ? blocks[0].getBoundingClientRect().width : Math.min(W * 0.56, 640);
   const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
-
-  headingWrap.style.left = columnLeft + 'px';
-  packages.style.left = columnLeft + 'px';
-  process.style.left = columnLeft + 'px';
-  work.style.left = columnLeft + 'px';
-  services.style.left = columnLeft + 'px';
-  about.style.left = columnLeft + 'px';
-  if (contact) {
-    contact.style.left = columnLeft + 'px';
-    contact.style.width = columnWidth + 'px';
-  }
+  column.forEach((el) => { el.style.left = columnLeft + 'px'; });
+  if (contact) contact.style.width = columnWidth + 'px';
 }
 
 // Desktop's email + social icons block, vertically centered in the empty
@@ -335,7 +328,7 @@ function positionMainBody() {
 function positionDesktopContact() {
   const block = document.querySelector('.desktop-contact');
   const about = document.getElementById('about');
-  if (!block) return;
+  if (!block || !about) return;
   if (W < MOBILE_BREAKPOINT) {
     block.style.top = '';
     return;
