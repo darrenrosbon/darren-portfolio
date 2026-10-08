@@ -719,3 +719,5 @@ h2.heading2 {
   font:600 11.5px 'JetBrains Mono', monospace; transition:background .2s ease, color .2s ease; }
 .offer-add:hover { background:#e8caa0; color:#0a0a0a; }
 .offer-cell .offer-for { flex:1; }
+/* Home has no floating quote card, so no room is reserved for the mobile bar */
+@media (max-width: 700px) { body:has(#hero[data-page="home"]) { padding-bottom:0; } }
