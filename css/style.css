@@ -704,3 +704,22 @@ h2.heading2 {
   #hero[data-page="about"] #about { grid-template-columns:minmax(0, 420px) auto; column-gap:64px; justify-content:center; }
   #hero[data-page="about"] .sa-map { width:clamp(300px, 26vw, 400px); justify-self:center; }
 }
+
+/* Home page hero: subline + buttons, and the floating quote card steps aside (the hero buttons replace it) */
+.hero-sub { margin:14px 0 0; max-width:44ch; color:#c9c9c9; font-size:14px; line-height:1.6; }
+.hero-btns { display:flex; flex-wrap:wrap; align-items:center; gap:10px 10px; margin-top:16px; }
+.hero-btn { font:600 13px 'JetBrains Mono', monospace; padding:10px 16px; border:1px solid #e8caa0; text-decoration:none; transition:background .2s ease; }
+.hero-btn-primary { background:#e8caa0; color:#0a0a0a; }
+.hero-btn-primary:hover { background:#f2dcb9; }
+.hero-btn-ghost { background:transparent; color:#e8caa0; }
+.hero-btn-ghost:hover { background:rgba(232,202,160,0.12); }
+.hero-more { color:#e8caa0; font-size:12px; text-decoration:underline; text-underline-offset:4px; opacity:.85; margin-left:6px; }
+.hero-more:hover { opacity:1; }
+#hero[data-page="home"] .cta-card { display:none; }
+body:has(#hero[data-page="home"]) { padding-bottom:0; }
+@media (max-width: 700px) {
+  .hero-sub { font-size:13px; max-width:32ch; margin-top:10px; }
+  .hero-btns { margin-top:12px; max-width:62%; }
+  .hero-btn { padding:9px 12px; font-size:12px; }
+  .hero-more { margin-left:0; }
+}
