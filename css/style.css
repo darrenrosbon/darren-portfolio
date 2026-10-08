@@ -764,4 +764,5 @@ h2.heading2 {
 
 /* Work page: gold button under the projects, leading to pricing and the quote form */
 .work-cta { margin:0; order:99; }
-@media (max-width: 700px) { .work-cta { margin:0; } }
+/* mobile already has the quote bar at the bottom of the screen */
+@media (max-width: 700px) { .work-cta.offer-link { display:none; } }
