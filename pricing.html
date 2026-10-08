@@ -162,14 +162,19 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .field .bad { border-color: #e07a7a; }
 .addons-field { border: 0; padding: 0; margin: 0; }
 .addons-field legend { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 8px; }
-.checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.field .check { display: flex; align-items: flex-start; gap: 10px; border: 1px solid var(--line-strong); padding: 10px 12px; cursor: pointer; font-size: 13px; text-transform: none; line-height: 1.4; letter-spacing: 0; color: var(--fg); min-width: 0; }
-.check:hover { border-color: var(--gold); }
-.check input { width: 16px; height: 16px; margin: 2px 0 0; flex: none; accent-color: var(--gold); padding: 0; }
-.check span { min-width: 0; }
-.check em { display: block; font-style: normal; color: var(--muted); font-size: 12px; }
-.check:has(input:checked) { border-color: var(--gold); background: #1b1813; }
-@media (max-width: 600px) { .checks { grid-template-columns: 1fr; } }
+.qty-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.qty-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--line-strong); padding: 8px 10px 8px 12px; min-width: 0; }
+.qty-row.has { border-color: var(--gold); background: #1b1813; }
+.qty-label { min-width: 0; font-size: 13px; line-height: 1.4; }
+.qty-label span { display: block; }
+.qty-label em { display: block; font-style: normal; color: var(--muted); font-size: 12px; }
+.stepper { display: flex; align-items: center; flex: none; }
+.stepper button { font: inherit; font-size: 16px; width: 36px; height: 36px; background: transparent; color: var(--gold); border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
+.stepper button:hover:not([disabled]) { border-color: var(--gold); }
+.stepper button[disabled] { color: var(--muted); opacity: .5; cursor: default; }
+.stepper output { min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
+.qty-est { margin: 10px 0 0; color: var(--gold); }
+@media (max-width: 600px) { .qty-list { grid-template-columns: 1fr; } }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .qerr { margin: 0; color: #e07a7a; font-size: 13px; }
 .qok { margin: 0; color: var(--green); font-size: 13px; border: 1px solid var(--green); padding: 10px 12px; }
@@ -399,15 +404,16 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           </select>
         </div>
         <fieldset class="field wide addons-field">
-          <legend>Add-ons (optional)</legend>
-          <div class="checks">
-            <label class="check"><input type="checkbox" name="addon" value="AI website chatbot (R1,500 + R299/month)"><span>AI website chatbot <em>R1,500 + R299/month</em></span></label>
-            <label class="check"><input type="checkbox" name="addon" value="WhatsApp AI bot (R2,000 + R299/month)"><span>WhatsApp AI bot <em>R2,000 + R299/month</em></span></label>
-            <label class="check"><input type="checkbox" name="addon" value="Extra page (R350)"><span>Extra page <em>R350</em></span></label>
-            <label class="check"><input type="checkbox" name="addon" value="Logo design (R400)"><span>Logo design <em>R400</em></span></label>
-            <label class="check"><input type="checkbox" name="addon" value="Flyer design (R250)"><span>Flyer design <em>R250</em></span></label>
-            <label class="check"><input type="checkbox" name="addon" value="Social media pack (R500)"><span>Social media pack, 8 posts <em>R500</em></span></label>
+          <legend>Add-ons (optional). Use + for more than one.</legend>
+          <div class="qty-list">
+            <div class="qty-row" data-name="AI website chatbot" data-once="1500" data-monthly="299"><div class="qty-label"><span>AI website chatbot</span><em>R1,500 + R299/month</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one ai website chatbot" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one ai website chatbot">+</button></div></div>
+            <div class="qty-row" data-name="WhatsApp AI bot" data-once="2000" data-monthly="299"><div class="qty-label"><span>WhatsApp AI bot</span><em>R2,000 + R299/month</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one whatsapp ai bot" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one whatsapp ai bot">+</button></div></div>
+            <div class="qty-row" data-name="Extra page" data-once="350" data-monthly="0"><div class="qty-label"><span>Extra page</span><em>R350 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one extra page" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one extra page">+</button></div></div>
+            <div class="qty-row" data-name="Logo design" data-once="400" data-monthly="0"><div class="qty-label"><span>Logo design</span><em>R400</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one logo design" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one logo design">+</button></div></div>
+            <div class="qty-row" data-name="Flyer design" data-once="250" data-monthly="0"><div class="qty-label"><span>Flyer design</span><em>R250 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one flyer design" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one flyer design">+</button></div></div>
+            <div class="qty-row" data-name="Social media pack, 8 posts" data-once="500" data-monthly="0"><div class="qty-label"><span>Social media pack, 8 posts</span><em>R500 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one social media pack, 8 posts" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one social media pack, 8 posts">+</button></div></div>
           </div>
+          <p class="qty-est note" id="qEst" hidden></p>
         </fieldset>
         <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4"></textarea></div>
       </div>
@@ -483,9 +489,41 @@ document.getElementById('copy').addEventListener('click', function () {
     show('');
     return true;
   }
+  var MAX_QTY = 20;
+  function money(n) { return 'R' + n.toLocaleString('en-ZA').replace(/\s/g, ','); }
   function addons() {
-    return Array.prototype.map.call(form.querySelectorAll('input[name=addon]:checked'), function (c) { return c.value; });
+    var out = [];
+    form.querySelectorAll('.qty-row').forEach(function (row) {
+      var q = parseInt(row.querySelector('output').textContent, 10) || 0;
+      if (q > 0) out.push(q + ' x ' + row.dataset.name);
+    });
+    return out;
   }
+  function estimate() {
+    var once = 0, monthly = 0;
+    form.querySelectorAll('.qty-row').forEach(function (row) {
+      var q = parseInt(row.querySelector('output').textContent, 10) || 0;
+      once += q * Number(row.dataset.once);
+      monthly += q * Number(row.dataset.monthly);
+    });
+    var est = document.getElementById('qEst');
+    est.hidden = once === 0;
+    est.textContent = 'Add-ons estimate: ' + money(once) + (monthly ? ' once-off, plus ' + money(monthly) + '/month' : ' once-off') + '. Package price is separate.';
+  }
+  form.querySelectorAll('.qty-row').forEach(function (row) {
+    var out = row.querySelector('output'), dec = row.querySelector('.dec'), inc = row.querySelector('.inc');
+    function set(n) {
+      n = Math.max(0, Math.min(MAX_QTY, n));
+      out.textContent = n; dec.disabled = n === 0; inc.disabled = n === MAX_QTY;
+      row.classList.toggle('has', n > 0); estimate();
+    }
+    dec.addEventListener('click', function () { set((parseInt(out.textContent, 10) || 0) - 1); });
+    inc.addEventListener('click', function () { set((parseInt(out.textContent, 10) || 0) + 1); });
+    row._reset = function () { set(0); };
+  });
+  form.addEventListener('reset', function () {
+    setTimeout(function () { form.querySelectorAll('.qty-row').forEach(function (r) { r._reset(); }); }, 0);
+  });
   function waText() {
     var t = "Hi Darren, I'm " + val('qName');
     if (val('qBiz')) t += ' from ' + val('qBiz');
