@@ -666,29 +666,27 @@ h2.heading2 {
 .top-nav .top-nav-cta { background:#e8caa0; color:#0a0a0a; opacity:1; padding:3px 10px; }
 .top-nav .top-nav-cta:hover { background:#f2dcb9; text-decoration:none; }
 
-/* ---------- Offer section (below the hero) ---------- */
-#offer { position:relative; z-index:7; background:#0a0a0a; border-top:1px solid rgba(232,202,160,0.25); padding:56px 60px 96px; }
-.offer-inner { width:min(56%, 640px); display:grid; gap:28px; }
+/* ---------- Packages + process (part of the hero column; tops set by
+   positionServices() in site.js on desktop, flow in-document on mobile) ---------- */
+#packages, #process { position:absolute; left:60px; top:300px; z-index:5; width:min(56%, 640px); }
 .offer-block { grid-template-columns:repeat(2, 1fr); }
 .offer-cell { padding:16px; border-right:1px solid rgba(232,202,160,0.25); border-bottom:1px solid rgba(232,202,160,0.25); background:rgba(10,10,10,0.55); min-width:0; display:flex; flex-direction:column; gap:6px; }
 .offer-wide { grid-column:1 / -1; }
-.offer-featured { box-shadow:inset 0 0 0 1px #e8caa0; background:#1b1813; }
+.offer-featured { box-shadow:inset 0 0 0 1px #e8caa0; background:rgba(27,24,19,0.8); }
 .offer-name { color:#f0f0f0; font-weight:700; font-size:14px; }
 .offer-price { color:#e8caa0; font-weight:800; font-size:24px; line-height:1.1; }
 .offer-for { color:#969696; font-size:11.5px; line-height:1.45; }
 .offer-step { color:#e8caa0; font-size:11px; letter-spacing:1px; }
 .offer-badge { color:#7ec98f; border:1px solid #7ec98f; font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; padding:1px 5px; margin-left:4px; white-space:nowrap; font-weight:500; }
-.offer-link { grid-column:1 / -1; padding:14px 16px; color:#e8caa0; font-size:12px; font-weight:600; text-decoration:none; border-right:1px solid rgba(232,202,160,0.25); border-bottom:1px solid rgba(232,202,160,0.25); }
+.offer-link { grid-column:1 / -1; padding:14px 16px; color:#e8caa0; font-size:12px; font-weight:600; text-decoration:none; background:rgba(10,10,10,0.55); border-right:1px solid rgba(232,202,160,0.25); border-bottom:1px solid rgba(232,202,160,0.25); }
 .offer-link:hover { background:rgba(232,202,160,0.1); }
-.offer-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-#offer .cta-btn { font:600 13px 'JetBrains Mono', monospace; padding:10px 16px; border:1px solid #e8caa0; text-decoration:none; display:inline-block; }
-#offer .cta-btn-primary { background:#e8caa0; color:#0a0a0a; }
-#offer .cta-btn-ghost { background:transparent; color:#e8caa0; display:inline-block; }
-@media (min-width:701px) and (max-width:1180px) { #offer { padding-inline:24px 360px; } .offer-inner { width:auto; } }
 @media (max-width:700px) {
-  #offer { padding:36px 24px 40px; }
-  .offer-inner { width:auto; }
-  .offer-block { grid-template-columns:1fr; }
+  #packages, #process { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
+  .offer-block { grid-template-columns:none; }
+  .offer-cell, .offer-link { padding:10px 11px 12px; border:0; border-bottom:1px solid rgba(232,202,160,0.25); background:none; }
+  .offer-cell:last-child, .offer-link:last-child { border-bottom:0; }
+  .offer-featured { box-shadow:none; background:rgba(232,202,160,0.08); }
+  .offer-price { font-size:20px; }
   .top-nav { gap:4px 12px; }
   .top-nav .top-nav-cta { padding:2px 7px; }
 }

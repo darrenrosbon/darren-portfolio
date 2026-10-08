@@ -251,7 +251,11 @@ function positionServices() {
   const services = document.getElementById('services');
   const stack = document.getElementById('stack');
   const work = document.getElementById('work');
+  const packages = document.getElementById('packages');
+  const process = document.getElementById('process');
   if (W < MOBILE_BREAKPOINT) {
+    packages.style.top = '';
+    process.style.top = '';
     services.style.top = '';
     stack.style.top = '';
     return;
@@ -260,8 +264,10 @@ function positionServices() {
   // The headline is taller than the old single line, so #work starts below it
   // instead of at a fixed offset.
   const headingWrap = document.querySelector('.heading-wrap');
-  work.style.top = (headingWrap.getBoundingClientRect().bottom - heroTop + 32) + 'px';
-  services.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  packages.style.top = (headingWrap.getBoundingClientRect().bottom - heroTop + 32) + 'px';
+  work.style.top = (packages.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  process.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
+  services.style.top = (process.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
   stack.style.top = (services.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
 }
 
@@ -293,9 +299,11 @@ function positionMainBody() {
   const about = document.getElementById('about');
   const services = document.getElementById('services');
   const stack = document.getElementById('stack');
+  const packages = document.getElementById('packages');
+  const process = document.getElementById('process');
   const contact = document.querySelector('.desktop-contact');
   if (W < MOBILE_BREAKPOINT) {
-    [headingWrap, work, services, stack, about, contact].forEach((el) => { if (el) el.style.left = ''; });
+    [headingWrap, packages, process, work, services, stack, about, contact].forEach((el) => { if (el) el.style.left = ''; });
     if (contact) contact.style.width = '';
     return;
   }
@@ -306,6 +314,8 @@ function positionMainBody() {
   const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
 
   headingWrap.style.left = columnLeft + 'px';
+  packages.style.left = columnLeft + 'px';
+  process.style.left = columnLeft + 'px';
   work.style.left = columnLeft + 'px';
   services.style.left = columnLeft + 'px';
   stack.style.left = columnLeft + 'px';
