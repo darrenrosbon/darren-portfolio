@@ -173,7 +173,12 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .stepper button:hover:not([disabled]) { border-color: var(--gold); }
 .stepper button[disabled] { color: var(--muted); opacity: .5; cursor: default; }
 .stepper output { min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
-.qty-est { margin: 10px 0 0; color: var(--gold); }
+.qtotal { border: 1px solid var(--gold); background: #1b1813; padding: 14px 16px; display: grid; gap: 6px; }
+.qt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: var(--muted); }
+.qt-row strong { color: var(--fg); font-variant-numeric: tabular-nums; text-align: right; }
+.qt-sum { border-top: 1px dashed var(--line-strong); padding-top: 8px; margin-top: 2px; color: var(--fg); font-size: 14px; }
+.qt-sum strong { color: var(--gold); font-size: 22px; font-weight: 800; }
+.qtotal .note { margin-top: 4px; font-size: 12px; }
 @media (max-width: 600px) { .qty-list { grid-template-columns: 1fr; } }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .qerr { margin: 0; color: #e07a7a; font-size: 13px; }
@@ -394,12 +399,12 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         <div class="field wide"><label for="qPkg">Package you're interested in</label>
           <select id="qPkg" name="package">
             <option value="Not sure yet">Not sure yet</option>
-            <option>Digital Business Card (R1,250)</option>
-            <option>Starter (R1,950)</option>
-            <option>Business (R3,950)</option>
-            <option>Premium (R7,500)</option>
-            <option>Get Online bundle (R2,200)</option>
-            <option>Grow bundle (R5,650)</option>
+            <option data-price="1250">Digital Business Card (R1,250)</option>
+            <option data-price="1950">Starter (R1,950)</option>
+            <option data-price="3950">Business (R3,950)</option>
+            <option data-price="7500">Premium (R7,500)</option>
+            <option data-price="2200">Get Online bundle (R2,200)</option>
+            <option data-price="5650">Grow bundle (R5,650)</option>
             <option>Something custom</option>
           </select>
         </div>
@@ -413,9 +418,16 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <div class="qty-row" data-name="Flyer design" data-once="250" data-monthly="0"><div class="qty-label"><span>Flyer design</span><em>R250 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one flyer design" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one flyer design">+</button></div></div>
             <div class="qty-row" data-name="Social media pack, 8 posts" data-once="500" data-monthly="0"><div class="qty-label"><span>Social media pack, 8 posts</span><em>R500 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one social media pack, 8 posts" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one social media pack, 8 posts">+</button></div></div>
           </div>
-          <p class="qty-est note" id="qEst" hidden></p>
+
         </fieldset>
         <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4"></textarea></div>
+      </div>
+      <div class="qtotal" id="qTotal" aria-live="polite">
+        <div class="qt-row"><span>Package</span><strong id="qtPkg">Not chosen</strong></div>
+        <div class="qt-row"><span>Add-ons</span><strong id="qtAdd">R0</strong></div>
+        <div class="qt-row qt-sum"><span>Estimated total</span><strong id="qtSum">R0</strong></div>
+        <div class="qt-row" id="qtMonthRow" hidden><span>Plus monthly</span><strong id="qtMonth">R0/month</strong></div>
+        <p class="note" id="qtNote">An estimate, not a final quote. No VAT added. A custom build is priced separately.</p>
       </div>
       <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
       <p class="qerr" id="qErr" role="alert" hidden></p>
@@ -499,17 +511,30 @@ document.getElementById('copy').addEventListener('click', function () {
     });
     return out;
   }
-  function estimate() {
+  function pkgInfo() {
+    var sel = document.getElementById('qPkg'), opt = sel.options[sel.selectedIndex];
+    var price = Number(opt.getAttribute('data-price')) || 0;
+    return { name: opt.value, price: price };
+  }
+  function totals() {
     var once = 0, monthly = 0;
     form.querySelectorAll('.qty-row').forEach(function (row) {
       var q = parseInt(row.querySelector('output').textContent, 10) || 0;
       once += q * Number(row.dataset.once);
       monthly += q * Number(row.dataset.monthly);
     });
-    var est = document.getElementById('qEst');
-    est.hidden = once === 0;
-    est.textContent = 'Add-ons estimate: ' + money(once) + (monthly ? ' once-off, plus ' + money(monthly) + '/month' : ' once-off') + '. Package price is separate.';
+    var pkg = pkgInfo();
+    return { pkg: pkg, addons: once, monthly: monthly, total: pkg.price + once };
   }
+  function estimate() {
+    var x = totals();
+    document.getElementById('qtPkg').textContent = x.pkg.price ? x.pkg.name.replace(/ \(R[\d,]+\)$/, '') + ' ' + money(x.pkg.price) : x.pkg.name;
+    document.getElementById('qtAdd').textContent = money(x.addons);
+    document.getElementById('qtSum').textContent = money(x.total);
+    document.getElementById('qtMonthRow').hidden = x.monthly === 0;
+    document.getElementById('qtMonth').textContent = money(x.monthly) + '/month';
+  }
+  document.getElementById('qPkg').addEventListener('change', estimate);
   form.querySelectorAll('.qty-row').forEach(function (row) {
     var out = row.querySelector('output'), dec = row.querySelector('.dec'), inc = row.querySelector('.inc');
     function set(n) {
@@ -522,13 +547,16 @@ document.getElementById('copy').addEventListener('click', function () {
     row._reset = function () { set(0); };
   });
   form.addEventListener('reset', function () {
-    setTimeout(function () { form.querySelectorAll('.qty-row').forEach(function (r) { r._reset(); }); }, 0);
+    setTimeout(function () { form.querySelectorAll('.qty-row').forEach(function (r) { r._reset(); }); estimate(); }, 0);
   });
+  estimate();
   function waText() {
     var t = "Hi Darren, I'm " + val('qName');
     if (val('qBiz')) t += ' from ' + val('qBiz');
     t += '. I\'d like a quote. Package: ' + document.getElementById('qPkg').value + '.';
     if (addons().length) t += ' Add-ons: ' + addons().join(', ') + '.';
+    var x = totals();
+    if (x.total) t += ' Estimated total: ' + money(x.total) + (x.monthly ? ' plus ' + money(x.monthly) + '/month' : '') + '.';
     if (val('qMsg')) t += ' ' + val('qMsg');
     return t;
   }
@@ -548,6 +576,7 @@ document.getElementById('copy').addEventListener('click', function () {
         name: val('qName'), phone: val('qPhone'), business: val('qBiz'), email: val('qEmail'),
         package: document.getElementById('qPkg').value,
         addons: addons().join(', ') || 'None',
+        estimated_total: totals().total ? money(totals().total) + (totals().monthly ? ' plus ' + money(totals().monthly) + '/month' : '') : 'n/a',
         message: val('qMsg')
       })
     }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
