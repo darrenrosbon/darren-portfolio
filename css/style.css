@@ -437,7 +437,7 @@ h2.heading2 {
      further — a runaway loop. nowrap keeps each of the two <br>-separated
      segments on exactly one line each, so the heading's height is stable
      regardless of how much width the icon ends up taking. */
-  .guy-heading { margin:0; font-size:16px; text-align:right; white-space:nowrap; }
+  .guy-heading { margin:0; font-size:26px; line-height:1.02; text-align:right; white-space:nowrap; }
   /* text-align:right + margin reset — the desktop rule now sets
      text-align:center and margin:0 auto (for its own centering), which
      would otherwise leak through uncorrected here. */
@@ -698,7 +698,8 @@ h2.heading2 {
 /* About page (desktop): use the open space beside the face instead of the narrow home column. */
 @media (min-width: 701px) {
   #hero[data-page="about"] #about { width:auto; }
-  #hero[data-page="about"] .guy-heading { font-size:clamp(24px, 2.4vw, 36px); text-align:left; margin-bottom:20px; }
+  /* Same scale as the headline on the Home, Work and Pricing pages */
+  #hero[data-page="about"] .guy-heading { font-size:clamp(26px, 3.9vw, 60px); line-height:1.02; text-align:left; margin-bottom:20px; }
   #hero[data-page="about"] .about-eyebrow { font-size:12px; letter-spacing:2px; margin-bottom:10px; }
   #hero[data-page="about"] .about-body .about-text { font-size:clamp(15px, 1.15vw, 18px); line-height:1.75; max-width:none; }
 }
