@@ -123,7 +123,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .gold-t { color: var(--gold); }
 
 /* Two-column sections */
-.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .duo > div { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
 .duo > div + div { border-left: 1px solid var(--line); }
@@ -131,12 +131,10 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .duo h3 .gold-t { font-variant-numeric: tabular-nums; }
 .duo p { margin: 0; color: var(--muted); font-size: 13px; }
 
-.addons td.num { text-align: right; }
-.addons td.num .sub { text-align: right; }
 .bundles { display: flex; flex-direction: column; }
-.bundle-list { flex: 1; display: grid; grid-auto-rows: 1fr; }
+.bundle-list { flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .bundle { padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.bundle + .bundle { border-top: 1px solid var(--line); }
+.bundle + .bundle { border-left: 1px solid var(--line); }
 .bundle-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .bundle-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
 .bundle-price { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
@@ -239,6 +237,8 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   .pkg:last-child { border-bottom: 0; }
   .for { min-height: 0; }
   .duo > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .bundle-list { grid-template-columns: 1fr; }
+  .bundle + .bundle { border-left: 0; border-top: 1px solid var(--line); }
   th, td { padding: 10px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -353,24 +353,8 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   </section>
 
   <div class="cols">
-    <section class="panel addons" aria-labelledby="ad">
-      <header><h2 id="ad">Add-ons</h2><span class="tag">Any package</span></header>
-      <div class="table-scroll">
-        <table>
-          <tbody>
-            <tr><td>AI website chatbot<span class="sub">Answers FAQs, captures leads</span></td><td class="num">R1,500<span class="sub">+ R299/month API costs</span></td></tr>
-            <tr><td>WhatsApp AI bot<span class="sub">Bookings and quotes on WhatsApp. Meta message fees extra</span></td><td class="num">R2,000<span class="sub">+ R299/month API costs</span></td></tr>
-            <tr><td>Extra page</td><td class="num">R350</td></tr>
-            <tr><td>Logo design</td><td class="num">R400</td></tr>
-            <tr><td>Flyer design</td><td class="num">R250</td></tr>
-            <tr><td>Social media pack<span class="sub">8 branded posts</span></td><td class="num">R500</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
     <section class="panel bundles" aria-labelledby="bd">
-      <header><h2 id="bd">Bundles</h2><span class="tag">Save on add-ons</span></header>
+      <header><h2 id="bd">Bundles</h2><span class="tag">Save when you bundle</span></header>
       <div class="bundle-list">
         <article class="bundle">
           <div class="bundle-head"><h3>Get Online</h3><span class="bundle-price">R2,200</span></div>
