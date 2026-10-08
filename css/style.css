@@ -668,8 +668,6 @@ h2.heading2 {
 .top-nav { display:flex; gap:6px 18px; align-items:center; }
 .top-nav a { color:#e8caa0; text-decoration:none; opacity:.85; }
 .top-nav a:hover { opacity:1; text-decoration:underline; text-underline-offset:4px; }
-.top-nav .top-nav-cta { background:#e8caa0; color:#0a0a0a; opacity:1; padding:3px 10px; }
-.top-nav .top-nav-cta:hover { background:#f2dcb9; text-decoration:none; }
 .top-nav a[aria-current="page"] { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; }
 
 /* ---------- Packages + process (part of the hero column; tops set by
@@ -694,7 +692,6 @@ h2.heading2 {
   .offer-featured { box-shadow:none; background:rgba(232,202,160,0.08); }
   .offer-price { font-size:20px; }
   .top-nav { gap:4px 12px; }
-  .top-nav .top-nav-cta { padding:2px 7px; }
 }
 
 /* About page (desktop): use the open space beside the face instead of the narrow home column. */

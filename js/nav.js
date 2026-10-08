@@ -35,8 +35,7 @@
       .byline.top-nav a { padding:14px 12px; font-size:15px; opacity:1; border-bottom:1px solid rgba(232,202,160,0.15); }
       .byline.top-nav a[aria-current="page"] { text-decoration:none; background:rgba(232,202,160,0.1); }
       .byline.top-nav a:hover { text-decoration:none; background:rgba(232,202,160,0.08); }
-      .byline.top-nav .top-nav-cta { margin-top:8px; padding:13px 12px; text-align:center; border-bottom:0; }
-      .byline.top-nav .top-nav-cta:hover { background:#f2dcb9; }
+      .byline.top-nav a:last-child { border-bottom:0; }
     }
     @media (prefers-reduced-motion: reduce) {
       .nav-toggle span, .byline.top-nav { transition:none !important; }
