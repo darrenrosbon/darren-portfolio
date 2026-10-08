@@ -112,6 +112,10 @@ h1 span { color: var(--gold); }
 .support .badge { margin-top: 2px; }
 @media (max-width: 600px) { .support { flex-direction: column; gap: 8px; } }
 
+.add-quote { width: 100%; min-height: 40px; transition: background-color .2s ease, color .2s ease; }
+.add-quote[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.add-quote[aria-pressed="true"]::before { content: "\2713\00a0"; }
+
 /* Tables */
 .table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
@@ -280,6 +284,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~3 days</dd></dl>
         <div class="deposit"><span>30% deposit</span><strong>R375</strong></div>
+        <button class="btn ghost add-quote" type="button" data-pkg="Digital Business Card (R1,250)" aria-pressed="false">Add to quote</button>
       </article>
 
       <article class="pkg">
@@ -294,6 +299,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~5 days</dd></dl>
         <div class="deposit"><span>30% deposit</span><strong>R585</strong></div>
+        <button class="btn ghost add-quote" type="button" data-pkg="Starter (R1,950)" aria-pressed="false">Add to quote</button>
       </article>
 
       <article class="pkg featured">
@@ -309,6 +315,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>2 rounds</dd><dt>Turnaround</dt><dd>~10 days</dd></dl>
         <div class="deposit"><span>40% deposit</span><strong>R1,580</strong></div>
+        <button class="btn ghost add-quote" type="button" data-pkg="Business (R3,950)" aria-pressed="false">Add to quote</button>
       </article>
 
       <article class="pkg">
@@ -325,6 +332,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>3 rounds</dd><dt>Turnaround</dt><dd>~3 weeks</dd></dl>
         <div class="deposit"><span>50% deposit</span><strong>R3,750</strong></div>
+        <button class="btn ghost add-quote" type="button" data-pkg="Premium (R7,500)" aria-pressed="false">Add to quote</button>
       </article>
     </div>
     <div class="support">
@@ -363,6 +371,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <li>Logo design</li>
           </ul>
           <div class="bundle-foot"><span class="badge">Save R150</span><span>30% deposit: <strong>R660</strong></span></div>
+          <button class="btn ghost add-quote" type="button" data-pkg="Get Online bundle (R2,200)" aria-pressed="false">Add to quote</button>
         </article>
         <article class="bundle">
           <div class="bundle-head"><h3>Grow</h3><span class="bundle-price">R5,650</span></div>
@@ -372,6 +381,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <li>Social media pack, 8 posts</li>
           </ul>
           <div class="bundle-foot"><span class="badge">Save R300</span><span>40% deposit: <strong>R2,260</strong></span></div>
+          <button class="btn ghost add-quote" type="button" data-pkg="Grow bundle (R5,650)" aria-pressed="false">Add to quote</button>
         </article>
       </div>
     </section>
@@ -585,6 +595,7 @@ document.getElementById('copy').addEventListener('click', function () {
     });
     document.addEventListener('click', function (e) { if (isOpen() && !wrap.contains(e.target)) close(); });
     form.addEventListener('reset', function () { setTimeout(function () { paint(); }, 0); });
+    sel.addEventListener('change', paint);
     paint();
   })();
 
@@ -622,6 +633,28 @@ document.getElementById('copy').addEventListener('click', function () {
     document.getElementById('qtMonth').textContent = money(x.monthly) + '/month';
   }
   document.getElementById('qPkg').addEventListener('change', estimate);
+
+  var addBtns = document.querySelectorAll('.add-quote');
+  function syncAddBtns() {
+    var cur = document.getElementById('qPkg').value;
+    addBtns.forEach(function (b) {
+      var on = b.getAttribute('data-pkg') === cur;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? 'Added to quote' : 'Add to quote';
+    });
+  }
+  document.getElementById('qPkg').addEventListener('change', syncAddBtns);
+  form.addEventListener('reset', function () { setTimeout(syncAddBtns, 0); });
+  addBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var sel = document.getElementById('qPkg');
+      sel.value = b.getAttribute('data-pkg');
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('quote').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+  syncAddBtns();
   form.querySelectorAll('.qty-row').forEach(function (row) {
     var out = row.querySelector('output'), dec = row.querySelector('.dec'), inc = row.querySelector('.inc');
     function set(n) {
