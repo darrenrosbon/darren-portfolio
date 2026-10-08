@@ -160,6 +160,16 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .field textarea { resize: vertical; min-height: 96px; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
 .field .bad { border-color: #e07a7a; }
+.addons-field { border: 0; padding: 0; margin: 0; }
+.addons-field legend { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 8px; }
+.checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.field .check { display: flex; align-items: flex-start; gap: 10px; border: 1px solid var(--line-strong); padding: 10px 12px; cursor: pointer; font-size: 13px; text-transform: none; line-height: 1.4; letter-spacing: 0; color: var(--fg); min-width: 0; }
+.check:hover { border-color: var(--gold); }
+.check input { width: 16px; height: 16px; margin: 2px 0 0; flex: none; accent-color: var(--gold); padding: 0; }
+.check span { min-width: 0; }
+.check em { display: block; font-style: normal; color: var(--muted); font-size: 12px; }
+.check:has(input:checked) { border-color: var(--gold); background: #1b1813; }
+@media (max-width: 600px) { .checks { grid-template-columns: 1fr; } }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .qerr { margin: 0; color: #e07a7a; font-size: 13px; }
 .qok { margin: 0; color: var(--green); font-size: 13px; border: 1px solid var(--green); padding: 10px 12px; }
@@ -383,9 +393,22 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <option>Starter (R1,950)</option>
             <option>Business (R3,950)</option>
             <option>Premium (R7,500)</option>
+            <option>Get Online bundle (R2,200)</option>
+            <option>Grow bundle (R5,650)</option>
             <option>Something custom</option>
           </select>
         </div>
+        <fieldset class="field wide addons-field">
+          <legend>Add-ons (optional)</legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="addon" value="AI website chatbot (R1,500 + R299/month)"><span>AI website chatbot <em>R1,500 + R299/month</em></span></label>
+            <label class="check"><input type="checkbox" name="addon" value="WhatsApp AI bot (R2,000 + R299/month)"><span>WhatsApp AI bot <em>R2,000 + R299/month</em></span></label>
+            <label class="check"><input type="checkbox" name="addon" value="Extra page (R350)"><span>Extra page <em>R350</em></span></label>
+            <label class="check"><input type="checkbox" name="addon" value="Logo design (R400)"><span>Logo design <em>R400</em></span></label>
+            <label class="check"><input type="checkbox" name="addon" value="Flyer design (R250)"><span>Flyer design <em>R250</em></span></label>
+            <label class="check"><input type="checkbox" name="addon" value="Social media pack (R500)"><span>Social media pack, 8 posts <em>R500</em></span></label>
+          </div>
+        </fieldset>
         <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4"></textarea></div>
       </div>
       <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
@@ -460,10 +483,14 @@ document.getElementById('copy').addEventListener('click', function () {
     show('');
     return true;
   }
+  function addons() {
+    return Array.prototype.map.call(form.querySelectorAll('input[name=addon]:checked'), function (c) { return c.value; });
+  }
   function waText() {
     var t = "Hi Darren, I'm " + val('qName');
     if (val('qBiz')) t += ' from ' + val('qBiz');
     t += '. I\'d like a quote. Package: ' + document.getElementById('qPkg').value + '.';
+    if (addons().length) t += ' Add-ons: ' + addons().join(', ') + '.';
     if (val('qMsg')) t += ' ' + val('qMsg');
     return t;
   }
@@ -481,7 +508,9 @@ document.getElementById('copy').addEventListener('click', function () {
         _subject: 'Website quote request: ' + val('qName'),
         _template: 'table',
         name: val('qName'), phone: val('qPhone'), business: val('qBiz'), email: val('qEmail'),
-        package: document.getElementById('qPkg').value, message: val('qMsg')
+        package: document.getElementById('qPkg').value,
+        addons: addons().join(', ') || 'None',
+        message: val('qMsg')
       })
     }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
