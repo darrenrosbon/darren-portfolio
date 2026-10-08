@@ -738,3 +738,9 @@ h2.heading2 {
   .social-row-mobile { display:flex; justify-content:center; gap:26px; margin:22px 24px 0; position:relative; z-index:5; }
   .social-row-mobile .social-icon { width:32px; height:32px; aspect-ratio:auto; }
 }
+
+/* About page, mobile: the page is exactly one screen; the space for the fixed bottom bar lives inside the hero instead of below it, so there is no pointless scroll */
+@media (max-width: 700px) {
+  #hero[data-page="about"] { padding-bottom:72px; }
+  body:has(#hero[data-page="about"]) { padding-bottom:0; }
+}
