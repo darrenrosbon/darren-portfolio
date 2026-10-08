@@ -103,6 +103,10 @@ h1 span { color: var(--gold); }
 .feats li::before { content: "+"; position: absolute; left: 0; color: var(--gold); }
 .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
 .meta dd { margin: 0; color: var(--fg); text-align: right; font-variant-numeric: tabular-nums; }
+.splits { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0; padding: 10px 12px; border: 1px solid var(--line-strong); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.splits dt { margin: 0; }
+.splits dd { margin: 0; text-align: right; color: var(--fg); }
+.splits dd.first { color: var(--gold); font-weight: 700; font-size: 14px; }
 .deposit { border: 1px solid var(--line-strong); padding: 10px 12px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; color: var(--muted); }
 .deposit strong { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
 
@@ -283,7 +287,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           <li>Mobile-first, data-light</li>
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~3 days</dd></dl>
-        <div class="deposit"><span>30% deposit</span><strong>R375</strong></div>
+        <dl class="splits"><dt>30% deposit</dt><dd class="first">R375</dd><dt>On launch</dt><dd>R875</dd></dl>
         <button class="btn ghost add-quote" type="button" data-pkg="Digital Business Card (R1,250)" aria-pressed="false">Add to quote</button>
       </article>
 
@@ -298,7 +302,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           <li>Basic SEO</li>
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~5 days</dd></dl>
-        <div class="deposit"><span>30% deposit</span><strong>R585</strong></div>
+        <dl class="splits"><dt>30% deposit</dt><dd class="first">R585</dd><dt>On launch</dt><dd>R1,365</dd></dl>
         <button class="btn ghost add-quote" type="button" data-pkg="Starter (R1,950)" aria-pressed="false">Add to quote</button>
       </article>
 
@@ -314,7 +318,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           <li>SEO on every page</li>
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>2 rounds</dd><dt>Turnaround</dt><dd>~10 days</dd></dl>
-        <div class="deposit"><span>40% deposit</span><strong>R1,580</strong></div>
+        <dl class="splits"><dt>40% deposit</dt><dd class="first">R1,580</dd><dt>Design approved</dt><dd>R1,185</dd><dt>On launch</dt><dd>R1,185</dd></dl>
         <button class="btn ghost add-quote" type="button" data-pkg="Business (R3,950)" aria-pressed="false">Add to quote</button>
       </article>
 
@@ -331,7 +335,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
           <li>Full SEO + Google Analytics</li>
         </ul>
         <dl class="meta"><dt>Revisions</dt><dd>3 rounds</dd><dt>Turnaround</dt><dd>~3 weeks</dd></dl>
-        <div class="deposit"><span>50% deposit</span><strong>R3,750</strong></div>
+        <dl class="splits"><dt>50% deposit</dt><dd class="first">R3,750</dd><dt>Design approved</dt><dd>R1,875</dd><dt>On launch</dt><dd>R1,875</dd></dl>
         <button class="btn ghost add-quote" type="button" data-pkg="Premium (R7,500)" aria-pressed="false">Add to quote</button>
       </article>
     </div>
@@ -342,21 +346,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     <div class="support">
       <span class="badge gold">Custom</span>
       <p><strong>Need something that doesn't fit a package?</strong> I also do custom quotes based on what your business needs. <a href="#quote">Ask for a free quote</a>.</p>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="pay">
-    <header><h2 id="pay">How payment works</h2><span class="tag">Payment by EFT</span></header>
-    <div class="table-scroll">
-      <table>
-        <thead><tr><th>Package</th><th>Deposit</th><th>Design approved</th><th>On launch</th></tr></thead>
-        <tbody>
-          <tr><td>Digital Business Card</td><td class="num"><span class="gold-t">R375</span><span class="sub">30%</span></td><td>—</td><td class="num">R875</td></tr>
-          <tr><td>Starter</td><td class="num"><span class="gold-t">R585</span><span class="sub">30%</span></td><td>—</td><td class="num">R1,365</td></tr>
-          <tr><td>Business</td><td class="num"><span class="gold-t">R1,580</span><span class="sub">40%</span></td><td class="num">R1,185</td><td class="num">R1,185</td></tr>
-          <tr><td>Premium</td><td class="num"><span class="gold-t">R3,750</span><span class="sub">50%</span></td><td class="num">R1,875</td><td class="num">R1,875</td></tr>
-        </tbody>
-      </table>
     </div>
   </section>
 
@@ -391,7 +380,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     <header><h2 id="sp">The small print</h2><span class="tag">Good to know</span></header>
     <div class="panel-body">
       <ul class="fine">
-        <li>Deposits are non-refundable once design work has started.</li>
+        <li>Payment is by EFT, in the stages shown on each package.</li><li>Deposits are non-refundable once design work has started.</li>
         <li>Your site goes live on your domain once the final payment clears. Until then it stays on my hosting.</li>
         <li>Your domain is registered in your name. You own it and pay the yearly renewal directly, usually around R100–R150 for a .co.za.</li>
         <li>Free after-sales support runs for 30 days from launch and covers fixes and small changes. New pages or features are quoted separately.</li>
