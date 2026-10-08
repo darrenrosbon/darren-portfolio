@@ -34,7 +34,7 @@ main:focus { outline:none; }
   position:absolute; left:60px; top:48px; z-index:5;
   display:flex; flex-direction:column; align-items:flex-start; gap:0;
 }
-.hero-eyebrow { color:#e8caa0; font-size:12px; letter-spacing:2px; font-weight:500; margin-bottom:24px; }
+.hero-eyebrow { color:#e8caa0; font-size:12px; letter-spacing:2px; font-weight:500; margin-bottom:40px; }
 .heading-accent { color:#e8caa0; }
 h1.heading {
   margin:0; color:#f0f0f0; font-weight:800;
@@ -725,3 +725,4 @@ body:has(#hero[data-page="home"]) { padding-bottom:0; }
   .hero-btn { padding:9px 12px; font-size:12px; }
   .hero-more { margin-left:0; }
 }
+@media (max-width: 700px) { .hero-eyebrow { margin-bottom:28px; } }
