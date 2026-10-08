@@ -175,10 +175,13 @@ function layout(keepHeight) {
     positionDesktopContact();
   }
 
-  const desktopContact = document.querySelector('.desktop-contact');
-  if (IS_HOME && desktopContact && !keepHeight && W >= MOBILE_BREAKPOINT) {
+  // Grow the hero to fit the last block on the page: the contact block, else
+  // the about block, else whichever stacked block comes last.
+  const stacked = stackedBlocks();
+  const lastBlock = document.querySelector('.desktop-contact') || document.getElementById('about') || stacked[stacked.length - 1];
+  if (IS_HOME && lastBlock && !keepHeight && W >= MOBILE_BREAKPOINT) {
     const heroTop = hero.getBoundingClientRect().top;
-    const contactBottom = desktopContact.getBoundingClientRect().bottom - heroTop;
+    const contactBottom = lastBlock.getBoundingClientRect().bottom - heroTop;
     const needed = Math.ceil(contactBottom + 40);
     if (needed > hero.clientHeight) {
       hero.style.height = needed + 'px';
@@ -281,15 +284,16 @@ function positionServices() {
 function positionAboutSection() {
   const about = document.getElementById('about');
   const blocks = stackedBlocks();
-  if (!about || !blocks.length) return;
-  const work = blocks[blocks.length - 1];
+  if (!about) return;
+  // Under the last stacked block, or straight under the headline when the page has none.
+  const above = blocks.length ? blocks[blocks.length - 1] : document.querySelector('.heading-wrap');
   const heroTop = hero.getBoundingClientRect().top;
-  const gap = BLOCK_GAP;
+  const gap = blocks.length ? BLOCK_GAP : 32;
   if (W >= MOBILE_BREAKPOINT) {
     about.style.marginTop = '';
     about.style.top = '0px'; // reset before measuring so the old value can't skew the new one
-    const workBottom = work.getBoundingClientRect().bottom - heroTop;
-    about.style.top = (workBottom + gap) + 'px';
+    const aboveBottom = above.getBoundingClientRect().bottom - heroTop;
+    about.style.top = (aboveBottom + gap) + 'px';
     return;
   }
   about.style.top = '';
