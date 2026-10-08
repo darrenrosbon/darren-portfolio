@@ -721,3 +721,12 @@ h2.heading2 {
 .offer-cell .offer-for { flex:1; }
 /* Home has no floating quote card, so no room is reserved for the mobile bar */
 @media (max-width: 700px) { body:has(#hero[data-page="home"]) { padding-bottom:0; } }
+
+/* About page, mobile: left-aligned text and column */
+@media (max-width: 700px) {
+  #about { max-width:none; margin:0 24px; text-align:left; }
+  .guy-heading { text-align:left; }
+  .about-text, .about-body .about-text { text-align:left; }
+  .guy-heading-row { justify-content:flex-start; }
+  .sa-map { margin:18px 0 0; width:min(293px, calc(100vw - 48px)); }
+}
