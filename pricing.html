@@ -160,6 +160,26 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .field textarea { resize: vertical; min-height: 96px; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
 .field .bad { border-color: #e07a7a; }
+
+/* Custom dropdown (built from the native select by JS; the select stays as the form value) */
+.dd { position: relative; }
+.dd-ready select { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.dd-btn { font: inherit; font-size: 14px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong); padding: 11px 12px; cursor: pointer; border-radius: 0; transition: border-color .2s ease, background-color .2s ease; }
+.dd-btn:hover { border-color: var(--gold); }
+.dd-btn:focus-visible, .dd.open .dd-btn { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.dd.open .dd-btn { background: #1b1813; }
+.dd-chev { width: 16px; height: 16px; flex: none; color: var(--gold); transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+.dd.open .dd-chev { transform: rotate(180deg); }
+.dd-menu { list-style: none; margin: 4px 0 0; padding: 0; position: absolute; left: 0; right: 0; top: 100%; z-index: 20; max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; background: var(--panel); border: 1px solid var(--gold); box-shadow: 0 12px 28px rgba(0, 0, 0, .6);
+  opacity: 0; visibility: hidden; transform: translateY(-6px); transform-origin: top; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+.dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; transition: opacity .18s ease, transform .18s ease, visibility 0s; }
+.dd-opt { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 12px 10px 14px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--line); position: relative; }
+.dd-opt:last-child { border-bottom: 0; }
+.dd-opt .p { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dd-opt.active { background: rgba(232, 202, 160, .1); }
+.dd-opt[aria-selected="true"] { color: var(--gold); }
+.dd-opt[aria-selected="true"]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); }
+.dd-opt[aria-selected="true"] .p { color: var(--gold); }
 .addons-field { border: 0; padding: 0; margin: 0; }
 .addons-field legend { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 8px; }
 .qty-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -501,6 +521,89 @@ document.getElementById('copy').addEventListener('click', function () {
     show('');
     return true;
   }
+  (function () {
+    var sel = document.getElementById('qPkg');
+    var wrap = document.createElement('div');
+    wrap.className = 'dd';
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    wrap.classList.add('dd-ready');
+    sel.tabIndex = -1;
+
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'dd-btn'; btn.id = 'qPkgBtn';
+    btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span class="dd-val"></span><svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>';
+    var menu = document.createElement('ul');
+    menu.className = 'dd-menu'; menu.id = 'qPkgMenu'; menu.setAttribute('role', 'listbox'); menu.tabIndex = -1;
+    btn.setAttribute('aria-controls', 'qPkgMenu');
+    wrap.appendChild(btn); wrap.appendChild(menu);
+    var label = document.querySelector('label[for="qPkg"]');
+    if (label) { label.setAttribute('for', 'qPkgBtn'); menu.setAttribute('aria-labelledby', label.id || (label.id = 'qPkgLabel')); }
+
+    var opts = Array.prototype.map.call(sel.options, function (o, i) {
+      var m = /^(.*?)\s*\((R[\d,]+)\)$/.exec(o.value);
+      var li = document.createElement('li');
+      li.className = 'dd-opt'; li.id = 'qPkgOpt' + i; li.setAttribute('role', 'option');
+      li.innerHTML = '<span></span><span class="p"></span>';
+      li.children[0].textContent = m ? m[1] : o.value;
+      li.children[1].textContent = m ? m[2] : '';
+      li.addEventListener('mousedown', function (e) { e.preventDefault(); });
+      li.addEventListener('click', function () { choose(i); close(true); });
+      li.addEventListener('mousemove', function () { setActive(i); });
+      menu.appendChild(li);
+      return li;
+    });
+    var active = sel.selectedIndex;
+
+    function paint() {
+      var cur = sel.selectedIndex;
+      btn.querySelector('.dd-val').textContent = sel.options[cur].value;
+      opts.forEach(function (li, i) { li.setAttribute('aria-selected', i === cur ? 'true' : 'false'); });
+    }
+    function setActive(i) {
+      active = Math.max(0, Math.min(opts.length - 1, i));
+      opts.forEach(function (li, k) { li.classList.toggle('active', k === active); });
+      btn.setAttribute('aria-activedescendant', opts[active].id);
+      var li = opts[active];
+      if (li.offsetTop < menu.scrollTop) menu.scrollTop = li.offsetTop;
+      else if (li.offsetTop + li.offsetHeight > menu.scrollTop + menu.clientHeight) menu.scrollTop = li.offsetTop + li.offsetHeight - menu.clientHeight;
+    }
+    function choose(i) {
+      sel.selectedIndex = i; paint();
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    function open() {
+      wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true');
+      setActive(sel.selectedIndex);
+    }
+    function close(refocus) {
+      wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+      btn.removeAttribute('aria-activedescendant');
+      if (refocus) btn.focus();
+    }
+    function isOpen() { return wrap.classList.contains('open'); }
+
+    btn.addEventListener('click', function () { isOpen() ? close() : open(); });
+    btn.addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (!isOpen()) {
+        if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'Enter' || k === ' ') { e.preventDefault(); open(); }
+        return;
+      }
+      if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+      else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+      else if (k === 'Home') { e.preventDefault(); setActive(0); }
+      else if (k === 'End') { e.preventDefault(); setActive(opts.length - 1); }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(active); close(true); }
+      else if (k === 'Escape') { e.preventDefault(); close(true); }
+      else if (k === 'Tab') { close(); }
+    });
+    document.addEventListener('click', function (e) { if (isOpen() && !wrap.contains(e.target)) close(); });
+    form.addEventListener('reset', function () { setTimeout(function () { paint(); }, 0); });
+    paint();
+  })();
+
   var MAX_QTY = 20;
   function money(n) { return 'R' + n.toLocaleString('en-ZA').replace(/\s/g, ','); }
   function addons() {
