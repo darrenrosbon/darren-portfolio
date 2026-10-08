@@ -25,8 +25,8 @@
    Single dark look by choice: it is the studio's brand. */
 :root {
   --bg: #0a0a0a;
-  --panel: #12110f;
-  --panel-head: #1a1815;
+  --panel: rgba(10, 10, 10, .7);
+  --panel-head: rgba(232, 202, 160, .08);
   --line: #2c2924;
   --line-strong: #4a4237;
   --fg: #ede9e1;
@@ -41,45 +41,44 @@
 body {
   margin: 0;
   background: var(--bg);
-  background-image:
-    linear-gradient(var(--panel) 1px, transparent 1px),
-    linear-gradient(90deg, var(--panel) 1px, transparent 1px);
-  background-size: 48px 48px;
   color: var(--fg);
   font-family: var(--mono);
   font-size: 14px;
   line-height: 1.6;
 }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 28px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 96px 72px; display: grid; gap: 28px; }
 a { color: var(--gold); }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-/* Site nav */
-.skip-link { position: absolute; left: -9999px; top: 8px; background: var(--gold); color: var(--on-gold); padding: 8px 12px; z-index: 10; }
-.skip-link:focus { left: 8px; }
-.site-nav { border-bottom: 1px solid var(--line-strong); background: rgba(10, 10, 10, .92); }
-.nav-in { max-width: 1120px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
-.nav-mark { display: block; line-height: 0; margin-right: auto; }
-.nav-mark:hover { opacity: .8; }
-.nav-links { display: flex; align-items: center; gap: 4px 22px; flex-wrap: wrap; }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; padding: 4px 0; border-bottom: 1px solid transparent; }
-.nav-links a:hover { color: var(--fg); }
-.nav-links a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
-.nav-links a.nav-cta { color: var(--on-gold); background: var(--gold); border: 0; padding: 6px 14px; font-weight: 700; }
-.nav-links a.nav-cta:hover { filter: brightness(1.08); color: var(--on-gold); }
-@media (max-width: 600px) { .nav-in { padding: 10px 16px; gap: 12px; } .nav-links { gap: 2px 14px; } }
+/* Site nav: same as the home page */
+.skip-link { position: absolute; left: -9999px; top: 8px; background: var(--bg); color: var(--gold); border: 1px solid var(--gold); padding: 8px 12px; z-index: 100; font-weight: 700; font-size: 13px; text-decoration: none; }
+.skip-link:focus { left: 12px; top: 12px; }
+.site-head { height: 0; }
+.site-mark { position: absolute; top: 20px; left: 20px; z-index: 6; display: block; line-height: 0; transition: opacity .15s ease; }
+.site-mark img { display: block; }
+.site-mark:hover { opacity: .8; }
+.byline { position: absolute; top: 48px; right: 32px; z-index: 5; color: var(--gold); font-weight: 500; font-size: clamp(13px, 1.3vw, 18px); letter-spacing: .5px; text-align: right; }
+.top-nav { display: flex; gap: 6px 18px; align-items: center; }
+.top-nav a { color: var(--gold); text-decoration: none; opacity: .85; }
+.top-nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.top-nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.top-nav .top-nav-cta { background: var(--gold); color: var(--on-gold); opacity: 1; padding: 3px 10px; }
+.top-nav .top-nav-cta:hover { background: #f2dcb9; text-decoration: none; }
+@media (max-width: 700px) { .byline { top: 16px; right: 16px; font-size: 11px; } .top-nav { gap: 4px 12px; } .top-nav .top-nav-cta { padding: 2px 7px; } }
 
 /* Hero */
-.eyebrow { color: var(--gold); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 12px; }
+.eyebrow { color: var(--gold); font-size: 12px; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; margin: 0 0 12px; }
 h1 { font-size: clamp(30px, 5.4vw, 48px); line-height: 1.08; margin: 0; font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
 h1 span { color: var(--gold); }
 .lede { color: var(--muted); max-width: 62ch; margin: 16px 0 0; }
 
 /* Panels */
-.panel { border: 1px solid var(--line-strong); background: var(--panel); }
+canvas#c { display: block; position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
+.wrap, .site-head { position: relative; z-index: 5; }
+.panel { border: 1px solid rgba(232, 202, 160, .25); border-top: 2px solid var(--gold); background: var(--panel); }
 .panel > header {
   display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-  padding: 14px 18px; background: var(--panel-head); border-bottom: 1px solid var(--line-strong);
+  padding: 14px 18px; background: var(--panel-head); border-bottom: 1px solid rgba(232, 202, 160, .25);
 }
 .panel > header h2 { margin: 0; font-size: 17px; font-weight: 700; }
 .tag { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
@@ -90,7 +89,7 @@ h1 span { color: var(--gold); }
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .pkg { padding: 20px 18px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; position: relative; }
 .pkg:last-child { border-right: 0; }
-.pkg.featured { background: #1b1813; box-shadow: inset 0 0 0 1px var(--gold); }
+.pkg.featured { background: rgba(27, 24, 19, .8); box-shadow: inset 0 0 0 1px var(--gold); }
 .pkg-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 24px; }
 .pkg h3 { margin: 0; font-size: 15px; font-weight: 700; }
 .badge { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--green); color: var(--green); white-space: nowrap; }
@@ -123,7 +122,7 @@ h1 span { color: var(--gold); }
 /* Accordion (small print) */
 .acc-h { margin: 0; font-size: inherit; }
 .acc-btn { font: inherit; color: var(--fg); width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; background: var(--panel-head); border: 0; cursor: pointer; text-align: left; transition: background-color .2s ease; }
-.acc-btn:hover { background: #211e1a; }
+.acc-btn:hover { background: rgba(232, 202, 160, .14); }
 .acc-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 .acc-title { font-size: 17px; font-weight: 700; }
 .acc-meta { display: inline-flex; align-items: center; gap: 12px; }
@@ -180,7 +179,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .dd.open .dd-btn { background: #1b1813; }
 .dd-chev { width: 16px; height: 16px; flex: none; color: var(--gold); transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
 .dd.open .dd-chev { transform: rotate(180deg); }
-.dd-menu { list-style: none; margin: 4px 0 0; padding: 0; position: absolute; left: 0; right: 0; top: 100%; z-index: 20; max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; background: var(--panel); border: 1px solid var(--gold); box-shadow: 0 12px 28px rgba(0, 0, 0, .6);
+.dd-menu { list-style: none; margin: 4px 0 0; padding: 0; position: absolute; left: 0; right: 0; top: 100%; z-index: 20; max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; background: #12110f; border: 1px solid var(--gold); box-shadow: 0 12px 28px rgba(0, 0, 0, .6);
   opacity: 0; visibility: hidden; transform: translateY(-6px); transform-origin: top; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
 .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; transition: opacity .18s ease, transform .18s ease, visibility 0s; }
 .dd-opt { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 12px 10px 14px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--line); position: relative; }
@@ -242,7 +241,7 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   .pkg:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
 @media (max-width: 600px) {
-  .wrap { padding-inline: 16px; padding-block: 32px 56px; }
+  .wrap { padding-inline: 16px; padding-block: 72px 56px; }
   .grid, .duo { grid-template-columns: 1fr; }
   .pkg { border-right: 0; border-bottom: 1px solid var(--line); }
   .pkg:last-child { border-bottom: 0; }
@@ -254,22 +253,20 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 </style>
 </head>
 <body>
+<canvas id="c"></canvas>
 <a class="skip-link" href="#main">Skip to content</a>
-<nav class="site-nav" aria-label="Main">
-  <div class="nav-in">
-    <a class="nav-mark" href="index.html" aria-label="Robson Web Studio, home">
-      <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
-    </a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="pricing.html" aria-current="page">Pricing</a>
-      <a class="nav-cta" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-    </div>
-  </div>
-</nav>
+<header class="site-head">
+  <a class="site-mark" href="index.html" aria-label="Robson Web Studio, home">
+    <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+  </a>
+  <nav class="byline top-nav" aria-label="Main">
+    <a href="index.html#work">Work</a><a href="pricing.html" aria-current="page">Pricing</a><a class="top-nav-cta" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </nav>
+</header>
 
 <main class="wrap" id="main" tabindex="-1">
   <section>
+    <p class="eyebrow">ROBSON WEB STUDIO · JOHANNESBURG</p>
     <h1>Proper websites,<br><span>priced for SA business</span></h1>
     <p class="lede">Fast, mobile-first sites that load on any data bundle and send customers straight to your WhatsApp. Small deposits, split payments on bigger builds, 30 days of free support after launch, and no surprise invoices.</p>
   </section>
@@ -693,5 +690,7 @@ document.getElementById('copy').addEventListener('click', function () {
   });
 })();
 </script>
+<script src="js/face-art.js?v=113"></script>
+<script src="js/site.js?v=123"></script>
 </body>
 </html>

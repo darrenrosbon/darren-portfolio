@@ -1,12 +1,17 @@
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
-const hero = document.getElementById('hero');
+// Inner pages (pricing) have no hero or home layout: same background, no column positioning.
+const IS_HOME = !!document.getElementById('work');
+const hero = document.getElementById('hero') || document.documentElement;
 
-document.querySelector('.site-mark').addEventListener('click', (e) => {
-  e.preventDefault();
-  hero.scrollIntoView({ behavior: 'smooth' });
-  history.replaceState(null, '', location.pathname + location.search);
-});
+const siteMark = document.querySelector('.site-mark');
+if (IS_HOME && siteMark) {
+  siteMark.addEventListener('click', (e) => {
+    e.preventDefault();
+    hero.scrollIntoView({ behavior: 'smooth' });
+    history.replaceState(null, '', location.pathname + location.search);
+  });
+}
 const BG_FONT_SIZE = 13, CELL = 13;
 const BG_COLOR = [150, 150, 150];
 const FACE_COLOR = [232, 202, 160];
@@ -113,7 +118,7 @@ function resize() { layout(false); }
 // keepHeight is true only on the second pass after growing the hero to fit
 // the desktop column; every other call starts from the CSS height.
 function layout(keepHeight) {
-  if (!keepHeight) hero.style.height = '';
+  if (!keepHeight && IS_HOME) hero.style.height = '';
   // Canvas is position:fixed, so it covers the viewport, not the (taller,
   // scrolling) hero. Mobile uses the larger of innerHeight/screen.height so
   // the strip revealed when the URL bar collapses is still painted.
@@ -162,13 +167,15 @@ function layout(keepHeight) {
   buildOccupancyMask();
   buildNodes();
   buildCaches();
-  sizeSocialIcons();
-  positionServices();
-  positionAboutSection();
-  positionMainBody();
-  positionDesktopContact();
+  if (IS_HOME) {
+    sizeSocialIcons();
+    positionServices();
+    positionAboutSection();
+    positionMainBody();
+    positionDesktopContact();
+  }
 
-  if (!keepHeight && W >= MOBILE_BREAKPOINT) {
+  if (IS_HOME && !keepHeight && W >= MOBILE_BREAKPOINT) {
     const heroTop = hero.getBoundingClientRect().top;
     const contactBottom = document.querySelector('.desktop-contact').getBoundingClientRect().bottom - heroTop;
     const needed = Math.ceil(contactBottom + 40);
@@ -553,7 +560,8 @@ function drawPulses(tMs) {
 function drawFace() {
   const layer = isWinking ? faceWinkCache : faceOpenCache;
   // Mobile content scrolls over the fixed face; dim it so text stays legible.
-  ctx.globalAlpha = W < MOBILE_BREAKPOINT ? 0.5 : 1;
+  // Inner pages have wide content over the face, so it sits back further there.
+  ctx.globalAlpha = !IS_HOME ? 0.35 : (W < MOBILE_BREAKPOINT ? 0.5 : 1);
   ctx.drawImage(layer, faceOriginX, faceOriginY, layer.width / DPR, layer.height / DPR);
   ctx.globalAlpha = 1;
 }

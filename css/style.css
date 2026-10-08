@@ -666,6 +666,7 @@ h2.heading2 {
 .top-nav a:hover { opacity:1; text-decoration:underline; text-underline-offset:4px; }
 .top-nav .top-nav-cta { background:#e8caa0; color:#0a0a0a; opacity:1; padding:3px 10px; }
 .top-nav .top-nav-cta:hover { background:#f2dcb9; text-decoration:none; }
+.top-nav a[aria-current="page"] { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; }
 
 /* ---------- Packages + process (part of the hero column; tops set by
    positionServices() in site.js on desktop, flow in-document on mobile) ---------- */
