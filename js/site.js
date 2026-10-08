@@ -57,10 +57,9 @@ function buildFace() {
     // Desktop: the fixed CTA card owns the bottom-right corner, so the face
     // must end above it. Shrink to fit if the viewport is too short, then
     // center in the viewport, shifting up if that would reach the card.
-    const card = document.querySelector('.cta-card');
-    const cardBlock = card && getComputedStyle(card).display !== 'none'
-      ? card.offsetHeight + parseFloat(getComputedStyle(card).bottom) + 16 // card height + its bottom offset + gap
-      : 0;
+    // Reserve the same room for the quote card on every page (whether or not that page
+    // shows one) so the face has the identical size and position everywhere.
+    const cardBlock = 200;
     const limit = H - cardBlock;
     const scale = Math.max(0.55, Math.min(1, (limit - FACE_TOP_PADDING) / (faceRows * FACE_CELL_H)));
     FACE_FONT *= scale; FACE_CELL_W *= scale; FACE_CELL_H *= scale;
