@@ -596,7 +596,8 @@ h2.heading2 {
   }
   .cta-eyebrow { color:#e8caa0; font-size:12px; letter-spacing:1px; margin-bottom:8px; }
   .cta-title { color:#f0f0f0; font-weight:800; font-size:20px; letter-spacing:-1px; line-height:1.15; margin-bottom:16px; }
-  .cta-actions { display:flex; gap:10px; flex-wrap:wrap; }
+  .cta-actions { display:flex; gap:8px; flex-wrap:nowrap; }
+  .cta-actions .cta-btn { padding:10px 12px; font-size:12px; white-space:nowrap; flex:0 1 auto; }
   .cta-btn {
     font:600 13px 'JetBrains Mono', monospace; padding:10px 16px; cursor:pointer;
     border:1px solid #e8caa0; text-decoration:none; transition:background .2s ease, color .2s ease;
