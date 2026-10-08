@@ -1,10 +1,6 @@
 // Mobile navigation: on narrow screens the inline links collapse behind a burger button
 // that opens a dropdown panel. On desktop nothing changes (the button stays hidden).
 (function () {
-  const nav = document.querySelector('.top-nav');
-  if (!nav) return;
-  if (!nav.id) nav.id = 'siteNav';
-
   const style = document.createElement('style');
   style.textContent = `
     .nav-toggle { display:none; }
@@ -54,6 +50,11 @@
   `;
   document.head.appendChild(style);
 
+  function init() {
+  const nav = document.querySelector('.top-nav');
+  if (!nav) return;
+  if (!nav.id) nav.id = 'siteNav';
+
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'nav-toggle';
@@ -95,4 +96,9 @@
   });
   const onChange = () => { if (!mq.matches) setOpen(false); };
   if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
+  }
+
+  // The stylesheet above is injected immediately (this script runs in <head>) so the nav never
+  // flashes unstyled; the markup work waits for the page to be parsed.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
