@@ -735,6 +735,6 @@ h2.heading2 {
 /* About page, mobile: social icons sit under the email bar */
 .social-row-mobile { display:none; }
 @media (max-width: 700px) {
-  .social-row-mobile { display:flex; gap:22px; margin:22px 24px 0; position:relative; z-index:5; }
+  .social-row-mobile { display:flex; justify-content:center; gap:26px; margin:22px 24px 0; position:relative; z-index:5; }
   .social-row-mobile .social-icon { width:32px; height:32px; aspect-ratio:auto; }
 }
