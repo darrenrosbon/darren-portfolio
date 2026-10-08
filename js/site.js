@@ -249,7 +249,6 @@ const BLOCK_GAP = 48;
 
 function positionServices() {
   const services = document.getElementById('services');
-  const stack = document.getElementById('stack');
   const work = document.getElementById('work');
   const packages = document.getElementById('packages');
   const process = document.getElementById('process');
@@ -257,7 +256,6 @@ function positionServices() {
     packages.style.top = '';
     process.style.top = '';
     services.style.top = '';
-    stack.style.top = '';
     return;
   }
   const heroTop = hero.getBoundingClientRect().top;
@@ -268,12 +266,11 @@ function positionServices() {
   work.style.top = (packages.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
   process.style.top = (work.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
   services.style.top = (process.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
-  stack.style.top = (services.getBoundingClientRect().bottom - heroTop + BLOCK_GAP) + 'px';
 }
 
 function positionAboutSection() {
   const about = document.getElementById('about');
-  const work = document.getElementById('stack');
+  const work = document.getElementById('services');
   const heroTop = hero.getBoundingClientRect().top;
   const gap = BLOCK_GAP;
   if (W >= MOBILE_BREAKPOINT) {
@@ -298,12 +295,11 @@ function positionMainBody() {
   const work = document.getElementById('work');
   const about = document.getElementById('about');
   const services = document.getElementById('services');
-  const stack = document.getElementById('stack');
   const packages = document.getElementById('packages');
   const process = document.getElementById('process');
   const contact = document.querySelector('.desktop-contact');
   if (W < MOBILE_BREAKPOINT) {
-    [headingWrap, packages, process, work, services, stack, about, contact].forEach((el) => { if (el) el.style.left = ''; });
+    [headingWrap, packages, process, work, services, about, contact].forEach((el) => { if (el) el.style.left = ''; });
     if (contact) contact.style.width = '';
     return;
   }
@@ -318,7 +314,6 @@ function positionMainBody() {
   process.style.left = columnLeft + 'px';
   work.style.left = columnLeft + 'px';
   services.style.left = columnLeft + 'px';
-  stack.style.left = columnLeft + 'px';
   about.style.left = columnLeft + 'px';
   if (contact) {
     contact.style.left = columnLeft + 'px';
