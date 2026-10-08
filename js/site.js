@@ -361,14 +361,15 @@ function centerAboutPage() {
   const headH = heading.getBoundingClientRect().height;
   const aboutH = about.getBoundingClientRect().height;
   const contactH = contact.getBoundingClientRect().height;
-  const groupH = headH + GAP_HEAD + aboutH + GAP_CONTACT + contactH;
+  const gapHead = headH > 0 ? GAP_HEAD : 0; // the page headline now lives inside the about block
+  const groupH = headH + gapHead + aboutH + GAP_CONTACT + contactH;
   const floor = EYEBROW_TOP + eyebrow.getBoundingClientRect().height + 24;
   const areaH = Math.max(window.innerHeight, floor + groupH + 24);
   const top = Math.max(floor, floor + (areaH - floor - groupH) / 2);
   heading.style.top = top + 'px';
   eyebrow.style.top = (EYEBROW_TOP - top) + 'px';
-  about.style.top = (top + headH + GAP_HEAD) + 'px';
-  contact.style.top = (top + headH + GAP_HEAD + aboutH + GAP_CONTACT) + 'px';
+  about.style.top = (top + headH + gapHead) + 'px';
+  contact.style.top = (top + headH + gapHead + aboutH + GAP_CONTACT) + 'px';
 }
 
 // Desktop's email + social icons block, vertically centered in the empty

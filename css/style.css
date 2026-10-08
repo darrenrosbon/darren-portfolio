@@ -52,7 +52,7 @@ h1.heading {
   position:absolute; left:60px; top:500px; z-index:5;
   width: min(56%, 640px);
 }
-h2.guy-heading {
+.guy-heading {
   margin:0 0 14px 0; color:#f0f0f0; font-weight:800; text-align:center;
   font-size: clamp(18px, 2.2vw, 28px);
   letter-spacing:-1px;
@@ -435,7 +435,7 @@ h2.heading2 {
      further — a runaway loop. nowrap keeps each of the two <br>-separated
      segments on exactly one line each, so the heading's height is stable
      regardless of how much width the icon ends up taking. */
-  h2.guy-heading { margin:0; font-size:16px; text-align:right; white-space:nowrap; }
+  .guy-heading { margin:0; font-size:16px; text-align:right; white-space:nowrap; }
   /* text-align:right + margin reset — the desktop rule now sets
      text-align:center and margin:0 auto (for its own centering), which
      would otherwise leak through uncorrected here. */
@@ -644,7 +644,7 @@ h2.heading2 {
   .about-body { display:contents; }
   .about-eyebrow { display:block; grid-column:1; grid-row:1; color:#e8caa0; font-size:11px; letter-spacing:1px; margin-bottom:8px; }
   .guy-heading-row { grid-column:1; grid-row:2; }
-  h2.guy-heading { text-align:left; margin:0 0 12px 0; }
+  .guy-heading { text-align:left; margin:0 0 12px 0; }
   .about-body .about-text { grid-column:1; grid-row:3; text-align:left; max-width:36ch; margin:0; }
   .sa-map { grid-column:2; grid-row:1 / 4; }
 }
@@ -696,7 +696,7 @@ h2.heading2 {
 /* About page (desktop): use the open space beside the face instead of the narrow home column. */
 @media (min-width: 701px) {
   #hero[data-page="about"] #about { width:auto; }
-  #hero[data-page="about"] h2.guy-heading { font-size:clamp(24px, 2.4vw, 36px); text-align:left; margin-bottom:20px; }
+  #hero[data-page="about"] .guy-heading { font-size:clamp(24px, 2.4vw, 36px); text-align:left; margin-bottom:20px; }
   #hero[data-page="about"] .about-eyebrow { font-size:12px; letter-spacing:2px; margin-bottom:10px; }
   #hero[data-page="about"] .about-body .about-text { font-size:clamp(15px, 1.15vw, 18px); line-height:1.75; max-width:none; }
 }
