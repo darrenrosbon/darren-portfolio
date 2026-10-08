@@ -315,11 +315,15 @@ function positionMainBody() {
   if (W < MOBILE_BREAKPOINT) {
     column.forEach((el) => { el.style.left = ''; });
     if (contact) contact.style.width = '';
+    if (about) about.style.width = '';
     return;
   }
   // Column width matches the existing CSS formula for the blocks (min(56%, 640px)),
   // read live rather than duplicating the constant.
-  const columnWidth = blocks.length ? blocks[0].getBoundingClientRect().width : Math.min(W * 0.56, 640);
+  // Pages with no stacked blocks (About) use the whole open space beside the face.
+  const columnWidth = blocks.length ? blocks[0].getBoundingClientRect().width
+    : Math.max(320, Math.min(faceOriginX - 96, 900));
+  if (!blocks.length && about) about.style.width = columnWidth + 'px';
   const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
   column.forEach((el) => { el.style.left = columnLeft + 'px'; });
   if (contact) contact.style.width = columnWidth + 'px';

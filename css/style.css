@@ -692,3 +692,15 @@ h2.heading2 {
   .top-nav { gap:4px 12px; }
   .top-nav .top-nav-cta { padding:2px 7px; }
 }
+
+/* About page (desktop): use the open space beside the face instead of the narrow home column. */
+@media (min-width: 701px) {
+  #hero[data-page="about"] #about { width:auto; }
+  #hero[data-page="about"] h2.guy-heading { font-size:clamp(24px, 2.4vw, 36px); text-align:left; margin-bottom:20px; }
+  #hero[data-page="about"] .about-eyebrow { font-size:12px; letter-spacing:2px; margin-bottom:10px; }
+  #hero[data-page="about"] .about-body .about-text { font-size:clamp(15px, 1.15vw, 18px); line-height:1.75; max-width:40ch; }
+}
+@media (min-width: 961px) {
+  #hero[data-page="about"] #about { column-gap:56px; }
+  #hero[data-page="about"] .sa-map { width:clamp(300px, 26vw, 400px); justify-self:end; }
+}
