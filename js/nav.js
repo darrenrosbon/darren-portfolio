@@ -12,12 +12,11 @@
       .nav-toggle {
         display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
         position:fixed; top:14px; right:12px; width:40px; height:40px; padding:0; z-index:90;
-        background:rgba(10,10,10,0.88); border:1px solid rgba(232,202,160,0.6); color:#e8caa0; cursor:pointer;
-        transition:background-color .2s ease, border-color .2s ease;
+        background:transparent; border:0; color:#e8caa0; cursor:pointer;
       }
-      .nav-toggle:hover, .nav-toggle[aria-expanded="true"] { background:#1b1813; border-color:#e8caa0; }
       .nav-toggle:focus-visible { outline:2px solid #e8caa0; outline-offset:3px; }
-      .nav-toggle span { display:block; width:18px; height:2px; background:currentColor; transform-origin:center;
+      .nav-toggle span { display:block; width:22px; height:2px; background:currentColor; transform-origin:center;
+        box-shadow:0 0 6px 2px rgba(10,10,10,0.9);
         transition:transform .25s cubic-bezier(.4,0,.2,1), opacity .15s ease; }
       .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
       .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity:0; }
