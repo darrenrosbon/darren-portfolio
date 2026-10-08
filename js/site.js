@@ -173,7 +173,7 @@ function layout(keepHeight) {
     positionAboutSection();
     positionMainBody();
     positionDesktopContact();
-    centerAboutPage();
+    centerPageContent();
   }
 
   // Grow the hero to fit the last block on the page: the contact block, else
@@ -183,7 +183,7 @@ function layout(keepHeight) {
   if (IS_HOME && lastBlock && !keepHeight && W >= MOBILE_BREAKPOINT) {
     const heroTop = hero.getBoundingClientRect().top;
     const contactBottom = lastBlock.getBoundingClientRect().bottom - heroTop;
-    const needed = Math.ceil(contactBottom + (hero.dataset.page === 'about' ? 16 : 40));
+    const needed = Math.ceil(contactBottom + (hero.dataset.page === 'about' || hero.dataset.page === 'home' ? 16 : 40));
     if (needed > hero.clientHeight) {
       hero.style.height = needed + 'px';
       layout(true);
@@ -339,37 +339,46 @@ function positionMainBody() {
   if (contact) contact.style.width = columnWidth + 'px';
 }
 
-// About page (desktop): the eyebrow stays pinned at the top while the headline, the
-// about block and the contact block move down together, centered vertically in the
-// space below the eyebrow.
-function centerAboutPage() {
-  if (hero.dataset.page !== 'about') return;
+// Home and About (desktop): the eyebrow stays pinned at the top while the headline and
+// everything below it move down together, centered vertically in the space under it.
+function centerPageContent() {
+  const page = hero.dataset.page;
+  if (page !== 'about' && page !== 'home') return;
   const heading = document.querySelector('.heading-wrap');
   const eyebrow = heading && heading.querySelector('.hero-eyebrow');
-  const about = document.getElementById('about');
-  const contact = document.querySelector('.desktop-contact');
-  if (!heading || !eyebrow || !about || !contact) return;
+  if (!heading || !eyebrow) return;
   if (W < MOBILE_BREAKPOINT) {
     heading.style.top = '';
     ['position', 'left', 'top', 'whiteSpace'].forEach((p) => { eyebrow.style[p] = ''; });
     return;
   }
-  const EYEBROW_TOP = 48, GAP_HEAD = 32, GAP_CONTACT = 36;
+  // What sits under the headline, in order, with the gap before each item.
+  const seq = page === 'about'
+    ? [[document.getElementById('about'), 32], [document.querySelector('.desktop-contact'), 36]]
+    : [[document.getElementById('packages'), 32]];
+  const items = seq.filter(([el]) => el);
+  if (!items.length) return;
+  const EYEBROW_TOP = 48;
   eyebrow.style.position = 'absolute';
   eyebrow.style.left = '0';
   eyebrow.style.whiteSpace = 'nowrap';
   const headH = heading.getBoundingClientRect().height;
-  const aboutH = about.getBoundingClientRect().height;
-  const contactH = contact.getBoundingClientRect().height;
-  const gapHead = headH > 0 ? GAP_HEAD : 0; // the page headline now lives inside the about block
-  const groupH = headH + gapHead + aboutH + GAP_CONTACT + contactH;
+  let groupH = headH;
+  items.forEach(([el, gap], i) => {
+    // the first gap only applies when the headline itself takes up room
+    groupH += (i === 0 && headH === 0 ? 0 : gap) + el.getBoundingClientRect().height;
+  });
   const floor = EYEBROW_TOP + eyebrow.getBoundingClientRect().height + 24;
   const areaH = Math.max(window.innerHeight, floor + groupH + 24);
   const top = Math.max(floor, floor + (areaH - floor - groupH) / 2);
   heading.style.top = top + 'px';
   eyebrow.style.top = (EYEBROW_TOP - top) + 'px';
-  about.style.top = (top + headH + gapHead) + 'px';
-  contact.style.top = (top + headH + gapHead + aboutH + GAP_CONTACT) + 'px';
+  let y = top + headH;
+  items.forEach(([el, gap], i) => {
+    y += (i === 0 && headH === 0 ? 0 : gap);
+    el.style.top = y + 'px';
+    y += el.getBoundingClientRect().height;
+  });
 }
 
 // Desktop's email + social icons block, vertically centered in the empty
