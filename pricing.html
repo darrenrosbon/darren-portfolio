@@ -147,6 +147,27 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .fine li { padding-left: 22px; position: relative; color: var(--fg); }
 .fine li::before { content: "//"; position: absolute; left: 0; color: var(--gold); }
 
+/* Quote form */
+.qform { padding: 18px; display: grid; gap: 16px; }
+.qgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.wide { grid-column: 1 / -1; }
+.field label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .field textarea {
+  font: inherit; font-size: 14px; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong);
+  border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0;
+}
+.field textarea { resize: vertical; min-height: 96px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.field .bad { border-color: #e07a7a; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.qerr { margin: 0; color: #e07a7a; font-size: 13px; }
+.qok { margin: 0; color: var(--green); font-size: 13px; border: 1px solid var(--green); padding: 10px 12px; }
+.qactions { display: flex; gap: 10px; flex-wrap: wrap; }
+.qactions .btn { min-height: 44px; }
+.qactions .btn[disabled] { opacity: .6; cursor: wait; }
+@media (max-width: 600px) { .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
+
 /* CTA */
 .cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 22px; }
 .cta h2 { margin: 0 0 4px; font-size: 20px; }
@@ -346,11 +367,42 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     </div>
   </section>
 
-  <section class="panel" id="quote">
+  <section class="panel" id="quote" aria-labelledby="qt">
+    <header><h2 id="qt">Get a free quote</h2><span class="tag">No obligation</span></header>
+    <form class="qform" id="quoteForm" novalidate>
+      <p class="note">Tell me about your business and I'll come back with a package or a custom price. Name and phone are required.</p>
+      <div class="qgrid">
+        <div class="field"><label for="qName">Your name</label><input id="qName" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="qPhone">Phone or WhatsApp</label><input id="qPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="082 123 4567" required></div>
+        <div class="field"><label for="qBiz">Business name</label><input id="qBiz" name="business" type="text" autocomplete="organization"></div>
+        <div class="field"><label for="qEmail">Email (optional)</label><input id="qEmail" name="email" type="email" autocomplete="email"></div>
+        <div class="field wide"><label for="qPkg">Package you're interested in</label>
+          <select id="qPkg" name="package">
+            <option value="Not sure yet">Not sure yet</option>
+            <option>Digital Business Card (R1,250)</option>
+            <option>Starter (R1,950)</option>
+            <option>Business (R3,950)</option>
+            <option>Premium (R7,500)</option>
+            <option>Something custom</option>
+          </select>
+        </div>
+        <div class="field wide"><label for="qMsg">What does your business do? (optional)</label><textarea id="qMsg" name="message" rows="4"></textarea></div>
+      </div>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+      <p class="qerr" id="qErr" role="alert" hidden></p>
+      <div class="qactions">
+        <button class="btn solid" type="submit" id="qSubmit">Send quote request</button>
+        <button class="btn ghost" type="button" id="qWa">Send on WhatsApp instead</button>
+      </div>
+      <p class="qok" id="qOk" role="status" hidden>Thanks, got it. I'll be in touch on the number you gave me.</p>
+    </form>
+  </section>
+
+  <section class="panel" id="contact">
     <div class="cta">
       <div>
-        <h2>Need something different?</h2>
-        <p>I also do custom quotes based on what your business needs. Tell me about your business and I'll put together a package or a custom price. Quotes are free.</p>
+        <h2>Prefer to chat?</h2>
+        <p>WhatsApp or email works too. Quotes are always free.</p>
       </div>
       <div class="actions">
         <a class="btn solid" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp me</a>
@@ -378,6 +430,74 @@ document.getElementById('copy').addEventListener('click', function () {
   function select() { var r = document.createRange(); r.selectNodeContents(email); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
   try { navigator.clipboard.writeText(email.textContent).then(done, select); } catch (e) { select(); }
 });
+
+(function () {
+  var form = document.getElementById('quoteForm');
+  var err = document.getElementById('qErr'), ok = document.getElementById('qOk');
+  var submit = document.getElementById('qSubmit');
+  var ENDPOINT = 'https://formsubmit.co/ajax/darren@robsonwebstudio.com';
+  var WA = 'https://wa.me/27844114748?text=';
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+  function show(msg) { err.textContent = msg; err.hidden = !msg; }
+  function check() {
+    var bad = [];
+    ['qName', 'qPhone'].forEach(function (id) {
+      var el = document.getElementById(id), v = el.value.trim();
+      var fail = !v || (id === 'qPhone' && v.replace(/\D/g, '').length < 9);
+      el.classList.toggle('bad', fail);
+      if (fail) bad.push(el);
+    });
+    var em = document.getElementById('qEmail');
+    var emBad = em.value.trim() !== '' && !em.checkValidity();
+    em.classList.toggle('bad', emBad);
+    if (emBad) bad.push(em);
+    if (bad.length) {
+      show(bad[0].id === 'qPhone' ? 'Enter a phone number we can reach you on.' : bad[0].id === 'qEmail' ? 'That email address looks off.' : 'Enter your name.');
+      bad[0].focus();
+      return false;
+    }
+    show('');
+    return true;
+  }
+  function waText() {
+    var t = "Hi Darren, I'm " + val('qName');
+    if (val('qBiz')) t += ' from ' + val('qBiz');
+    t += '. I\'d like a quote. Package: ' + document.getElementById('qPkg').value + '.';
+    if (val('qMsg')) t += ' ' + val('qMsg');
+    return t;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    ok.hidden = true;
+    if (!check()) return;
+    if (document.querySelector('[name=_honey]').value) return;
+    submit.disabled = true; submit.textContent = 'Sending…';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Website quote request: ' + val('qName'),
+        _template: 'table',
+        name: val('qName'), phone: val('qPhone'), business: val('qBiz'), email: val('qEmail'),
+        package: document.getElementById('qPkg').value, message: val('qMsg')
+      })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok || String(res.j.success) === 'false') throw new Error('send failed');
+        form.reset(); ok.hidden = false; ok.scrollIntoView({ block: 'nearest' });
+      })
+      .catch(function () { show("Couldn't send that. Try WhatsApp instead, or email darren@robsonwebstudio.com."); })
+      .then(function () { submit.disabled = false; submit.textContent = 'Send quote request'; });
+  });
+
+  document.getElementById('qWa').addEventListener('click', function () {
+    if (!val('qName')) { document.getElementById('qName').classList.add('bad'); show('Enter your name first.'); document.getElementById('qName').focus(); return; }
+    show('');
+    window.open(WA + encodeURIComponent(waText()), '_blank', 'noopener');
+  });
+})();
 </script>
 </body>
 </html>
