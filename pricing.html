@@ -131,7 +131,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .gold-t { color: var(--gold); }
 
 /* Two-column sections */
-.cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .duo > div { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
 .duo > div + div { border-left: 1px solid var(--line); }
@@ -139,15 +138,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .duo h3 .gold-t { font-variant-numeric: tabular-nums; }
 .duo p { margin: 0; color: var(--muted); font-size: 13px; }
 
-.bundles { display: flex; flex-direction: column; }
-.bundle-list { flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.bundle { padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.bundle + .bundle { border-left: 1px solid var(--line); }
-.bundle-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.bundle-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
-.bundle-price { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
-.bundle-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
-.bundle-foot strong { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
 
 .fine { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 13px; }
 .fine li { padding-left: 22px; position: relative; color: var(--fg); }
@@ -236,7 +226,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pkg:nth-child(2n) { border-right: 0; }
   .pkg:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .cols { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .wrap { padding-inline: 16px; padding-block: 32px 56px; }
@@ -245,8 +234,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
   .pkg:last-child { border-bottom: 0; }
   .for { min-height: 0; }
   .duo > div + div { border-left: 0; border-top: 1px solid var(--line); }
-  .bundle-list { grid-template-columns: 1fr; }
-  .bundle + .bundle { border-left: 0; border-top: 1px solid var(--line); }
   th, td { padding: 10px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -349,33 +336,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     </div>
   </section>
 
-  <div class="cols">
-    <section class="panel bundles" aria-labelledby="bd">
-      <header><h2 id="bd">Bundles</h2><span class="tag">Save when you bundle</span></header>
-      <div class="bundle-list">
-        <article class="bundle">
-          <div class="bundle-head"><h3>Get Online</h3><span class="bundle-price">R2,200</span></div>
-          <ul class="feats">
-            <li>Starter site</li>
-            <li>Logo design</li>
-          </ul>
-          <div class="bundle-foot"><span class="badge">Save R150</span><span>30% deposit: <strong>R660</strong></span></div>
-          <button class="btn ghost add-quote" type="button" data-pkg="Get Online bundle (R2,200)" aria-pressed="false">Add to quote</button>
-        </article>
-        <article class="bundle">
-          <div class="bundle-head"><h3>Grow</h3><span class="bundle-price">R5,650</span></div>
-          <ul class="feats">
-            <li>Business site</li>
-            <li>AI website chatbot (R299/month API costs)</li>
-            <li>Social media pack, 8 posts</li>
-          </ul>
-          <div class="bundle-foot"><span class="badge">Save R300</span><span>40% deposit: <strong>R2,260</strong></span></div>
-          <button class="btn ghost add-quote" type="button" data-pkg="Grow bundle (R5,650)" aria-pressed="false">Add to quote</button>
-        </article>
-      </div>
-    </section>
-  </div>
-
   <section class="panel" aria-labelledby="sp">
     <header><h2 id="sp">The small print</h2><span class="tag">Good to know</span></header>
     <div class="panel-body">
@@ -406,8 +366,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <option data-price="1950">Starter (R1,950)</option>
             <option data-price="3950">Business (R3,950)</option>
             <option data-price="7500">Premium (R7,500)</option>
-            <option data-price="2200">Get Online bundle (R2,200)</option>
-            <option data-price="5650">Grow bundle (R5,650)</option>
             <option>Something custom</option>
           </select>
         </div>
