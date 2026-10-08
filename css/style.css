@@ -624,6 +624,7 @@ h2.heading2 {
   .cta-title br { display:none; }
   .cta-actions { flex:none; }
   .cta-btn-ghost { display:none; } /* mobile already has the contact bar + [i] modal */
+  .cta-btn-ghost.cta-btn-pricing { display:inline-block; font:600 14px 'JetBrains Mono', monospace; padding:11px 12px; white-space:nowrap; background:transparent; color:#e8caa0; border:1px solid #e8caa0; text-decoration:none; }
   .cta-btn-primary {
     font:600 14px 'JetBrains Mono', monospace; padding:11px 16px; white-space:nowrap;
     background:#e8caa0; color:#0a0a0a; border:1px solid #e8caa0; text-decoration:none;

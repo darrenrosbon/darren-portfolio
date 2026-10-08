@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pricing — Robson Web Studio</title>
+<meta name="description" content="Website packages from R1,250 for South African businesses. Mobile-first sites, WhatsApp buttons, split payments, free copywriting and 30 days of free support.">
+<link rel="canonical" href="https://robsonwebstudio.com/pricing.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Robson Web Studio">
+<meta property="og:title" content="Pricing — Robson Web Studio">
+<meta property="og:description" content="Website packages from R1,250 for South African businesses. Split payments, free copywriting and 30 days of free support.">
+<meta property="og:url" content="https://robsonwebstudio.com/pricing.html">
+<meta property="og:image" content="https://robsonwebstudio.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: one column of terminal-style panels (header strip + body), matching robsonwebstudio.com.
+   Single dark look by choice: it is the studio's brand. */
+:root {
+  --bg: #0a0a0a;
+  --panel: #12110f;
+  --panel-head: #1a1815;
+  --line: #2c2924;
+  --line-strong: #4a4237;
+  --fg: #ede9e1;
+  --muted: #9a958c;
+  --gold: #e8caa0;
+  --on-gold: #0a0a0a;
+  --green: #7ec98f;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    linear-gradient(var(--panel) 1px, transparent 1px),
+    linear-gradient(90deg, var(--panel) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 28px; }
+a { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Site nav */
+.skip-link { position: absolute; left: -9999px; top: 8px; background: var(--gold); color: var(--on-gold); padding: 8px 12px; z-index: 10; }
+.skip-link:focus { left: 8px; }
+.site-nav { border-bottom: 1px solid var(--line-strong); background: rgba(10, 10, 10, .92); }
+.nav-in { max-width: 1120px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+.nav-mark { display: block; line-height: 0; margin-right: auto; }
+.nav-mark:hover { opacity: .8; }
+.nav-links { display: flex; align-items: center; gap: 4px 22px; flex-wrap: wrap; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; padding: 4px 0; border-bottom: 1px solid transparent; }
+.nav-links a:hover { color: var(--fg); }
+.nav-links a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-links a.nav-cta { color: var(--on-gold); background: var(--gold); border: 0; padding: 6px 14px; font-weight: 700; }
+.nav-links a.nav-cta:hover { filter: brightness(1.08); color: var(--on-gold); }
+@media (max-width: 600px) { .nav-in { padding: 10px 16px; gap: 12px; } .nav-links { gap: 2px 14px; } }
+
+/* Hero */
+.eyebrow { color: var(--gold); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 12px; }
+h1 { font-size: clamp(30px, 5.4vw, 48px); line-height: 1.08; margin: 0; font-weight: 800; letter-spacing: -.01em; text-wrap: balance; }
+h1 span { color: var(--gold); }
+.lede { color: var(--muted); max-width: 62ch; margin: 16px 0 0; }
+
+/* Panels */
+.panel { border: 1px solid var(--line-strong); background: var(--panel); }
+.panel > header {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 14px 18px; background: var(--panel-head); border-bottom: 1px solid var(--line-strong);
+}
+.panel > header h2 { margin: 0; font-size: 17px; font-weight: 700; }
+.tag { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.panel-body { padding: 18px; }
+.note { color: var(--muted); font-size: 12.5px; margin: 0; }
+
+/* Package grid */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pkg { padding: 20px 18px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; position: relative; }
+.pkg:last-child { border-right: 0; }
+.pkg.featured { background: #1b1813; box-shadow: inset 0 0 0 1px var(--gold); }
+.pkg-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 24px; }
+.pkg h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.badge { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--green); color: var(--green); white-space: nowrap; }
+.badge.gold { border-color: var(--gold); color: var(--gold); }
+.price { font-size: 32px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.price small { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+.for { color: var(--muted); font-size: 12.5px; margin: 0; min-height: 40px; }
+.feats { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; gap: 7px; font-size: 13px; flex: 1; }
+.feats li { padding-left: 18px; position: relative; }
+.feats li::before { content: "+"; position: absolute; left: 0; color: var(--gold); }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.meta dd { margin: 0; color: var(--fg); text-align: right; font-variant-numeric: tabular-nums; }
+.deposit { border: 1px solid var(--line-strong); padding: 10px 12px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; color: var(--muted); }
+.deposit strong { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.support { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-top: 1px solid var(--line-strong); background: var(--panel-head); }
+.support p { margin: 0; font-size: 13px; color: var(--muted); min-width: 0; }
+.support strong { color: var(--fg); }
+.support .badge { margin-top: 2px; }
+@media (max-width: 600px) { .support { flex-direction: column; gap: 8px; } }
+
+/* Tables */
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 11px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.num { white-space: nowrap; }
+td .sub { display: block; color: var(--muted); font-size: 12px; }
+.gold-t { color: var(--gold); }
+
+/* Two-column sections */
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.duo > div { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.duo > div + div { border-left: 1px solid var(--line); }
+.duo h3 { margin: 0; font-size: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.duo h3 .gold-t { font-variant-numeric: tabular-nums; }
+.duo p { margin: 0; color: var(--muted); font-size: 13px; }
+
+.addons td.num { text-align: right; }
+.addons td.num .sub { text-align: right; }
+.bundles { display: flex; flex-direction: column; }
+.bundle-list { flex: 1; display: grid; grid-auto-rows: 1fr; }
+.bundle { padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.bundle + .bundle { border-top: 1px solid var(--line); }
+.bundle-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.bundle-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.bundle-price { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.bundle-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.bundle-foot strong { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.fine { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 13px; }
+.fine li { padding-left: 22px; position: relative; color: var(--fg); }
+.fine li::before { content: "//"; position: absolute; left: 0; color: var(--gold); }
+
+/* CTA */
+.cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 22px; }
+.cta h2 { margin: 0 0 4px; font-size: 20px; }
+.cta p { margin: 0; color: var(--muted); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; }
+.btn { font: inherit; font-size: 13px; padding: 10px 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--gold); cursor: pointer; text-decoration: none; }
+.btn.solid { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.btn.ghost { background: transparent; color: var(--gold); }
+.btn:hover { filter: brightness(1.08); }
+.contact-bar { display: flex; align-items: center; border: 1px solid rgba(232, 202, 160, .4); background: rgba(232, 202, 160, .06); min-width: 0; max-width: 100%; }
+.contact-email { padding: 14px 20px; color: var(--gold); font-weight: 700; font-size: 15px; text-decoration: none; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.contact-email:hover, .copy-btn:hover { background: rgba(232, 202, 160, .12); }
+.copy-btn { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: 44px; align-self: stretch; border: 0; border-left: 1px solid rgba(232, 202, 160, .4); background: transparent; color: var(--gold); padding: 0; cursor: pointer; }
+.copy-btn svg { width: 18px; height: 18px; }
+.copy-btn.copied { color: var(--green); }
+.actions .btn { min-height: 54px; }
+@media (max-width: 600px) { .actions { flex-direction: column; width: 100%; } .contact-email { font-size: 13px; padding: 16px 14px; flex: 1 1 0; } .copy-btn { width: 52px; } }
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pkg:nth-child(2n) { border-right: 0; }
+  .pkg:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { padding-inline: 16px; padding-block: 32px 56px; }
+  .grid, .duo { grid-template-columns: 1fr; }
+  .pkg { border-right: 0; border-bottom: 1px solid var(--line); }
+  .pkg:last-child { border-bottom: 0; }
+  .for { min-height: 0; }
+  .duo > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  th, td { padding: 10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" aria-label="Main">
+  <div class="nav-in">
+    <a class="nav-mark" href="index.html" aria-label="Robson Web Studio, home">
+      <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pricing.html" aria-current="page">Pricing</a>
+      <a href="https://darrenrosbon.github.io/darren-portfolio-site/">Portfolio</a>
+      <a class="nav-cta" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap" id="main" tabindex="-1">
+  <section>
+    <h1>Proper websites,<br><span>priced for SA business</span></h1>
+    <p class="lede">Fast, mobile-first sites that load on any data bundle and send customers straight to your WhatsApp. Small deposits, split payments on bigger builds, 30 days of free support after launch, and no surprise invoices.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="pk">
+    <header><h2 id="pk">Website packages</h2><span class="tag">Once-off · No VAT added</span></header>
+    <div class="grid">
+      <article class="pkg">
+        <div class="pkg-top"><h3>Digital Business Card</h3></div>
+        <div class="price">R1,250</div>
+        <p class="for">For side hustles and sole traders who just need to be findable.</p>
+        <ul class="feats">
+          <li>One short page</li>
+          <li>Your logo, services and reviews</li>
+          <li>WhatsApp button + Google Maps</li>
+          <li>Mobile-first, data-light</li>
+        </ul>
+        <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~3 days</dd></dl>
+        <div class="deposit"><span>30% deposit</span><strong>R375</strong></div>
+      </article>
+
+      <article class="pkg">
+        <div class="pkg-top"><h3>Starter</h3></div>
+        <div class="price">R1,950</div>
+        <p class="for">For tree fellers, dog walkers and small service businesses.</p>
+        <ul class="feats">
+          <li>One scrolling page, up to 6 sections</li>
+          <li>Contact form + WhatsApp button</li>
+          <li>Google Business Profile setup</li>
+          <li>Basic SEO</li>
+        </ul>
+        <dl class="meta"><dt>Revisions</dt><dd>1 round</dd><dt>Turnaround</dt><dd>~5 days</dd></dl>
+        <div class="deposit"><span>30% deposit</span><strong>R585</strong></div>
+      </article>
+
+      <article class="pkg featured">
+        <div class="pkg-top"><h3>Business</h3><span class="badge gold">Most popular</span></div>
+        <div class="price">R3,950</div>
+        <p class="for">For paving, panel beaters, salons and established trades.</p>
+        <ul class="feats">
+          <li>Up to 5 pages</li>
+          <li>Everything in Starter</li>
+          <li>Quote request form</li>
+          <li>Projects gallery page</li>
+          <li>SEO on every page</li>
+        </ul>
+        <dl class="meta"><dt>Revisions</dt><dd>2 rounds</dd><dt>Turnaround</dt><dd>~10 days</dd></dl>
+        <div class="deposit"><span>40% deposit</span><strong>R1,580</strong></div>
+      </article>
+
+      <article class="pkg">
+        <div class="pkg-top"><h3>Premium</h3><span class="badge">AI included</span></div>
+        <div class="price">R7,500</div>
+        <p class="for">For law firms, clinics and businesses that take bookings.</p>
+        <ul class="feats">
+          <li>Up to 10 pages</li>
+          <li>Everything in Business</li>
+          <li>Booking or quote system</li>
+          <li>AI website chatbot (R299/month for API costs)</li>
+          <li>Filterable portfolio</li>
+          <li>Full SEO + Google Analytics</li>
+        </ul>
+        <dl class="meta"><dt>Revisions</dt><dd>3 rounds</dd><dt>Turnaround</dt><dd>~3 weeks</dd></dl>
+        <div class="deposit"><span>50% deposit</span><strong>R3,750</strong></div>
+      </article>
+    </div>
+    <div class="support">
+      <span class="badge">Included</span>
+      <p><strong>Every website comes with free copywriting and 30 days of free after-sales support.</strong> I write the text for your pages, and if something breaks or needs a small fix after launch, I sort it out at no charge.</p>
+    </div>
+    <div class="support">
+      <span class="badge gold">Custom</span>
+      <p><strong>Need something that doesn't fit a package?</strong> I also do custom quotes based on what your business needs. <a href="#quote">Ask for a free quote</a>.</p>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="pay">
+    <header><h2 id="pay">How payment works</h2><span class="tag">Payment by EFT</span></header>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Package</th><th>Deposit</th><th>Design approved</th><th>On launch</th></tr></thead>
+        <tbody>
+          <tr><td>Digital Business Card</td><td class="num"><span class="gold-t">R375</span><span class="sub">30%</span></td><td>—</td><td class="num">R875</td></tr>
+          <tr><td>Starter</td><td class="num"><span class="gold-t">R585</span><span class="sub">30%</span></td><td>—</td><td class="num">R1,365</td></tr>
+          <tr><td>Business</td><td class="num"><span class="gold-t">R1,580</span><span class="sub">40%</span></td><td class="num">R1,185</td><td class="num">R1,185</td></tr>
+          <tr><td>Premium</td><td class="num"><span class="gold-t">R3,750</span><span class="sub">50%</span></td><td class="num">R1,875</td><td class="num">R1,875</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="panel addons" aria-labelledby="ad">
+      <header><h2 id="ad">Add-ons</h2><span class="tag">Any package</span></header>
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><td>AI website chatbot<span class="sub">Answers FAQs, captures leads</span></td><td class="num">R1,500<span class="sub">+ R299/month API costs</span></td></tr>
+            <tr><td>WhatsApp AI bot<span class="sub">Bookings and quotes on WhatsApp. Meta message fees extra</span></td><td class="num">R2,000<span class="sub">+ R299/month API costs</span></td></tr>
+            <tr><td>Extra page</td><td class="num">R350</td></tr>
+            <tr><td>Logo design</td><td class="num">R400</td></tr>
+            <tr><td>Flyer design</td><td class="num">R250</td></tr>
+            <tr><td>Social media pack<span class="sub">8 branded posts</span></td><td class="num">R500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel bundles" aria-labelledby="bd">
+      <header><h2 id="bd">Bundles</h2><span class="tag">Save on add-ons</span></header>
+      <div class="bundle-list">
+        <article class="bundle">
+          <div class="bundle-head"><h3>Get Online</h3><span class="bundle-price">R2,200</span></div>
+          <ul class="feats">
+            <li>Starter site</li>
+            <li>Logo design</li>
+          </ul>
+          <div class="bundle-foot"><span class="badge">Save R150</span><span>30% deposit: <strong>R660</strong></span></div>
+        </article>
+        <article class="bundle">
+          <div class="bundle-head"><h3>Grow</h3><span class="bundle-price">R5,650</span></div>
+          <ul class="feats">
+            <li>Business site</li>
+            <li>AI website chatbot (R299/month API costs)</li>
+            <li>Social media pack, 8 posts</li>
+          </ul>
+          <div class="bundle-foot"><span class="badge">Save R300</span><span>40% deposit: <strong>R2,260</strong></span></div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="sp">
+    <header><h2 id="sp">The small print</h2><span class="tag">Good to know</span></header>
+    <div class="panel-body">
+      <ul class="fine">
+        <li>Deposits are non-refundable once design work has started.</li>
+        <li>Your site goes live on your domain once the final payment clears. Until then it stays on my hosting.</li>
+        <li>Your domain is registered in your name. You own it and pay the yearly renewal directly, usually around R100–R150 for a .co.za.</li>
+        <li>Free after-sales support runs for 30 days from launch and covers fixes and small changes. New pages or features are quoted separately.</li>
+        <li>Please send your business details and photos within 7 days. Projects with no reply for 7 days are paused.</li>
+        <li>Changes beyond your included revision rounds are billed at R350 per hour.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel" id="quote">
+    <div class="cta">
+      <div>
+        <h2>Need something different?</h2>
+        <p>I also do custom quotes based on what your business needs. Tell me about your business and I'll put together a package or a custom price. Quotes are free.</p>
+      </div>
+      <div class="actions">
+        <a class="btn solid" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp me</a>
+        <a class="btn ghost" href="mailto:darren@robsonwebstudio.com?subject=Website%20quote">Email me</a>
+        <div class="contact-bar">
+          <a class="contact-email" id="email" href="mailto:darren@robsonwebstudio.com">darren@robsonwebstudio.com</a>
+          <button class="copy-btn" id="copy" type="button" aria-label="Copy email address">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M20 6 9 17l-5-5"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+document.getElementById('copy').addEventListener('click', function () {
+  var btn = this, email = document.getElementById('email');
+  var copyIcon = btn.querySelector('.icon-copy'), checkIcon = btn.querySelector('.icon-check');
+  function done() {
+    btn.classList.add('copied'); copyIcon.hidden = true; checkIcon.hidden = false;
+    setTimeout(function () { btn.classList.remove('copied'); copyIcon.hidden = false; checkIcon.hidden = true; }, 1800);
+  }
+  function select() { var r = document.createRange(); r.selectNodeContents(email); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  try { navigator.clipboard.writeText(email.textContent).then(done, select); } catch (e) { select(); }
+});
+</script>
+</body>
+</html>
