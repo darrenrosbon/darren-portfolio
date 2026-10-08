@@ -357,8 +357,17 @@ resize();
 // column's left position depends on #work's rendered width, and the
 // vertical centering depends on #about's rendered bottom, both of which
 // can shift once the real font swaps in.
+// The home sections are positioned by this script after load, so a deep link like
+// index.html#work lands before they have moved. Re-jump once layout has settled.
+function jumpToHash() {
+  if (!IS_HOME || !location.hash) return;
+  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) target.scrollIntoView();
+}
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(resize);
+  document.fonts.ready.then(() => { resize(); jumpToHash(); });
+} else {
+  jumpToHash();
 }
 
 // Occasional blink, cartoon-wink style: eye closes and holds for a beat,
