@@ -358,17 +358,20 @@ resize();
 // vertical centering depends on #about's rendered bottom, both of which
 // can shift once the real font swaps in.
 // The home sections are positioned by this script after load, so a deep link like
-// index.html#work lands before they have moved. Re-jump once layout has settled.
+// index.html#work lands before they have moved. Keep re-jumping while layout settles,
+// and stop as soon as the visitor scrolls themselves.
+let userScrolled = false;
+['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((ev) => window.addEventListener(ev, () => { userScrolled = true; }, { passive: true, once: true }));
 function jumpToHash() {
-  if (!IS_HOME || !location.hash) return;
+  if (!IS_HOME || !location.hash || userScrolled) return;
   const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (target) target.scrollIntoView();
 }
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => { resize(); jumpToHash(); });
-} else {
-  jumpToHash();
 }
+window.addEventListener('load', () => { jumpToHash(); setTimeout(jumpToHash, 300); setTimeout(jumpToHash, 900); });
+jumpToHash();
 
 // Occasional blink, cartoon-wink style: eye closes and holds for a beat,
 // then a little twinkle star pops in next to it, spins, and fades before

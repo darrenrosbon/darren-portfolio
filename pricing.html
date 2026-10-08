@@ -74,7 +74,8 @@ h1 span { color: var(--gold); }
 
 /* Panels */
 canvas#c { display: block; position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
-.wrap, .site-head { position: relative; z-index: 5; }
+.wrap { position: relative; z-index: 5; }
+.site-head { position: relative; z-index: 20; }
 .panel { border: 1px solid rgba(232, 202, 160, .25); border-top: 2px solid var(--gold); background: var(--panel); }
 .panel > header {
   display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
@@ -691,6 +692,6 @@ document.getElementById('copy').addEventListener('click', function () {
 })();
 </script>
 <script src="js/face-art.js?v=113"></script>
-<script src="js/site.js?v=124"></script>
+<script src="js/site.js?v=125"></script>
 </body>
 </html>
