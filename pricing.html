@@ -219,8 +219,13 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 .qok { margin: 0; color: var(--green); font-size: 13px; border: 1px solid var(--green); padding: 10px 12px; }
 .qactions { display: flex; gap: 10px; flex-wrap: wrap; }
 .qactions .btn { min-height: 44px; }
+.qactions { align-items: center; gap: 10px 12px; }
+.q-or { color: var(--muted); }
+.q-link { font: inherit; font-size: 13px; color: var(--gold); background: none; border: 0; padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.q-link:hover { color: #f2dcb9; }
+.q-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .qactions .btn[disabled] { opacity: .6; cursor: wait; }
-@media (max-width: 600px) { .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
+@media (max-width: 600px) { .q-dot { display: none; } .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
 
 /* CTA */
 .cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 22px; }
@@ -393,30 +398,13 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
       <p class="qerr" id="qErr" role="alert" hidden></p>
       <div class="qactions">
         <button class="btn solid" type="submit" id="qSubmit">Send quote request</button>
-        <button class="btn ghost" type="button" id="qWa">Send on WhatsApp instead</button>
+        <span class="q-or">or</span>
+        <button class="q-link" type="button" id="qWa">WhatsApp me</button>
+        <span class="q-or q-dot">&middot;</span>
+        <a class="q-link" href="mailto:darren@robsonwebstudio.com?subject=Website%20quote">darren@robsonwebstudio.com</a>
       </div>
       <p class="qok" id="qOk" role="status" hidden>Thanks, got it. I'll be in touch on the number you gave me.</p>
     </form>
-  </section>
-
-  <section class="panel" id="contact">
-    <div class="cta">
-      <div>
-        <h2>Prefer to chat?</h2>
-        <p>WhatsApp or email works too. Quotes are always free.</p>
-      </div>
-      <div class="actions">
-        <a class="btn solid" href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer">WhatsApp me</a>
-        <a class="btn ghost" href="mailto:darren@robsonwebstudio.com?subject=Website%20quote">Email me</a>
-        <div class="contact-bar">
-          <a class="contact-email" id="email" href="mailto:darren@robsonwebstudio.com">darren@robsonwebstudio.com</a>
-          <button class="copy-btn" id="copy" type="button" aria-label="Copy email address">
-            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M20 6 9 17l-5-5"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
   </section>
 
   <section class="panel acc" id="sp-panel">
@@ -443,17 +431,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
 </main>
 
 <script>
-document.getElementById('copy').addEventListener('click', function () {
-  var btn = this, email = document.getElementById('email');
-  var copyIcon = btn.querySelector('.icon-copy'), checkIcon = btn.querySelector('.icon-check');
-  function done() {
-    btn.classList.add('copied'); copyIcon.hidden = true; checkIcon.hidden = false;
-    setTimeout(function () { btn.classList.remove('copied'); copyIcon.hidden = false; checkIcon.hidden = true; }, 1800);
-  }
-  function select() { var r = document.createRange(); r.selectNodeContents(email); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-  try { navigator.clipboard.writeText(email.textContent).then(done, select); } catch (e) { select(); }
-});
-
 (function () {
   var form = document.getElementById('quoteForm');
   var err = document.getElementById('qErr'), ok = document.getElementById('qOk');
