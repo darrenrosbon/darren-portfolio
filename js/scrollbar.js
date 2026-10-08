@@ -16,6 +16,8 @@
     .site-scroll.dragging .site-scroll-thumb { cursor:grabbing; }
     .site-scroll.dragging { user-select:none; }
     @media (prefers-reduced-motion: reduce) { .site-scroll-thumb { transition:none; } }
+    /* No custom scrollbar on mobile; touch scrolling needs no indicator. */
+    @media (max-width: 700px) { .site-scroll { display:none !important; } }
   `;
   document.head.appendChild(style);
 
