@@ -631,7 +631,7 @@ function drawFace() {
   const layer = isWinking ? faceWinkCache : faceOpenCache;
   // Mobile content scrolls over the fixed face; dim it so text stays legible.
   // Inner pages have wide content over the face, so it sits back further there.
-  ctx.globalAlpha = !IS_HOME ? 0.35 : (W < MOBILE_BREAKPOINT ? 0.5 : 1);
+  ctx.globalAlpha = !IS_HOME ? 0.35 : (W < MOBILE_BREAKPOINT ? 0.25 : 1);
   ctx.drawImage(layer, faceOriginX, faceOriginY, layer.width / DPR, layer.height / DPR);
   ctx.globalAlpha = 1;
 }

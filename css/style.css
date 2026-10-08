@@ -719,3 +719,27 @@ h2.heading2 {
   font:600 11.5px 'JetBrains Mono', monospace; transition:background .2s ease, color .2s ease; }
 .offer-add:hover { background:#e8caa0; color:#0a0a0a; }
 .offer-cell .offer-for { flex:1; }
+
+/* ---------- Mobile, calmer layout: full-width content, faded face, no bottom bar ---------- */
+.hero-cta-m, .hero-cta-wrap { display:none; }
+@media (max-width: 700px) {
+  #packages, #services, #work, #process { max-width:none; width:auto; margin:24px 24px 0; }
+  .cards, .service-grid { background:rgba(10,10,10,0.82); }
+
+  /* the quote bar goes: one WhatsApp button lives in the page instead */
+  .cta-card { display:none; }
+  body { padding-bottom:0; }
+  .hero-sub { max-width:none; font-size:13px; margin-top:10px; }
+  .hero-cta-m { display:block; margin:16px 0 0; padding:12px; text-align:center; background:#e8caa0; color:#0a0a0a;
+    font:600 13px 'JetBrains Mono', monospace; text-decoration:none; }
+  .hero-cta-wrap { display:block; position:relative; z-index:5; margin:24px 24px 0; }
+  .hero-cta-wrap .hero-cta-m { margin:0; }
+
+  /* packages become slim rows: name, price, View */
+  #packages .offer-cell { display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; column-gap:12px; padding:12px 14px; }
+  #packages .offer-name { grid-column:1; grid-row:1; }
+  #packages .offer-price { grid-column:2; grid-row:1; font-size:17px; }
+  #packages .offer-add { grid-column:3; grid-row:1; margin:0; padding:5px 12px; }
+  #packages .offer-for { display:none; }
+  .offer-link { padding:13px 14px; }
+}
