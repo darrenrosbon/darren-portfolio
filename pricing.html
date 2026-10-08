@@ -120,6 +120,20 @@ h1 span { color: var(--gold); }
 .add-quote[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
 .add-quote[aria-pressed="true"]::before { content: "\2713\00a0"; }
 
+/* Accordion (small print) */
+.acc-h { margin: 0; font-size: inherit; }
+.acc-btn { font: inherit; color: var(--fg); width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; background: var(--panel-head); border: 0; cursor: pointer; text-align: left; transition: background-color .2s ease; }
+.acc-btn:hover { background: #211e1a; }
+.acc-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.acc-title { font-size: 17px; font-weight: 700; }
+.acc-meta { display: inline-flex; align-items: center; gap: 12px; }
+.acc-chev { width: 18px; height: 18px; color: var(--gold); flex: none; transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+.acc-btn[aria-expanded="true"] .acc-chev { transform: rotate(180deg); }
+.acc-btn[aria-expanded="true"] { border-bottom: 1px solid var(--line-strong); }
+.acc-wrap { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s cubic-bezier(.4, 0, .2, 1), visibility 0s linear .3s; }
+.acc-wrap.open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s cubic-bezier(.4, 0, .2, 1), visibility 0s; }
+.acc-inner { overflow: hidden; min-height: 0; }
+
 /* Tables */
 .table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
@@ -336,20 +350,6 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
     </div>
   </section>
 
-  <section class="panel" aria-labelledby="sp">
-    <header><h2 id="sp">The small print</h2><span class="tag">Good to know</span></header>
-    <div class="panel-body">
-      <ul class="fine">
-        <li>Payment is by EFT, in the stages shown on each package.</li><li>Deposits are non-refundable once design work has started.</li>
-        <li>Your site goes live on your domain once the final payment clears. Until then it stays on my hosting.</li>
-        <li>Your domain is registered in your name. You own it and pay the yearly renewal directly, usually around R100–R150 for a .co.za.</li>
-        <li>Free after-sales support runs for 30 days from launch and covers fixes and small changes. New pages or features are quoted separately.</li>
-        <li>Please send your business details and photos within 7 days. Projects with no reply for 7 days are paused.</li>
-        <li>Changes beyond your included revision rounds are billed at R350 per hour.</li>
-      </ul>
-    </div>
-  </section>
-
   <section class="panel" id="quote" aria-labelledby="qt">
     <header><h2 id="qt">Get a free quote</h2><span class="tag">No obligation</span></header>
     <form class="qform" id="quoteForm" novalidate>
@@ -415,6 +415,28 @@ td .sub { display: block; color: var(--muted); font-size: 12px; }
             <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M20 6 9 17l-5-5"></path></svg>
           </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel acc" id="sp-panel">
+    <h2 class="acc-h"><button class="acc-btn" type="button" id="spBtn" aria-expanded="false" aria-controls="spBody">
+      <span class="acc-title">The small print</span>
+      <span class="acc-meta"><span class="tag">Good to know</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
+    </button></h2>
+    <div class="acc-wrap" id="spBody" role="region" aria-labelledby="spBtn">
+      <div class="acc-inner">
+        <div class="panel-body">
+          <ul class="fine">
+            <li>Payment is by EFT, in the stages shown on each package.</li>
+            <li>Deposits are non-refundable once design work has started.</li>
+            <li>Your site goes live on your domain once the final payment clears. Until then it stays on my hosting.</li>
+            <li>Your domain is registered in your name. You own it and pay the yearly renewal directly, usually around R100–R150 for a .co.za.</li>
+            <li>Free after-sales support runs for 30 days from launch and covers fixes and small changes. New pages or features are quoted separately.</li>
+            <li>Please send your business details and photos within 7 days. Projects with no reply for 7 days are paused.</li>
+            <li>Changes beyond your included revision rounds are billed at R350 per hour.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -659,6 +681,15 @@ document.getElementById('copy').addEventListener('click', function () {
     if (!val('qName')) { document.getElementById('qName').classList.add('bad'); show('Enter your name first.'); document.getElementById('qName').focus(); return; }
     show('');
     window.open(WA + encodeURIComponent(waText()), '_blank', 'noopener');
+  });
+})();
+
+(function () {
+  var btn = document.getElementById('spBtn'), body = document.getElementById('spBody');
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    body.classList.toggle('open', open);
   });
 })();
 </script>
