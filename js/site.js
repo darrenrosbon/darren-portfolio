@@ -173,6 +173,7 @@ function layout(keepHeight) {
     positionAboutSection();
     positionMainBody();
     positionDesktopContact();
+    centerAboutPage();
   }
 
   // Grow the hero to fit the last block on the page: the contact block, else
@@ -182,7 +183,7 @@ function layout(keepHeight) {
   if (IS_HOME && lastBlock && !keepHeight && W >= MOBILE_BREAKPOINT) {
     const heroTop = hero.getBoundingClientRect().top;
     const contactBottom = lastBlock.getBoundingClientRect().bottom - heroTop;
-    const needed = Math.ceil(contactBottom + 40);
+    const needed = Math.ceil(contactBottom + (hero.dataset.page === 'about' ? 16 : 40));
     if (needed > hero.clientHeight) {
       hero.style.height = needed + 'px';
       layout(true);
@@ -336,6 +337,38 @@ function positionMainBody() {
   const columnLeft = Math.max(24, (faceOriginX - columnWidth) / 2);
   column.forEach((el) => { el.style.left = columnLeft + 'px'; });
   if (contact) contact.style.width = columnWidth + 'px';
+}
+
+// About page (desktop): the eyebrow stays pinned at the top while the headline, the
+// about block and the contact block move down together, centered vertically in the
+// space below the eyebrow.
+function centerAboutPage() {
+  if (hero.dataset.page !== 'about') return;
+  const heading = document.querySelector('.heading-wrap');
+  const eyebrow = heading && heading.querySelector('.hero-eyebrow');
+  const about = document.getElementById('about');
+  const contact = document.querySelector('.desktop-contact');
+  if (!heading || !eyebrow || !about || !contact) return;
+  if (W < MOBILE_BREAKPOINT) {
+    heading.style.top = '';
+    ['position', 'left', 'top', 'whiteSpace'].forEach((p) => { eyebrow.style[p] = ''; });
+    return;
+  }
+  const EYEBROW_TOP = 48, GAP_HEAD = 32, GAP_CONTACT = 36;
+  eyebrow.style.position = 'absolute';
+  eyebrow.style.left = '0';
+  eyebrow.style.whiteSpace = 'nowrap';
+  const headH = heading.getBoundingClientRect().height;
+  const aboutH = about.getBoundingClientRect().height;
+  const contactH = contact.getBoundingClientRect().height;
+  const groupH = headH + GAP_HEAD + aboutH + GAP_CONTACT + contactH;
+  const floor = EYEBROW_TOP + eyebrow.getBoundingClientRect().height + 24;
+  const areaH = Math.max(window.innerHeight, floor + groupH + 24);
+  const top = Math.max(floor, floor + (areaH - floor - groupH) / 2);
+  heading.style.top = top + 'px';
+  eyebrow.style.top = (EYEBROW_TOP - top) + 'px';
+  about.style.top = (top + headH + GAP_HEAD) + 'px';
+  contact.style.top = (top + headH + GAP_HEAD + aboutH + GAP_CONTACT) + 'px';
 }
 
 // Desktop's email + social icons block, vertically centered in the empty
