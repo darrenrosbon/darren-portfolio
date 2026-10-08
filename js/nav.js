@@ -4,10 +4,21 @@
   const style = document.createElement('style');
   style.textContent = `
     .nav-toggle { display:none; }
+    .m-bar { display:none; }
     @media (max-width: 700px) {
+      html { scroll-padding-top:64px; }
+      /* sticky top bar: logo mark, studio name between, burger */
+      .m-bar { display:flex; align-items:center; justify-content:center; position:fixed; top:0; left:0; right:0; height:56px; z-index:10;
+        background:rgba(10,10,10,0.96); border-bottom:1px solid rgba(232,202,160,0.18); }
+      .m-bar-title { color:#e8caa0; font-weight:500; font-size:12px; letter-spacing:2px; white-space:nowrap; }
+      .site-mark { position:fixed; top:28px; transform:translateY(-50%); z-index:12; }
+      .hero-eyebrow, p.eyebrow { display:none; }
+      .heading-wrap { padding-top:84px; }
+      .wrap { padding-block-start:84px; }
+
       .nav-toggle {
         display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
-        position:fixed; top:14px; right:12px; width:40px; height:40px; padding:0; z-index:90;
+        position:fixed; top:8px; right:12px; width:40px; height:40px; padding:0; z-index:90;
         background:transparent; border:0; color:#e8caa0; cursor:pointer;
       }
       .nav-toggle:focus-visible { outline:2px solid #e8caa0; outline-offset:3px; }
@@ -54,6 +65,14 @@
   const nav = document.querySelector('.top-nav');
   if (!nav) return;
   if (!nav.id) nav.id = 'siteNav';
+
+  // Sticky top bar (mobile only, see CSS): carries the studio name that used to sit above the headline
+  const tag = document.querySelector('.hero-eyebrow, .eyebrow');
+  const bar = document.createElement('div');
+  bar.className = 'm-bar';
+  bar.innerHTML = '<span class="m-bar-title"></span>';
+  bar.firstChild.textContent = tag ? tag.textContent.trim() : 'ROBSON WEB STUDIO';
+  document.body.insertBefore(bar, document.body.firstChild);
 
   const btn = document.createElement('button');
   btn.type = 'button';
