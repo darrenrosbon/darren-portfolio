@@ -766,3 +766,10 @@ h2.heading2 {
 .work-cta { margin:0; order:99; }
 /* mobile already has the quote bar at the bottom of the screen */
 @media (max-width: 700px) { .work-cta.offer-link { display:none; } }
+
+/* Home hero: primary "See my work" button beside the quote link */
+.hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:8px 22px; margin-top:6px; }
+.hero-actions .hero-quote-link { margin-top:0; }
+.hero-work-btn { display:inline-flex; align-items:center; min-height:44px; padding:0 18px; background:#e8caa0; color:#0a0a0a;
+  font-size:13px; font-weight:600; text-decoration:none; }
+.hero-work-btn:hover { background:#f2dcb9; }
