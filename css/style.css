@@ -29,7 +29,7 @@ main:focus { outline:none; }
 .site-mark { position:absolute; top:56px; transform:translateY(-50%); left:20px; z-index:6; display:block; line-height:0; transition:opacity 0.15s ease; }
 .site-mark img { display:block; }
 .site-mark:hover { opacity:0.8; }
-.site-mark { display: flex; align-items: center; gap: 12px; }
+.site-mark { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .site-mark-text { display: block; line-height: 1; font-family: 'JetBrains Mono', monospace; text-align: left; }
 .site-mark-text b { display: block; color: #f0f0f0; font-weight: 800; font-size: 17px; letter-spacing: 1px; }
 .site-mark-text i { display: block; color: #e8caa0; font-style: normal; font-weight: 500; font-size: 9.5px; letter-spacing: 4.2px; margin-top: 5px; white-space: nowrap; }
