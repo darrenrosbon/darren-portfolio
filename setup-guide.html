@@ -114,7 +114,9 @@ ul.plain li::marker { color: var(--gold); }
 .site-mark { position: absolute; top: 56px; transform: translateY(-50%); left: 20px; z-index: 6; display: block; line-height: 0; transition: opacity .15s ease; }
 .site-mark img { display: block; }
 .site-mark:hover { opacity: .8; }
-.site-mark { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.site-mark { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.site-mark img { height: 31.5px; width: auto; }
+@media (max-width: 700px) { .site-mark img { box-sizing: content-box; width: 17.5px; height: 14.9px; padding: 6.55px 5.25px; } }
 .site-mark-text { display: block; line-height: 1; border-left: 1px solid #4a4237; padding-left: 12px; font-family: 'JetBrains Mono', monospace; text-align: left; }
 .site-mark-text b { display: block; color: #f0f0f0; font-weight: 800; font-size: 17px; letter-spacing: 1px; }
 .site-mark-text i { display: block; color: #e8caa0; font-style: normal; font-weight: 500; font-size: 9.5px; letter-spacing: 4.2px; margin-top: 5px; white-space: nowrap; }
@@ -134,7 +136,7 @@ ul.plain li::marker { color: var(--gold); }
 
 <header class="site-head">
   <a class="site-mark" href="index.html" aria-label="Robson Web Studio, home">
-    <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+    <img src="img/logo-mark.svg?v=1" width="37" height="31" alt="">
     <span class="site-mark-text" aria-hidden="true"><b>ROBSON</b><i>WEB STUDIO</i></span>
   </a>
   <nav class="byline top-nav" aria-label="Main">
