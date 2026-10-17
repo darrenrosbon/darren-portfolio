@@ -677,6 +677,18 @@ h2.heading2 {
 .top-nav a { color:#e8caa0; text-decoration:none; opacity:.85; }
 .top-nav a:hover { opacity:1; text-decoration:underline; text-underline-offset:4px; }
 .top-nav a[aria-current="page"] { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; }
+.nav-div { display: none; }
+@media (min-width: 701px) {
+  .top-nav { gap: 6px 22px; }
+  .top-nav .nav-div { display: block; width: 1px; height: 18px; background: #4a4237; }
+  .top-nav a.nav-muted { opacity: .5; }
+  .top-nav a.nav-muted:hover { opacity: 1; }
+  .top-nav a[aria-current="page"] { position: relative; color: #f0f0f0; opacity: 1; text-decoration: none; }
+  .top-nav a[aria-current="page"]::before { content: ">"; position: absolute; left: -14px; color: #e8caa0; }
+  .top-nav a[aria-current="page"]::after { content: "_"; position: absolute; right: -11px; color: #e8caa0; animation: nav-blink 1.1s steps(1) infinite; }
+}
+@keyframes nav-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .top-nav a[aria-current="page"]::after { animation: none; } }
 
 /* ---------- Packages + process (part of the hero column; tops set by
    positionServices() in site.js on desktop, flow in-document on mobile) ---------- */

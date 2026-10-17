@@ -126,6 +126,18 @@ ul.plain li::marker { color: var(--gold); }
 .top-nav a { color: var(--gold); text-decoration: none; opacity: .85; }
 .top-nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
 .top-nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.nav-div { display: none; }
+@media (min-width: 701px) {
+  .top-nav { gap: 6px 22px; }
+  .top-nav .nav-div { display: block; width: 1px; height: 18px; background: #4a4237; }
+  .top-nav a.nav-muted { opacity: .5; }
+  .top-nav a.nav-muted:hover { opacity: 1; }
+  .top-nav a[aria-current="page"] { position: relative; color: #f0f0f0; opacity: 1; text-decoration: none; }
+  .top-nav a[aria-current="page"]::before { content: ">"; position: absolute; left: -14px; color: #e8caa0; }
+  .top-nav a[aria-current="page"]::after { content: "_"; position: absolute; right: -11px; color: #e8caa0; animation: nav-blink 1.1s steps(1) infinite; }
+}
+@keyframes nav-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .top-nav a[aria-current="page"]::after { animation: none; } }
 .back-home { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; background: var(--gold); color: var(--on-gold); font-family: var(--mono); font-weight: 700; font-size: 14px; text-decoration: none; }
 .back-home:hover { background: #f2dcb9; }
 @media (max-width: 700px) { .site-mark { top: 34px; } .byline { top: 34px; right: 16px; font-size: 11px; } .top-nav { gap: 4px 12px; } }
@@ -140,7 +152,7 @@ ul.plain li::marker { color: var(--gold); }
     <span class="site-mark-text" aria-hidden="true"><b>ROBSON</b><i>WEB STUDIO</i></span>
   </a>
   <nav class="byline top-nav" aria-label="Main">
-    <a href="index.html">Home</a><a href="work.html">Work</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="setup-guide.html" aria-current="page">Setup</a>
+    <a href="index.html">Home</a><a href="work.html">Work</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><span class="nav-div" aria-hidden="true"></span><a class="nav-muted" href="setup-guide.html" aria-current="page">Setup</a>
   </nav>
 </header>
 
