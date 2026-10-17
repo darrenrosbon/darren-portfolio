@@ -679,7 +679,7 @@ h2.heading2 {
 .top-nav a[aria-current="page"] { opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; }
 .nav-div { display: none; }
 @media (min-width: 701px) {
-  .top-nav { gap: 6px 22px; }
+  .top-nav { gap: 6px 36px; }
   .top-nav .nav-div { display: block; width: 1px; height: 18px; background: #4a4237; }
   .top-nav a.nav-muted { opacity: .5; }
   .top-nav a.nav-muted:hover { opacity: 1; }
