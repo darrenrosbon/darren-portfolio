@@ -12,7 +12,9 @@
       /* sticky top bar: logo mark, studio name between, burger */
       .m-bar { display:flex; align-items:center; justify-content:center; position:fixed; top:0; left:0; right:0; height:56px; z-index:10;
         background:rgba(10,10,10,0.96); border-bottom:1px solid rgba(232,202,160,0.18); }
-      .m-bar-title { color:#e8caa0; font-weight:500; font-size:14px; line-height:18px; letter-spacing:2px; white-space:nowrap; position:relative; top:.5px; }
+      .m-bar-title { display:block; text-align:center; line-height:1; font-family:'JetBrains Mono', monospace; position:relative; top:.5px; }
+      .m-bar-title b { display:block; color:#f0f0f0; font-weight:800; font-size:16px; letter-spacing:1.5px; }
+      .m-bar-title i { display:block; color:#e8caa0; font-style:normal; font-weight:500; font-size:9px; letter-spacing:4.6px; margin:5px 0 0 4.6px; white-space:nowrap; }
       .site-mark { position:fixed; top:28px; left:12px; padding:8px; transform:translateY(-50%); z-index:12; }
       .hero-eyebrow, p.eyebrow { display:none; }
       .heading-wrap { padding-top:84px; }
@@ -77,11 +79,9 @@
   if (!nav.id) nav.id = 'siteNav';
 
   // Sticky top bar (mobile only, see CSS): carries the studio name that used to sit above the headline
-  const tag = document.querySelector('.hero-eyebrow, .eyebrow');
   const bar = document.createElement('div');
   bar.className = 'm-bar';
-  bar.innerHTML = '<span class="m-bar-title"></span>';
-  bar.firstChild.textContent = tag ? tag.textContent.trim() : 'ROBSON WEB STUDIO';
+  bar.innerHTML = '<span class="m-bar-title"><b>ROBSON</b><i>WEB STUDIO</i></span>';
   document.body.insertBefore(bar, document.body.firstChild);
 
   const btn = document.createElement('button');
