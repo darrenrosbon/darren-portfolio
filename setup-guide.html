@@ -40,7 +40,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
 }
-.wrap { max-width: 780px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 24px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-inline: 20px; padding-block: 110px 72px; display: grid; gap: 24px; }
 a { color: var(--gold); }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 h1, h2, h3 { font-family: var(--mono); text-wrap: balance; }
@@ -106,29 +106,38 @@ ul.plain li::marker { color: var(--gold); }
 .progress strong { color: var(--gold); }
 
 @media (max-width: 600px) {
-  .wrap { padding-inline: 16px; padding-block: 32px 56px; }
+  .wrap { padding-inline: 16px; padding-block: 84px 56px; }
   .kv { grid-template-columns: 1fr; gap: 2px; }
   .kv dd { margin-bottom: 8px; }
   .ui { white-space: normal; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-.site-nav { display: flex; justify-content: space-between; align-items: center; gap: 8px 18px; flex-wrap: wrap; max-width: 780px; margin: 0 auto; padding: 16px 20px 0; }
-.site-nav .mark { display: block; line-height: 0; }
-.site-nav .links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 14px; font-weight: 500; }
-.site-nav .links a { color: var(--gold); text-decoration: none; opacity: .85; padding: 10px 0; }
-.site-nav .links a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-.site-nav .links a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+/* Header identical to the other pages: logo left, nav right, both on one line at the same height */
+.site-head { height: 0; }
+.site-mark { position: absolute; top: 56px; transform: translateY(-50%); left: 20px; z-index: 6; display: block; line-height: 0; transition: opacity .15s ease; }
+.site-mark img { display: block; }
+.site-mark:hover { opacity: .8; }
+.byline { position: absolute; top: 56px; transform: translateY(-50%); right: 32px; z-index: 5; color: var(--gold); font-family: var(--mono); font-weight: 500; font-size: clamp(13px, 1.3vw, 18px); letter-spacing: .5px; text-align: right; }
+.top-nav { display: flex; gap: 6px 18px; align-items: center; }
+.top-nav a { color: var(--gold); text-decoration: none; opacity: .85; }
+.top-nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.top-nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .back-home { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; background: var(--gold); color: var(--on-gold); font-family: var(--mono); font-weight: 700; font-size: 14px; text-decoration: none; }
 .back-home:hover { background: #f2dcb9; }
-@media (max-width: 600px) { .site-nav { padding-inline: 16px; } .site-nav .links { font-size: 12px; gap: 2px 14px; } }
+@media (max-width: 700px) { .site-mark { top: 34px; } .byline { top: 34px; right: 16px; font-size: 11px; } .top-nav { gap: 4px 12px; } }
 </style>
+<script src="js/nav.js?v=9"></script>
 </head>
 <body>
 
-<nav class="site-nav" aria-label="Main">
-  <a class="mark" href="index.html" aria-label="Robson Web Studio, home"><img src="img/favicon.svg?v=2" width="28" height="28" alt=""></a>
-  <div class="links"><a href="index.html">Home</a><a href="work.html">Work</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="setup-guide.html" aria-current="page">Setup</a></div>
-</nav>
+<header class="site-head">
+  <a class="site-mark" href="index.html" aria-label="Robson Web Studio, home">
+    <img src="img/favicon.svg?v=2" width="28" height="28" alt="">
+  </a>
+  <nav class="byline top-nav" aria-label="Main">
+    <a href="index.html">Home</a><a href="work.html">Work</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="setup-guide.html" aria-current="page">Setup</a>
+  </nav>
+</header>
 
 <main class="wrap">
   <section>
