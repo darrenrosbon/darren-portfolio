@@ -4,6 +4,8 @@
   const style = document.createElement('style');
   style.textContent = `
     .nav-toggle { display:none; }
+    .nav-contact { display:none; }
+    @keyframes nav-blink { 0%,45% { opacity:1; } 50%,95% { opacity:0; } }
     .m-bar { display:none; }
     @media (max-width: 700px) {
       html { scroll-padding-top:64px; }
@@ -29,19 +31,27 @@
       .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity:0; }
       .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
 
+      /* full-screen menu: sits under the top bar, covers the page, big type */
       .byline.top-nav {
-        position:fixed; top:64px; left:16px; right:16px; z-index:85; transform:translateY(-8px);
-        display:flex; flex-direction:column; align-items:stretch; gap:0; padding:6px;
-        background:rgba(10,10,10,0.97); border:1px solid #e8caa0; box-shadow:0 14px 30px rgba(0,0,0,0.6);
+        position:fixed; top:56px; left:0; right:0; bottom:0; z-index:85; transform:translateY(-8px);
+        display:flex; flex-direction:column; align-items:stretch; gap:0; padding:26px 22px 0;
+        background:#0a0a0a; border:0; overflow-y:auto;
         text-align:left; font-size:15px;
         opacity:0; visibility:hidden;
         transition:opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
       }
       .byline.top-nav.open { opacity:1; visibility:visible; transform:none; transition:opacity .2s ease, transform .2s ease, visibility 0s; }
-      .byline.top-nav a { padding:14px 12px; font-size:15px; opacity:1; border-bottom:1px solid rgba(232,202,160,0.15); }
-      .byline.top-nav a[aria-current="page"] { text-decoration:none; background:rgba(232,202,160,0.1); }
-      .byline.top-nav a:hover { text-decoration:none; background:rgba(232,202,160,0.08); }
-      .byline.top-nav a:last-child { border-bottom:0; }
+      html.nav-open { overflow:hidden; }
+      .byline.top-nav a { display:block; padding:9px 0; min-height:44px; font-size:26px; font-weight:800; line-height:1.25; opacity:.85; border:0; }
+      .byline.top-nav a:hover { text-decoration:none; opacity:1; }
+      .byline.top-nav a[aria-current="page"] { opacity:1; color:#f0f0f0; text-decoration:none; background:none; }
+      .byline.top-nav a[aria-current="page"]::before { content:">"; color:#e8caa0; margin-right:10px; }
+      .byline.top-nav a[aria-current="page"]::after { content:"_"; color:#e8caa0; animation:nav-blink 1.1s steps(1) infinite; }
+      .byline.top-nav a.nav-muted { font-size:14px; font-weight:500; opacity:.5; padding-top:16px; }
+      .byline.top-nav a.nav-muted[aria-current="page"] { opacity:1; }
+      .byline.top-nav .nav-contact { display:flex; flex-direction:column; margin-top:auto; padding:14px 0 calc(22px + env(safe-area-inset-bottom)); border-top:1px solid #2a2620; }
+      .byline.top-nav .nav-contact a { font-size:12px; font-weight:500; line-height:1.4; padding:10px 0; min-height:44px; opacity:1; display:flex; flex-direction:column; justify-content:center; }
+      .nav-contact small { display:block; color:#a39e94; font-size:11px; font-weight:400; letter-spacing:.5px; }
     }
     .wa-fab { display:none; }
     @media (max-width: 700px) {
@@ -96,10 +106,17 @@
   document.body.appendChild(fab);
   }
 
+  const contact = document.createElement('div');
+  contact.className = 'nav-contact';
+  contact.innerHTML = '<a href="https://wa.me/27844114748?text=Hi%20Darren%2C%20I%27d%20like%20a%20website%20quote" target="_blank" rel="noopener noreferrer"><small>WhatsApp</small>084 411 4748</a>' +
+    '<a href="mailto:darren@robsonwebstudio.com"><small>Email</small>darren@robsonwebstudio.com</a>';
+  nav.appendChild(contact);
+
   const mq = window.matchMedia('(max-width: 700px)');
 
   function setOpen(open, refocus) {
     nav.classList.toggle('open', open);
+    document.documentElement.classList.toggle('nav-open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
     if (!open && refocus) btn.focus();
