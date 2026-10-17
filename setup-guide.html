@@ -58,10 +58,6 @@ code { background: var(--panel-head); border: 1px solid var(--line); padding: 1p
 .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
 
 .num { font-family: var(--mono); font-size: 13px; color: var(--on-gold); background: var(--gold); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
-.done-toggle { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); cursor: pointer; user-select: none; }
-.done-toggle input { accent-color: var(--green); width: 16px; height: 16px; margin: 0; }
-.panel.is-done > header h2 .num { background: var(--green); }
-.panel.is-done .done-toggle { color: var(--green); }
 
 ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
 ol.steps li::marker { color: var(--gold); font-family: var(--mono); font-size: .9em; }
@@ -102,8 +98,6 @@ ul.plain li::marker { color: var(--gold); }
 .faq summary::marker { color: var(--gold); }
 .faq details p { margin: 8px 0 0; color: var(--muted); }
 
-.progress { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-.progress strong { color: var(--gold); }
 
 @media (max-width: 600px) {
   .wrap { padding-inline: 16px; padding-block: 84px 56px; }
@@ -146,7 +140,7 @@ ul.plain li::marker { color: var(--gold); }
   </section>
 
   <section class="panel" aria-labelledby="before">
-    <header><h2 id="before">Before you start</h2><span class="progress" id="progress" aria-live="polite"></span></header>
+    <header><h2 id="before">Before you start</h2></header>
     <div class="panel-body">
       <dl class="kv">
         <dt>You'll need</dt><dd>An email address you check, your phone, and a bank card that works for online payments in US dollars.</dd>
@@ -160,7 +154,7 @@ ul.plain li::marker { color: var(--gold); }
   </section>
 
   <section class="panel step" data-step="1" aria-labelledby="s1">
-    <header><h2 id="s1"><span class="num">1</span>Create a free Cloudflare account</h2><label class="done-toggle"><input type="checkbox" id="done-1"> Done</label></header>
+    <header><h2 id="s1"><span class="num">1</span>Create a free Cloudflare account</h2></header>
     <div class="panel-body">
       <ol class="steps">
         <li>Go to <a href="https://dash.cloudflare.com/sign-up" target="_blank" rel="noopener">dash.cloudflare.com/sign-up</a> and sign up with your email address.</li>
@@ -171,7 +165,7 @@ ul.plain li::marker { color: var(--gold); }
   </section>
 
   <section class="panel step" data-step="2" aria-labelledby="s2">
-    <header><h2 id="s2"><span class="num">2</span>Buy your domain</h2><label class="done-toggle"><input type="checkbox" id="done-2"> Done</label></header>
+    <header><h2 id="s2"><span class="num">2</span>Buy your domain</h2></header>
     <div class="panel-body">
       <ol class="steps">
         <li>On the Cloudflare home page, find the <strong>Domains</strong> box and click <span class="ui">Add a domain</span>, then choose <span class="ui">Buy a domain</span>.</li>
@@ -199,7 +193,7 @@ ul.plain li::marker { color: var(--gold); }
   </section>
 
   <section class="panel step" data-step="3" aria-labelledby="s3">
-    <header><h2 id="s3"><span class="num">3</span>Give me access to Cloudflare</h2><label class="done-toggle"><input type="checkbox" id="done-3"> Done</label></header>
+    <header><h2 id="s3"><span class="num">3</span>Give me access to Cloudflare</h2></header>
     <div class="panel-body">
       <p>Instead of sharing your password, you invite me as a member of your account. I get my own login, and you can remove my access at any time.</p>
       <ol class="steps">
@@ -231,7 +225,7 @@ ul.plain li::marker { color: var(--gold); }
   </section>
 
   <section class="panel step" data-step="4" aria-labelledby="s4">
-    <header><h2 id="s4"><span class="num">4</span>Let me know</h2><label class="done-toggle"><input type="checkbox" id="done-4"> Done</label></header>
+    <header><h2 id="s4"><span class="num">4</span>Let me know</h2></header>
     <div class="panel-body">
       <p>Send me a message once you've sent the invite, and include your domain name. That's all you need to do. I'll accept the invite and set up your website from there.</p>
       <p>Please don't send me your Cloudflare password. I don't need it.</p>
@@ -279,34 +273,6 @@ ul.plain li::marker { color: var(--gold); }
 
 <script>
 (function () {
-  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-  var progress = document.getElementById('progress');
-  var KEY = 'domain-guide-done-v3';
-  var saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
-
-  function render() {
-    var done = 0;
-    steps.forEach(function (s) {
-      var box = s.querySelector('input[type=checkbox]');
-      s.classList.toggle('is-done', box.checked);
-      if (box.checked) done++;
-    });
-    progress.innerHTML = '<strong>' + done + '</strong> of ' + steps.length + ' steps done';
-  }
-
-  steps.forEach(function (s) {
-    var n = s.getAttribute('data-step');
-    var box = s.querySelector('input[type=checkbox]');
-    box.checked = !!saved[n];
-    box.addEventListener('change', function () {
-      saved[n] = box.checked;
-      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
-      render();
-    });
-  });
-  render();
-
   var btn = document.getElementById('copy-email'), email = document.getElementById('dev-email');
   var copyIcon = btn.querySelector('.icon-copy'), checkIcon = btn.querySelector('.icon-check');
   btn.addEventListener('click', function () {
