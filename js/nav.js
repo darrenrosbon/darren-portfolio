@@ -10,7 +10,7 @@
       /* sticky top bar: logo mark, studio name between, burger */
       .m-bar { display:flex; align-items:center; justify-content:center; position:fixed; top:0; left:0; right:0; height:56px; z-index:10;
         background:rgba(10,10,10,0.96); border-bottom:1px solid rgba(232,202,160,0.18); }
-      .m-bar-title { color:#e8caa0; font-weight:500; font-size:12px; letter-spacing:2px; white-space:nowrap; }
+      .m-bar-title { color:#e8caa0; font-weight:500; font-size:12px; line-height:16px; letter-spacing:2px; white-space:nowrap; position:relative; top:.5px; }
       .site-mark { position:fixed; top:28px; left:12px; padding:8px; transform:translateY(-50%); z-index:12; }
       .hero-eyebrow, p.eyebrow { display:none; }
       .heading-wrap { padding-top:84px; }
