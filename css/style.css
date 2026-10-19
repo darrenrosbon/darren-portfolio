@@ -704,6 +704,8 @@ h2.heading2 {
 .offer-badge { color:#7ec98f; border:1px solid #7ec98f; font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; padding:1px 5px; margin-left:4px; white-space:nowrap; font-weight:500; }
 .offer-link { grid-column:1 / -1; padding:14px 16px; background:#e8caa0; color:#0a0a0a; font-size:12.5px; font-weight:700; text-align:center; text-decoration:none; transition:background .2s ease; }
 .offer-link:hover { background:#f2dcb9; }
+.offer-link-alt { background:rgba(10,10,10,0.55); color:#e8caa0; border:1px solid rgba(232,202,160,0.25); border-top:0; }
+.offer-link-alt:hover { background:rgba(232,202,160,0.12); }
 @media (max-width:700px) {
   #packages, #process { position:relative; left:0; top:0; width:auto; max-width:62%; margin:28px 0 0 24px; }
   .offer-block { grid-template-columns:none; }
