@@ -687,6 +687,7 @@ h2.heading2 {
   .top-nav a[aria-current="page"]::before { content: ">"; position: absolute; left: -14px; color: #e8caa0; }
   .top-nav a[aria-current="page"]::after { content: "_"; position: absolute; right: -11px; color: #e8caa0; animation: nav-blink 1.1s steps(1) infinite; }
 }
+@media (min-width: 701px) and (max-width: 900px) { .top-nav { gap: 6px 22px; } }
 @keyframes nav-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .top-nav a[aria-current="page"]::after { animation: none; } }
 

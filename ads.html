@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Google Ads — Robson Web Studio</title>
+<meta name="description" content="Google search ads management for South African businesses from R600 a month. Flat fee, no percentage of your ad spend, and the account stays in your name.">
+<link rel="canonical" href="https://robsonwebstudio.com/ads.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Robson Web Studio">
+<meta property="og:title" content="Google Ads — Robson Web Studio">
+<meta property="og:description" content="Google search ads management from R600 a month. Flat fee, no percentage of your ad spend.">
+<meta property="og:url" content="https://robsonwebstudio.com/ads.html">
+<meta property="og:image" content="https://robsonwebstudio.com/img/og-studio.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robson Web Studio: Proper websites, priced for SA business">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://robsonwebstudio.com/img/og-studio.png">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: one column of terminal-style panels (header strip + body), matching robsonwebstudio.com.
+   Single dark look by choice: it is the studio's brand. */
+:root {
+  --bg: #0a0a0a;
+  --panel: rgba(10, 10, 10, .7);
+  --panel-head: rgba(232, 202, 160, .08);
+  --line: #2c2924;
+  --line-strong: #4a4237;
+  --fg: #ede9e1;
+  --muted: #9a958c;
+  --gold: #e8caa0;
+  --on-gold: #0a0a0a;
+  --green: #7ec98f;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; width: 0; height: 0; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding-inline: 64px; padding-block: 48px 72px; display: grid; gap: 28px; }
+a { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Site nav: same as the home page */
+.skip-link { position: absolute; left: -9999px; top: 8px; background: var(--bg); color: var(--gold); border: 1px solid var(--gold); padding: 8px 12px; z-index: 100; font-weight: 700; font-size: 13px; text-decoration: none; }
+.skip-link:focus { left: 12px; top: 12px; }
+.site-head { height: 0; }
+.site-mark { position: absolute; top: 56px; transform: translateY(-50%); left: 20px; z-index: 6; display: block; line-height: 0; transition: opacity .15s ease; }
+.site-mark img { display: block; }
+.site-mark:hover { opacity: .8; }
+.site-mark { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.site-mark img { height: 31.5px; width: auto; }
+@media (max-width: 700px) { .site-mark img { box-sizing: content-box; width: 18.8px; height: 16px; padding: 6px 4.6px; } }
+.site-mark-text { display: block; line-height: 1; border-left: 1px solid #4a4237; padding-left: 12px; font-family: 'JetBrains Mono', monospace; text-align: left; }
+.site-mark-text b { display: block; color: #f0f0f0; font-weight: 800; font-size: 17px; letter-spacing: 1px; }
+.site-mark-text i { display: block; color: #e8caa0; font-style: normal; font-weight: 500; font-size: 9.5px; letter-spacing: 4.2px; margin-top: 5px; white-space: nowrap; }
+@media (max-width: 700px) { .site-mark-text { display: none; } }
+.byline { position: absolute; top: 56px; transform: translateY(-50%); right: 32px; z-index: 5; color: var(--gold); font-weight: 500; font-size: clamp(13px, 1.3vw, 18px); letter-spacing: .5px; text-align: right; line-height: normal; }
+.top-nav { display: flex; gap: 6px 18px; align-items: center; }
+.top-nav a { color: var(--gold); text-decoration: none; opacity: .85; }
+.top-nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.top-nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.nav-div { display: none; }
+@media (min-width: 701px) {
+  .top-nav { gap: 6px 36px; }
+  .top-nav .nav-div { display: block; width: 1px; height: 18px; background: #4a4237; }
+  .top-nav a.nav-muted { opacity: .5; }
+  .top-nav a.nav-muted:hover { opacity: 1; }
+  .top-nav a[aria-current="page"] { position: relative; color: #f0f0f0; opacity: 1; text-decoration: none; }
+  .top-nav a[aria-current="page"]::before { content: ">"; position: absolute; left: -14px; color: #e8caa0; }
+  .top-nav a[aria-current="page"]::after { content: "_"; position: absolute; right: -11px; color: #e8caa0; animation: nav-blink 1.1s steps(1) infinite; }
+}
+@media (min-width: 701px) and (max-width: 900px) { .top-nav { gap: 6px 22px; } }
+@keyframes nav-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .top-nav a[aria-current="page"]::after { animation: none; } }
+@media (max-width: 700px) { .site-mark { top: 34px; } .byline { top: 34px; right: 16px; font-size: 11px; } .top-nav { gap: 4px 12px; } }
+
+/* Hero */
+@media (min-width: 701px) { .eyebrow { visibility: hidden; } }
+.eyebrow { color: var(--gold); font-size: 12px; line-height: normal; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; margin: 0 0 40px; }
+/* Same headline scale and eyebrow gap as the Home, Work and About pages */
+h1 { color: #f0f0f0; font-size: clamp(26px, 3.9vw, 60px); line-height: 1.02; margin: 0; font-weight: 800; letter-spacing: -1px; text-wrap: balance; }
+h1 span { color: var(--gold); }
+.lede { color: var(--muted); max-width: 62ch; margin: 16px 0 0; }
+
+/* Panels */
+canvas#c { display: block; position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
+.wrap { position: relative; z-index: 5; }
+.site-head { position: relative; z-index: 20; }
+.panel { border: 1px solid rgba(232, 202, 160, .25); border-top: 2px solid var(--gold); background: var(--panel); }
+.panel > header {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 14px 18px; background: var(--panel-head); border-bottom: 1px solid rgba(232, 202, 160, .25);
+}
+.panel > header h2 { margin: 0; font-size: 17px; font-weight: 700; }
+.tag { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.panel-body { padding: 18px; }
+.note { color: var(--muted); font-size: 12.5px; margin: 0; }
+
+/* Package grid */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pkg { padding: 20px 18px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; position: relative; }
+.pkg:last-child { border-right: 0; }
+.pkg-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 24px; }
+.pkg h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.badge { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--green); color: var(--green); white-space: nowrap; }
+.badge.gold { border-color: var(--gold); color: var(--gold); }
+.price { font-size: 32px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.price small { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+.for { color: var(--muted); font-size: 12.5px; margin: 0; min-height: 40px; }
+.feats { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; gap: 7px; font-size: 13px; flex: 1; }
+.feats li { padding-left: 18px; position: relative; }
+.feats li::before { content: "+"; position: absolute; left: 0; color: var(--gold); }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--line-strong); padding-top: 12px; }
+.meta dd { margin: 0; color: var(--fg); text-align: right; font-variant-numeric: tabular-nums; }
+.splits { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0; padding: 10px 12px; border: 1px solid var(--line-strong); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.splits dt { margin: 0; }
+.splits dd { margin: 0; text-align: right; color: var(--fg); }
+.splits dd.first { color: var(--gold); font-weight: 700; font-size: 14px; }
+.deposit { border: 1px solid var(--line-strong); padding: 10px 12px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; color: var(--muted); }
+.deposit strong { color: var(--gold); font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.support { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-top: 1px solid var(--line-strong); background: var(--panel-head); }
+.support p { margin: 0; font-size: 13px; color: var(--muted); min-width: 0; }
+.support strong { color: var(--fg); }
+.support .badge { margin-top: 2px; }
+@media (max-width: 600px) { .support { flex-direction: column; gap: 8px; } }
+
+.add-quote { width: 100%; min-height: 40px; transition: background-color .2s ease, color .2s ease; }
+.add-quote[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.add-quote[aria-pressed="true"]::before { content: "\2713\00a0"; }
+
+/* Accordion (small print) */
+.acc-h { margin: 0; font-size: inherit; }
+.acc-btn { font: inherit; color: var(--fg); width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; background: var(--panel-head); border: 0; cursor: pointer; text-align: left; transition: background-color .2s ease; }
+.acc-btn:hover { background: rgba(232, 202, 160, .14); }
+.acc-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.acc-title { font-size: 17px; font-weight: 700; }
+.acc-meta { display: inline-flex; align-items: center; gap: 12px; }
+.acc-chev { width: 18px; height: 18px; color: var(--gold); flex: none; transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+.acc-btn[aria-expanded="true"] .acc-chev { transform: rotate(180deg); }
+.acc-btn[aria-expanded="true"] { border-bottom: 1px solid var(--line-strong); }
+.acc-wrap { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s cubic-bezier(.4, 0, .2, 1), visibility 0s linear .3s; }
+.acc-wrap.open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s cubic-bezier(.4, 0, .2, 1), visibility 0s; }
+.acc-inner { overflow: hidden; min-height: 0; }
+
+.pkg.highlight { box-shadow: inset 0 0 0 2px var(--gold); background: rgba(27, 24, 19, .8); animation: pkgPulse 1.4s ease-out 1; }
+@keyframes pkgPulse { 0% { box-shadow: inset 0 0 0 2px var(--gold), 0 0 0 0 rgba(232, 202, 160, .55); } 100% { box-shadow: inset 0 0 0 2px var(--gold), 0 0 0 18px rgba(232, 202, 160, 0); } }
+@media (prefers-reduced-motion: reduce) { .pkg.highlight { animation: none; } }
+
+/* Tables */
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 11px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.num { white-space: nowrap; }
+td .sub { display: block; color: var(--muted); font-size: 12px; }
+.gold-t { color: var(--gold); }
+
+/* Two-column sections */
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.duo > div { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.duo > div + div { border-left: 1px solid var(--line); }
+.duo h3 { margin: 0; font-size: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.duo h3 .gold-t { font-variant-numeric: tabular-nums; }
+.duo p { margin: 0; color: var(--muted); font-size: 13px; }
+
+
+.fine { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 13px; }
+.fine li { padding-left: 22px; position: relative; color: var(--fg); }
+.fine li::before { content: "//"; position: absolute; left: 0; color: var(--gold); }
+
+/* Quote form */
+.qform { padding: 18px; display: grid; gap: 16px; }
+.qgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.wide { grid-column: 1 / -1; }
+.field label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .field textarea {
+  font: inherit; font-size: 14px; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong);
+  border-radius: 0; padding: 11px 12px; width: 100%; min-width: 0;
+}
+.field textarea { resize: vertical; min-height: 96px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.field .bad { border-color: #e07a7a; }
+
+/* Custom dropdown (built from the native select by JS; the select stays as the form value) */
+.dd { position: relative; }
+.dd-ready select { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.dd-btn { font: inherit; font-size: 14px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong); padding: 11px 12px; cursor: pointer; border-radius: 0; transition: border-color .2s ease, background-color .2s ease; }
+.dd-btn:hover { border-color: var(--gold); }
+.dd-btn:focus-visible, .dd.open .dd-btn { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.dd.open .dd-btn { background: #1b1813; }
+.dd-chev { width: 16px; height: 16px; flex: none; color: var(--gold); transition: transform .25s cubic-bezier(.4, 0, .2, 1); }
+.dd.open .dd-chev { transform: rotate(180deg); }
+.dd-menu { list-style: none; margin: 4px 0 0; padding: 0; position: absolute; left: 0; right: 0; top: 100%; z-index: 20; max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; background: #12110f; border: 1px solid var(--gold); box-shadow: 0 12px 28px rgba(0, 0, 0, .6);
+  opacity: 0; visibility: hidden; transform: translateY(-6px); transform-origin: top; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+.dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; transition: opacity .18s ease, transform .18s ease, visibility 0s; }
+.dd-opt { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 12px 10px 14px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--line); position: relative; }
+.dd-opt:last-child { border-bottom: 0; }
+.dd-opt .p { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dd-opt.active { background: rgba(232, 202, 160, .1); }
+.dd-opt[aria-selected="true"] { color: var(--gold); }
+.dd-opt[aria-selected="true"]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); }
+.dd-opt[aria-selected="true"] .p { color: var(--gold); }
+.addons-field { border: 0; padding: 0; margin: 0; }
+.addons-field legend { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 8px; }
+.qty-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.qty-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--line-strong); padding: 8px 10px 8px 12px; min-width: 0; }
+.qty-row.has { border-color: var(--gold); background: #1b1813; }
+.qty-label { min-width: 0; font-size: 13px; line-height: 1.4; }
+.qty-label span { display: block; }
+.qty-label em { display: block; font-style: normal; color: var(--muted); font-size: 12px; }
+.stepper { display: flex; align-items: center; flex: none; }
+.stepper button { font: inherit; font-size: 16px; width: 36px; height: 36px; background: transparent; color: var(--gold); border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
+.stepper button:hover:not([disabled]) { border-color: var(--gold); }
+.stepper button[disabled] { color: var(--muted); opacity: .5; cursor: default; }
+.stepper output { min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
+.qtotal { border: 1px solid var(--gold); background: #1b1813; padding: 14px 16px; display: grid; gap: 6px; }
+.qt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: var(--muted); }
+.qt-row strong { color: var(--fg); font-variant-numeric: tabular-nums; text-align: right; }
+.qt-sum { border-top: 1px dashed var(--line-strong); padding-top: 8px; margin-top: 2px; color: var(--fg); font-size: 14px; }
+.qt-sum strong { color: var(--gold); font-size: 22px; font-weight: 800; }
+.qtotal .note { margin-top: 4px; font-size: 12px; }
+@media (max-width: 600px) { .qty-list { grid-template-columns: 1fr; } }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.qerr { margin: 0; color: #e07a7a; font-size: 13px; }
+.qok { margin: 0; color: var(--green); font-size: 13px; border: 1px solid var(--green); padding: 10px 12px; }
+.qactions { display: flex; gap: 10px; flex-wrap: wrap; }
+.qactions .btn { min-height: 44px; }
+.qactions { align-items: center; gap: 10px 12px; }
+.q-or { color: var(--muted); }
+.q-link { font: inherit; font-size: 13px; color: var(--gold); background: none; border: 0; padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.q-link:hover { color: #f2dcb9; }
+.q-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 600px) { .qactions { column-gap: 6px; } .qactions .q-or, .qactions .q-link { font-size: clamp(10px, 2.9vw, 11.5px); white-space: nowrap; } }
+.qactions .btn[disabled] { opacity: .6; cursor: wait; }
+@media (max-width: 600px) { .qgrid { grid-template-columns: 1fr; } .qform { padding: 14px; } .qactions .btn { flex: 1 1 100%; } }
+
+/* CTA */
+.cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 22px; }
+.cta h2 { margin: 0 0 4px; font-size: 20px; }
+.cta p { margin: 0; color: var(--muted); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; }
+.btn { font: inherit; font-size: 13px; padding: 10px 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--gold); cursor: pointer; text-decoration: none; }
+.btn.solid { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.btn.ghost { background: transparent; color: var(--gold); }
+.btn:hover { filter: brightness(1.08); }
+.contact-bar { display: flex; align-items: center; border: 1px solid rgba(232, 202, 160, .4); background: rgba(232, 202, 160, .06); min-width: 0; max-width: 100%; }
+.contact-email { padding: 14px 20px; color: var(--gold); font-weight: 700; font-size: 15px; text-decoration: none; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.contact-email:hover, .copy-btn:hover { background: rgba(232, 202, 160, .12); }
+.copy-btn { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: 44px; align-self: stretch; border: 0; border-left: 1px solid rgba(232, 202, 160, .4); background: transparent; color: var(--gold); padding: 0; cursor: pointer; }
+.copy-btn svg { width: 18px; height: 18px; }
+.copy-btn.copied { color: var(--green); }
+.actions .btn { min-height: 54px; }
+@media (max-width: 600px) { .actions { flex-direction: column; width: 100%; } .contact-email { font-size: 13px; padding: 16px 14px; flex: 1 1 0; } .copy-btn { width: 52px; } }
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pkg:nth-child(2n) { border-right: 0; }
+  .pkg:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .wrap { padding-inline: 24px; padding-block: 56px 56px; }
+  .eyebrow { margin-bottom: 28px; }
+  .grid, .duo { grid-template-columns: 1fr; }
+  .pkg { border-right: 0; border-bottom: 1px solid var(--line); }
+  .pkg:last-child { border-bottom: 0; }
+  .for { min-height: 0; }
+  .duo > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  th, td { padding: 10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* Phones: 16px inputs (stops iOS zooming the page on focus) and 44px tap targets */
+@media (max-width: 700px) {
+  .field input, .field select, .field textarea { font-size: 16px; }
+  .field input:not([type=checkbox]), .field select { min-height: 48px; }
+  .dd-btn { font-size: 16px; min-height: 48px; }
+  .dd-opt { padding-block: 13px; font-size: 14px; }
+  .stepper button { width: 44px; height: 44px; }
+  .add-quote { min-height: 44px; }
+  .q-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .acc-btn { min-height: 56px; }
+  .btn { min-height: 44px; }
+  .support a { display: inline-block; padding: 13px 0; }
+}
+
+
+/* Ads page */
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.costsplit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line-strong); }
+.costsplit > div { padding: 16px 18px; display: grid; gap: 4px; align-content: start; }
+.costsplit > div + div { border-left: 1px solid var(--line-strong); }
+.costsplit h3 { margin: 0; font-size: 15px; }
+.costsplit p { margin: 0; color: var(--muted); font-size: 13px; }
+@media (max-width: 600px) { .costsplit { grid-template-columns: 1fr; } .costsplit > div + div { border-left: 0; border-top: 1px solid var(--line-strong); } }
+.setup-note { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-top: 1px solid var(--line-strong); background: var(--panel-head); }
+.setup-note p { margin: 0; font-size: 13px; color: var(--muted); min-width: 0; }
+.setup-note strong { color: var(--fg); }
+.setup-note .badge { margin-top: 2px; }
+.steps-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; font-size: 13px; }
+.steps-list li { counter-increment: step; padding-left: 40px; position: relative; color: var(--muted); }
+.steps-list li strong { display: block; color: var(--fg); font-size: 14px; margin-bottom: 2px; }
+.steps-list li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background: var(--gold); color: var(--on-gold); font-weight: 800; font-size: 12px; }
+@media (max-width: 980px) {
+  .grid.three { grid-template-columns: 1fr; }
+  .grid.three .pkg { border-right: 0; border-bottom: 1px solid var(--line); }
+  .grid.three .pkg:last-child { border-bottom: 0; }
+}
+@media (max-width: 600px) { .setup-note { flex-direction: column; gap: 8px; } }
+</style>
+<script src="js/nav.js?v=14"></script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head">
+  <a class="site-mark" href="index.html" aria-label="Robson Web Studio, home">
+    <img src="img/logo-mark.svg?v=4" width="37" height="31" alt="">
+    <span class="site-mark-text" aria-hidden="true"><b>ROBSON</b><i>WEB STUDIO</i></span>
+  </a>
+  <nav class="byline top-nav" aria-label="Main">
+    <a href="index.html">Home</a><a href="work.html">Work</a><a href="pricing.html">Pricing</a><a href="ads.html" aria-current="page">Ads</a><a href="about.html">About</a><span class="nav-div" aria-hidden="true"></span><a class="nav-muted" href="setup-guide.html">Setup</a>
+  </nav>
+</header>
+
+<main class="wrap" id="main" tabindex="-1">
+  <section>
+    <p class="eyebrow">ROBSON WEB STUDIO</p>
+    <h1>Google search ads,<br><span>managed for SA business</span></h1>
+    <p class="lede">Show up when people nearby search for what you do. I set up and run your Google search ads, track the calls and WhatsApp taps they bring in, and send you a plain monthly report. A flat fee, never a cut of your ad spend.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="pl">
+    <header><h2 id="pl">Ads management plans</h2><span class="tag">Monthly · No VAT added</span></header>
+    <div class="costsplit">
+      <div>
+        <span class="tag">Paid to me</span>
+        <h3>My management fee</h3>
+        <p>The monthly plan price below. This pays for my work on your account.</p>
+      </div>
+      <div>
+        <span class="tag">Paid to Google</span>
+        <h3>Your ad budget</h3>
+        <p>What you spend on clicks. You choose it and pay Google directly. None of it comes to me.</p>
+      </div>
+    </div>
+    <div class="grid three">
+      <article class="pkg">
+        <div class="pkg-top"><h3>Lite</h3></div>
+        <div class="price">R600<small>/month fee</small></div>
+        <p class="for">For one service in one area, like a plumber in Pretoria East.</p>
+        <ul class="feats">
+          <li>Up to 2 ads</li>
+          <li>1 campaign</li>
+          <li>Local targeting around your town</li>
+          <li>Call and WhatsApp tracking</li>
+        </ul>
+        <dl class="meta"><dt>Free designs</dt><dd>1 a month</dd><dt>Ad budget to Google</dt><dd>R2,000+</dd><dt>Extra ads</dt><dd>R200 each</dd></dl>
+        <button class="btn ghost add-quote" type="button" data-pkg="Lite (R600/month)" aria-pressed="false">Choose Lite</button>
+      </article>
+
+      <article class="pkg">
+        <div class="pkg-top"><h3>Standard</h3><span class="badge gold">Most popular</span></div>
+        <div class="price">R1,200<small>/month fee</small></div>
+        <p class="for">For businesses with two services or a few areas to cover.</p>
+        <ul class="feats">
+          <li>Up to 5 ads</li>
+          <li>2 campaigns</li>
+          <li>Everything in Lite</li>
+          <li>Call and sitelink extensions</li>
+        </ul>
+        <dl class="meta"><dt>Free designs</dt><dd>2 a month</dd><dt>Ad budget to Google</dt><dd>R4,000+</dd><dt>Extra ads</dt><dd>R200 each</dd></dl>
+        <button class="btn ghost add-quote" type="button" data-pkg="Standard (R1,200/month)" aria-pressed="false">Choose Standard</button>
+      </article>
+
+      <article class="pkg">
+        <div class="pkg-top"><h3>Pro</h3></div>
+        <div class="price">R1,800<small>/month fee</small></div>
+        <p class="for">For competitive trades and clinics ready to grow.</p>
+        <ul class="feats">
+          <li>Up to 10 ads</li>
+          <li>3 to 4 campaigns</li>
+          <li>Everything in Standard</li>
+          <li>Monthly ad testing and review call</li>
+        </ul>
+        <dl class="meta"><dt>Free designs</dt><dd>2 a month</dd><dt>Ad budget to Google</dt><dd>R6,000+</dd><dt>Extra ads</dt><dd>R200 each</dd></dl>
+        <button class="btn ghost add-quote" type="button" data-pkg="Pro (R1,800/month)" aria-pressed="false">Choose Pro</button>
+      </article>
+    </div>
+    <div class="setup-note">
+      <span class="badge gold">Setup</span>
+      <p><strong>R1,500 once-off</strong> to build your account, keywords and first ads (R1,000 if you have a Premium website from me). Your ad budget is separate from my fees and is paid to Google.</p>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="inc">
+    <header><h2 id="inc">Included in every plan</h2><span class="tag">No hidden extras</span></header>
+    <div class="duo">
+      <div>
+        <h3>Set up once</h3>
+        <ul class="feats">
+          <li>Google Ads account in your name</li>
+          <li>Keyword research for what your customers search</li>
+          <li>Ads written for you, with local targeting</li>
+          <li>Tracking for calls, WhatsApp taps and form leads</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Every month</h3>
+        <ul class="feats">
+          <li>Weekly check of what people searched, with wasted clicks blocked</li>
+          <li>Budget and bid adjustments</li>
+          <li>Ad wording tweaks to get more calls</li>
+          <li>A plain-language report on WhatsApp or email</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="ds">
+    <header><h2 id="ds">Ad images and flyers</h2><span class="tag">Free designs every month</span></header>
+    <div class="duo">
+      <div>
+        <h3>Included free</h3>
+        <ul class="feats">
+          <li>Lite: 1 design a month</li>
+          <li>Standard: 2 designs a month</li>
+          <li>Pro: 2 designs a month</li>
+        </ul>
+        <p>Use them for ad images, flyers or WhatsApp graphics. Free designs don't roll over to the next month.</p>
+      </div>
+      <div>
+        <h3>Extra designs <span class="gold-t">R250 each</span></h3>
+        <p>The same price as a standalone flyer. One design is one ad image or one flyer, with one round of changes.</p>
+        <p>Need a full logo or a social media pack? Those are on the <a href="pricing.html#quote">Pricing page</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="hw">
+    <header><h2 id="hw">How it works</h2><span class="tag">From yes to live</span></header>
+    <div class="panel-body">
+      <ol class="steps-list">
+        <li><strong>You open a Google Ads account</strong>It takes about 10 minutes and I'll guide you. The account is in your name, so you always own it.</li>
+        <li><strong>I build your campaigns</strong>Keywords, ads and tracking, usually ready within 3 to 5 days. You approve before anything goes live.</li>
+        <li><strong>Your ads go live</strong>I check the searches weekly, block the ones that waste money and adjust to bring in more enquiries.</li>
+        <li><strong>You get a monthly report</strong>Clicks, calls, WhatsApp taps and what each enquiry cost, in plain language.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="panel" id="quote" aria-labelledby="qt">
+    <header><h2 id="qt">Get a free quote</h2><span class="tag">No obligation</span></header>
+    <form class="qform" id="quoteForm" novalidate>
+      <p class="note">Tell me about your business and I'll tell you which plan fits and what to budget for ads. Name and phone are required.</p>
+      <div class="qgrid">
+        <div class="field"><label for="qName">Your name</label><input id="qName" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required></div>
+        <div class="field"><label for="qPhone">Phone or WhatsApp</label><input id="qPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="082 123 4567" required></div>
+        <div class="field"><label for="qBiz">Business name</label><input id="qBiz" name="business" type="text" autocomplete="organization" autocapitalize="words" enterkeyhint="next"></div>
+        <div class="field"><label for="qEmail">Email (optional)</label><input id="qEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next"></div>
+        <div class="field wide"><label for="qPkg">Plan you're interested in</label>
+          <select id="qPkg" name="plan">
+            <option value="Not sure yet">Not sure yet</option>
+            <option data-monthly="600">Lite (R600/month)</option>
+            <option data-monthly="1200">Standard (R1,200/month)</option>
+            <option data-monthly="1800">Pro (R1,800/month)</option>
+          </select>
+        </div>
+        <fieldset class="field wide addons-field">
+          <legend>Extra designs (optional). Your free designs are already included.</legend>
+          <div class="qty-list">
+            <div class="qty-row" data-name="Ad image design" data-once="250"><div class="qty-label"><span>Ad image design</span><em>R250 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one ad image design" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one ad image design">+</button></div></div>
+            <div class="qty-row" data-name="Flyer design" data-once="250"><div class="qty-label"><span>Flyer design</span><em>R250 each</em></div><div class="stepper"><button type="button" class="dec" aria-label="Remove one flyer design" disabled>&minus;</button><output aria-live="polite">0</output><button type="button" class="inc" aria-label="Add one flyer design">+</button></div></div>
+          </div>
+        </fieldset>
+        <div class="field wide"><label for="qSpend">Your monthly ad budget, paid to Google on top of my fee (optional)</label><input id="qSpend" name="ad_budget" type="text" placeholder="For example R2,000" enterkeyhint="next"></div>
+        <div class="field wide"><label for="qMsg">What does your business do, and where? (optional)</label><textarea id="qMsg" name="message" rows="4" autocapitalize="sentences"></textarea></div>
+      </div>
+      <div class="qtotal" id="qTotal" aria-live="polite">
+        <div class="qt-row"><span>Plan</span><strong id="qtPkg">Not chosen</strong></div>
+        <div class="qt-row"><span>Setup (once-off)</span><strong id="qtSetup">R1,500</strong></div>
+        <div class="qt-row"><span>Extra designs (once-off)</span><strong id="qtDesign">R0</strong></div>
+        <div class="qt-row qt-sum"><span>Monthly management fee</span><strong id="qtMonth">R0/month</strong></div>
+        <p class="note">An estimate, not a final quote. No VAT added. Your ad budget is separate and is paid to Google, not to me.</p>
+      </div>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+      <p class="qerr" id="qErr" role="alert" hidden></p>
+      <div class="qactions">
+        <button class="btn solid" type="submit" id="qSubmit">Send quote request</button>
+        <span class="q-or">or</span>
+        <button class="q-link" type="button" id="qWa">WhatsApp me</button>
+        <span class="q-or q-dot">&middot;</span>
+        <a class="q-link" href="mailto:darren@robsonwebstudio.com?subject=Google%20ads%20quote">darren@robsonwebstudio.com</a>
+      </div>
+      <p class="qok" id="qOk" role="status" hidden>Thanks, got it. I'll be in touch on the number you gave me.</p>
+    </form>
+  </section>
+
+  <section class="panel acc" id="sp-panel">
+    <h2 class="acc-h"><button class="acc-btn" type="button" id="spBtn" aria-expanded="false" aria-controls="spBody">
+      <span class="acc-title">The small print</span>
+      <span class="acc-meta"><span class="tag">Good to know</span><svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+    </button></h2>
+    <div class="acc-wrap" id="spBody" role="region" aria-labelledby="spBtn">
+      <div class="acc-inner">
+        <div class="panel-body">
+          <ul class="fine">
+            <li>My fee is flat and monthly. Your ad spend is separate and is paid straight to Google from your own account.</li>
+            <li>The Google Ads account is in your name. You keep it, and everything in it, if we stop working together.</li>
+            <li>Plans run month to month after a 3-month minimum. After that, give me a month's notice to stop.</li>
+            <li>I manage the ads but can't promise results. Enquiries depend on your budget, your area, your competition and your website.</li>
+            <li>An ad is one live search ad that I write and set up. Editing an existing ad is free, and a new service or offer counts as a new ad.</li>
+            <li>The recommended ad spend on each plan is a guide, not a rule. You choose your own budget and can change it at any time.</li>
+            <li>Extra ads beyond your plan are R200 each per month.</li>
+            <li>Free designs (1 a month on Lite, 2 on Standard and Pro) don't roll over. Extra designs are R250 each, with one round of changes.</li>
+            <li>The setup fee is R1,500 once-off, or R1,000 if you have a Premium website from me, and is paid before work starts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('quoteForm');
+  var err = document.getElementById('qErr'), ok = document.getElementById('qOk');
+  var submit = document.getElementById('qSubmit');
+  var ENDPOINT = 'https://formsubmit.co/ajax/darren@robsonwebstudio.com';
+  var WA = 'https://wa.me/27844114748?text=';
+  var SETUP = 1500;
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+  function show(msg) { err.textContent = msg; err.hidden = !msg; }
+  function check() {
+    var bad = [];
+    ['qName', 'qPhone'].forEach(function (id) {
+      var el = document.getElementById(id), v = el.value.trim();
+      var fail = !v || (id === 'qPhone' && v.replace(/\D/g, '').length < 9);
+      el.classList.toggle('bad', fail);
+      if (fail) bad.push(el);
+    });
+    var em = document.getElementById('qEmail');
+    var emBad = em.value.trim() !== '' && !em.checkValidity();
+    em.classList.toggle('bad', emBad);
+    if (emBad) bad.push(em);
+    if (bad.length) {
+      show(bad[0].id === 'qPhone' ? 'Enter a phone number we can reach you on.' : bad[0].id === 'qEmail' ? 'That email address looks off.' : 'Enter your name.');
+      bad[0].focus();
+      return false;
+    }
+    show('');
+    return true;
+  }
+  (function () {
+    var sel = document.getElementById('qPkg');
+    var wrap = document.createElement('div');
+    wrap.className = 'dd';
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    wrap.classList.add('dd-ready');
+    sel.tabIndex = -1;
+
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'dd-btn'; btn.id = 'qPkgBtn';
+    btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span class="dd-val"></span><svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>';
+    var menu = document.createElement('ul');
+    menu.className = 'dd-menu'; menu.id = 'qPkgMenu'; menu.setAttribute('role', 'listbox'); menu.tabIndex = -1;
+    btn.setAttribute('aria-controls', 'qPkgMenu');
+    wrap.appendChild(btn); wrap.appendChild(menu);
+    var label = document.querySelector('label[for="qPkg"]');
+    if (label) { label.setAttribute('for', 'qPkgBtn'); menu.setAttribute('aria-labelledby', label.id || (label.id = 'qPkgLabel')); }
+
+    var opts = Array.prototype.map.call(sel.options, function (o, i) {
+      var m = /^(.*?)\s*\((R[\d,]+(?:\/month)?)\)$/.exec(o.value);
+      var li = document.createElement('li');
+      li.className = 'dd-opt'; li.id = 'qPkgOpt' + i; li.setAttribute('role', 'option');
+      li.innerHTML = '<span></span><span class="p"></span>';
+      li.children[0].textContent = m ? m[1] : o.value;
+      li.children[1].textContent = m ? m[2] : '';
+      li.addEventListener('mousedown', function (e) { e.preventDefault(); });
+      li.addEventListener('click', function () { choose(i); close(true); });
+      li.addEventListener('mousemove', function () { setActive(i); });
+      menu.appendChild(li);
+      return li;
+    });
+    var active = sel.selectedIndex;
+
+    function paint() {
+      var cur = sel.selectedIndex;
+      btn.querySelector('.dd-val').textContent = sel.options[cur].value;
+      opts.forEach(function (li, i) { li.setAttribute('aria-selected', i === cur ? 'true' : 'false'); });
+    }
+    function setActive(i) {
+      active = Math.max(0, Math.min(opts.length - 1, i));
+      opts.forEach(function (li, k) { li.classList.toggle('active', k === active); });
+      btn.setAttribute('aria-activedescendant', opts[active].id);
+      var li = opts[active];
+      if (li.offsetTop < menu.scrollTop) menu.scrollTop = li.offsetTop;
+      else if (li.offsetTop + li.offsetHeight > menu.scrollTop + menu.clientHeight) menu.scrollTop = li.offsetTop + li.offsetHeight - menu.clientHeight;
+    }
+    function choose(i) {
+      sel.selectedIndex = i; paint();
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    function open() {
+      wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true');
+      setActive(sel.selectedIndex);
+    }
+    function close(refocus) {
+      wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+      btn.removeAttribute('aria-activedescendant');
+      if (refocus) btn.focus();
+    }
+    function isOpen() { return wrap.classList.contains('open'); }
+
+    btn.addEventListener('click', function () { isOpen() ? close() : open(); });
+    btn.addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (!isOpen()) {
+        if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'Enter' || k === ' ') { e.preventDefault(); open(); }
+        return;
+      }
+      if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+      else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+      else if (k === 'Home') { e.preventDefault(); setActive(0); }
+      else if (k === 'End') { e.preventDefault(); setActive(opts.length - 1); }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(active); close(true); }
+      else if (k === 'Escape') { e.preventDefault(); close(true); }
+      else if (k === 'Tab') { close(); }
+    });
+    document.addEventListener('click', function (e) { if (isOpen() && !wrap.contains(e.target)) close(); });
+    form.addEventListener('reset', function () { setTimeout(function () { paint(); }, 0); });
+    sel.addEventListener('change', paint);
+    paint();
+  })();
+
+  function money(n) { return 'R' + n.toLocaleString('en-ZA').replace(/\s/g, ','); }
+  function planInfo() {
+    var sel = document.getElementById('qPkg'), opt = sel.options[sel.selectedIndex];
+    return { name: opt.value, monthly: Number(opt.getAttribute('data-monthly')) || 0 };
+  }
+  var MAX_QTY = 20;
+  function designs() {
+    var list = [], once = 0;
+    form.querySelectorAll('.qty-row').forEach(function (row) {
+      var q = parseInt(row.querySelector('output').textContent, 10) || 0;
+      if (q > 0) { list.push(q + ' x ' + row.dataset.name); once += q * Number(row.dataset.once); }
+    });
+    return { list: list, once: once };
+  }
+  var btns = document.querySelectorAll('.add-quote');
+  function estimate() {
+    var p = planInfo();
+    document.getElementById('qtPkg').textContent = p.monthly ? p.name.replace(/ \(R[\d,]+\/month\)$/, '') : p.name;
+    document.getElementById('qtSetup').textContent = money(SETUP);
+    document.getElementById('qtDesign').textContent = money(designs().once);
+    document.getElementById('qtMonth').textContent = money(p.monthly) + '/month';
+  }
+  function syncBtns() {
+    var cur = document.getElementById('qPkg').value;
+    btns.forEach(function (b) {
+      var on = b.getAttribute('data-pkg') === cur;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? 'Chosen' : 'Choose ' + b.getAttribute('data-pkg').split(' (')[0];
+    });
+  }
+  document.getElementById('qPkg').addEventListener('change', function () { estimate(); syncBtns(); });
+  form.addEventListener('reset', function () { setTimeout(function () { estimate(); syncBtns(); }, 0); });
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var sel = document.getElementById('qPkg');
+      sel.value = b.getAttribute('data-pkg');
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('quote').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+  form.querySelectorAll('.qty-row').forEach(function (row) {
+    var out = row.querySelector('output'), dec = row.querySelector('.dec'), inc = row.querySelector('.inc');
+    function set(n) {
+      n = Math.max(0, Math.min(MAX_QTY, n));
+      out.textContent = n; dec.disabled = n === 0; inc.disabled = n === MAX_QTY;
+      row.classList.toggle('has', n > 0); estimate();
+    }
+    dec.addEventListener('click', function () { set((parseInt(out.textContent, 10) || 0) - 1); });
+    inc.addEventListener('click', function () { set((parseInt(out.textContent, 10) || 0) + 1); });
+    row._reset = function () { set(0); };
+  });
+  form.addEventListener('reset', function () {
+    setTimeout(function () { form.querySelectorAll('.qty-row').forEach(function (r) { r._reset(); }); estimate(); }, 0);
+  });
+  estimate(); syncBtns();
+
+  function waText() {
+    var t = "Hi Darren, I'm " + val('qName');
+    if (val('qBiz')) t += ' from ' + val('qBiz');
+    t += ". I'd like a quote for Google ads management. Plan: " + document.getElementById('qPkg').value + '.';
+    if (val('qSpend')) t += ' Ad budget: ' + val('qSpend') + '.';
+    if (designs().list.length) t += ' Extra designs: ' + designs().list.join(', ') + '.';
+    if (val('qMsg')) t += ' ' + val('qMsg');
+    return t;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    ok.hidden = true;
+    if (!check()) return;
+    if (document.querySelector('[name=_honey]').value) return;
+    submit.disabled = true; submit.textContent = 'Sending…';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Google ads quote request: ' + val('qName'),
+        _template: 'table',
+        name: val('qName'), phone: val('qPhone'), business: val('qBiz'), email: val('qEmail'),
+        plan: document.getElementById('qPkg').value,
+        ad_budget: val('qSpend') || 'Not given',
+        extra_designs: designs().list.join(', ') || 'None',
+        message: val('qMsg')
+      })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok || String(res.j.success) === 'false') throw new Error('send failed');
+        form.reset(); ok.hidden = false; ok.scrollIntoView({ block: 'nearest' });
+      })
+      .catch(function () { show("Couldn't send that. Try WhatsApp instead, or email darren@robsonwebstudio.com."); })
+      .then(function () { submit.disabled = false; submit.textContent = 'Send quote request'; });
+  });
+
+  document.getElementById('qWa').addEventListener('click', function () {
+    if (!val('qName')) { document.getElementById('qName').classList.add('bad'); show('Enter your name first.'); document.getElementById('qName').focus(); return; }
+    show('');
+    window.open(WA + encodeURIComponent(waText()), '_blank', 'noopener');
+  });
+})();
+
+(function () {
+  var btn = document.getElementById('spBtn'), body = document.getElementById('spBody');
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    body.classList.toggle('open', open);
+  });
+})();
+</script>
+<script defer src="js/face-art.js?v=113"></script>
+<script defer src="js/site.js?v=140"></script>
+<script defer src="js/scrollbar.js?v=2"></script>
+</body>
+</html>
